@@ -1,7 +1,7 @@
 from core import Clock, Faults, Queue, Store, Worker
 
 
-def test_happy_path_single_worker_commits_once_and_succeeds():
+def test_happy_path_single_worker_commits_once_and_succeeds(experiment_log):
     """Single-worker baseline with guardrails enabled.
 
     Why keep `enforce_idempotent_commit=True` in a naive happy path?
@@ -36,6 +36,14 @@ def test_happy_path_single_worker_commits_once_and_succeeds():
     # 3) Lease exclusivity verification: the queue denies W2 while W1 still holds the lease because the latest execution is not DONE.
     assert queue.lease(worker_id="W2") is None
 
+    experiment_log(
+        {
+            "job_id": job_id,
+            "committed_exec_id": lease.exec_id,
+            "effects_count": store.count_effects(job_id),
+        }
+    )
+
     # 4) W1 begins work. The worker marks the execution IN_PROGRESS before touching any side effects.
     worker.start(lease)
     assert store.executions[lease.exec_id].status == "IN_PROGRESS"
@@ -54,7 +62,7 @@ def test_happy_path_single_worker_commits_once_and_succeeds():
     assert queue.lease(worker_id="W2") is None
 
 
-def test_happy_path_two_workers_second_worker_cannot_lease_after_success():
+def test_happy_path_two_workers_second_worker_cannot_lease_after_success(experiment_log):
     """Two-worker readability test for the non-failure flow.
 
     Story:
@@ -101,6 +109,15 @@ def test_happy_path_two_workers_second_worker_cannot_lease_after_success():
 
     # 4) INV_001: we still expect a single logical effect and one committed exec_id no matter how many workers exist.
     assert store.count_effects(job_id) == 1
+
+    experiment_log(
+        {
+            "job_id": job_id,
+            "committed_exec_id": lease_w1.exec_id,
+            "effects_count": store.count_effects(job_id),
+            "final_job_state": store.jobs[job_id]["state"],
+        }
+    )
     assert store.get_committed_exec_id(job_id) == lease_w1.exec_id
 
     # 5) INV_003: DONE → SUCCEEDED projection is deterministic (Job state follows execution state).

@@ -89,7 +89,7 @@ Taxonomy is expressed in metadata and indexed in `docs/taxonomy.md`, not by dire
 
 Every FM must include:
 
-- `test_happy_path.py`
+- `test_fmxxx_happy_path.py`
 - `test_repro_fmxxx.py`
 - `test_prevent_fmxxx.py`
 
@@ -330,7 +330,7 @@ tests/
 Tests required:
 
 ```
-test_happy_path.py
+test_fmxxx_happy_path.py
 test_repro_fmxxx.py
 test_prevent_fmxxx.py
 ```

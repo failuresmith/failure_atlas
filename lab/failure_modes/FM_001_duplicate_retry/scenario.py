@@ -73,3 +73,30 @@ def run(*, lease_seconds: int, work_duration_seconds: int, faults: Faults) -> Sc
         faults=faults,
     )
 
+
+def run_single_worker_happy_path(*, lease_seconds: int, work_duration_seconds: int) -> ScenarioResult:
+    """Happy path: single worker finishes within lease without retries or duplication."""
+    clock = Clock(start=0.0)
+    store = Store.in_memory(clock=clock)
+    queue = Queue(store=store, clock=clock, lease_seconds=lease_seconds)
+    worker = Worker(
+        worker_id="A",
+        store=store,
+        queue=queue,
+        clock=clock,
+        faults=Faults(enforce_idempotent_commit=True),
+    )
+
+    job_id = queue.submit_job(payload={"fm": "FM_001", "path": "happy"})
+    lease = queue.lease(worker_id="A")
+    assert lease is not None
+
+    worker.start(lease)
+    clock.advance(float(work_duration_seconds))
+    worker.finish(lease)
+
+    return ScenarioResult(
+        job_id=job_id,
+        effects_count=store.count_effects(job_id),
+        committed_exec_id=store.get_committed_exec_id(job_id),
+    )

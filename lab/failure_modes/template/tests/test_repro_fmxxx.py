@@ -2,13 +2,21 @@ from failure_modes.template.scenario import run
 from faults.injectors import Faults
 
 
-def test_repro_fmxxx_baseline_shows_failure():
+def test_repro_fmxxx_baseline_shows_failure(experiment_log):
     faults = Faults.none()
 
     result = run(
         lease_seconds=1,
         work_duration_seconds=2,  # make lease expire
         faults=faults,
+    )
+
+    experiment_log(
+        {
+            "lease_seconds": 1,
+            "work_duration_seconds": 2,
+            "effects_count": result.effects_count,
+        }
     )
 
     # This assertion should capture the failure's manifestation.

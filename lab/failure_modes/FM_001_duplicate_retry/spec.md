@@ -78,4 +78,4 @@ the logical effect.
 - `test_repro_fm001.py` proves duplicate effects in baseline mode
 - `test_prevent_fm001.py` proves exactly one effect after commit boundary
 - `test_recover_fm001.py` proves crash-after-commit reconciles to correct terminal state without duplicate effects
-- `test_happy_path.py` proves invariant-preserving baseline flow
+- `test_fm001_happy_path.py` proves invariant-preserving baseline flow

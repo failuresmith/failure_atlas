@@ -2,7 +2,7 @@ from core import Clock, Faults, Queue, Store, Worker
 from policies.reconcile import reconcile_after_crash
 
 
-def test_recover_fm001_crash_after_commit_reconcile_restores_correctness():
+def test_recover_fm001_crash_after_commit_reconcile_restores_correctness(experiment_log):
     """FM_001 recovery: crash after COMMITTED must reconcile to DONE without duplicate effects.
 
     Protects:
@@ -36,6 +36,15 @@ def test_recover_fm001_crash_after_commit_reconcile_restores_correctness():
     assert store.jobs[job_id]["state"] == "RUNNING"
 
     result = reconcile_after_crash(store=store, clock=clock)
+
+    experiment_log(
+        {
+            "job_id": job_id,
+            "committed_exec_id": lease.exec_id,
+            "finalized_exec_ids": result.finalized_exec_ids,
+            "effects_count": store.count_effects(job_id),
+        }
+    )
 
     assert lease.exec_id in result.finalized_exec_ids
     assert store.executions[lease.exec_id].status == "DONE"

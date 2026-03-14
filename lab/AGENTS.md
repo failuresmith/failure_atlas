@@ -98,7 +98,7 @@ For each new FM:
    - Acceptance criteria
 
 3) Add two tests:
-   - `test_happy_path.py` → proves baseline invariant-preserving flow
+   - `test_fmxxx_happy_path.py` → proves baseline invariant-preserving flow
    - `test_repro_fmxxx.py` → demonstrates the failure (baseline or broken variant)
    - `test_prevent_fmxxx.py` → proves the fix preserves invariants
    - `test_recover_fmxxx.py` (optional) → proves recovery returns to correctness
