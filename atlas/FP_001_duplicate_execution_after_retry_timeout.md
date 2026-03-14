@@ -47,6 +47,10 @@ Without first-commit gating, both cross the effect boundary.
 
 - `guardrails/GR_001_idempotent_commit_boundary.md`
 
+## Postmortem
+
+- `lab/postmortems/PM_001_duplicate_execution.md`
+
 ## Related Patterns
 
 - FP_002 Extension Authority Persistence

@@ -64,6 +64,7 @@ DISCOVER-style traffic.
 - **Mechanism:** unbounded server-side pagination state table
 - **Guardrail:** bounded cookie registry with deterministic overflow behavior
 - **Atlas update:** FP_005 linked to validated FM_002 + GR_005 artifacts
+- **Postmortem:** lab/postmortems/PM_005_unbounded_pagination_state.md
 
 ## Lab Reproduction
 

@@ -64,6 +64,7 @@ For any principal: `active_allocations(principal_id) > configured_max(principal_
 - **Mechanism:** strict boundary comparator (`>` vs `>=`) in pre-admit check
 - **Guardrail:** inclusive boundary policy + explicit edge-case regression tests
 - **Atlas update:** FP_006 linked to validated FM_003 + GR_006 artifacts
+- **Postmortem:** lab/postmortems/PM_006_quota_boundary_off_by_one.md
 
 ## Lab Reproduction
 

@@ -35,7 +35,9 @@ idempotent commit boundary, both attempts could apply logical effects.
 - `test_prevent_fm001.py`: proves duplicate retries no-op at commit boundary.
 - `test_recover_fm001.py`: proves reconcile restores correctness after crash.
 
+## Occurrences
+- Distributed job runner with short lease (`lease_seconds=1`) vs work duration (`=2`) causing retry overlap.
+
 ## Follow-ups
 - Extend reconcile to richer observability counters (`INV_005`).
 - Add FM_002 for torn/partial state updates.
-

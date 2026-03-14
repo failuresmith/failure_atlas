@@ -4,7 +4,6 @@ A field guide to how complex systems fail (safely).
 
 **Real failure → FM (prove) → FP (explain) → GR (mitigate).**
 
-
 <details>
 <summary>How?</summary>
 
@@ -20,6 +19,7 @@ A field guide to how complex systems fail (safely).
 ---
 
 Pipeline:
+“Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update”
 
 ```mermaid
 flowchart TD
@@ -27,6 +27,7 @@ flowchart TD
   A --> B[FM - minimal reproduction]
   B --> C[FP - failure pattern]
   C --> D[GR - guardrail pattern]
+  D --> E[Atlas]
 ```
 
 FM proves.

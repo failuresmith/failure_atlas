@@ -48,6 +48,10 @@ Revocation path is missing or asynchronous enough to leave active stale grants.
 
 - `guardrails/GR_002_lifecycle_bound_authority.md`
 
+## Postmortem
+
+- `lab/postmortems/PM_002_extension_authority_persistence.md`
+
 ## Related Patterns
 
 - FP_001 Duplicate Execution After Retry Timeout

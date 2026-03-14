@@ -46,6 +46,10 @@ registration/dispatch constraints.
 
 - `guardrails/GR_003_capability_surface_reduction.md`
 
+## Postmortem
+
+- `lab/postmortems/PM_003_read_only_enforcement_gap.md`
+
 ## Related Patterns
 
 - FP_001 Duplicate Execution After Retry Timeout
