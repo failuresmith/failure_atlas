@@ -62,6 +62,15 @@ For any principal identity (peer/tenant/actor):
 - admission logic must enforce inclusive boundary semantics at exact limits
 - boundary conditions (`0`, `1`, `N`) require explicit regression coverage
 
+## INV_008 — Participant identity mapping is bijective
+
+For any participant registry using credentials (e.g., TLS keys):
+
+- each TLS key maps to exactly one participant identifier
+- participant identifiers are unique (`participant_id ↔ credential` is one-to-one)
+- startup must fail fast on duplicate participant IDs or duplicate credentials
+- registries must not silently overwrite existing mappings
+
 ---
 
 ## Pipeline mapping
