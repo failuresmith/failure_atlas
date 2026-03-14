@@ -27,6 +27,8 @@ This taxonomy is the catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`.
 | Model Behavior | FP_004 Anthropomorphic Misinterpretation | n/a | GR_004 |
 | Resource Exhaustion | FP_005 Unbounded Pagination Cookie State Amplification | FM_002 | GR_005 |
 | Policy Enforcement | FP_006 Quota Boundary Off-by-One Admission | FM_003 | GR_006 |
+| Identity Integrity | FP_007 Identity Map Bijection Break | FM_004 | GR_007 |
+| Tool / Agent Interfaces | FP_008 Tool Authority Escalation via Prompt Injection | FM_008 | GR_008 |
 
 > Notes:
 > - `reproduced_in` and `mitigated_by` are list-valued in artifact metadata.
