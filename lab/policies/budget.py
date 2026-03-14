@@ -47,3 +47,33 @@ class CookieRegistry:
     def cookies(self) -> list[str]:
         return list(self._entries.keys())
 
+
+class PeerReservationQuota:
+    """Deterministic per-peer reservation admission with configurable boundary semantics."""
+
+    def __init__(self, *, max_reservations_per_peer: int, enforce_inclusive_boundary: bool) -> None:
+        if max_reservations_per_peer < 0:
+            raise ValueError("max_reservations_per_peer must be >= 0")
+        self.max_reservations_per_peer = max_reservations_per_peer
+        self.enforce_inclusive_boundary = enforce_inclusive_boundary
+        self._active_by_peer: dict[str, int] = {}
+        self.rejected_requests = 0
+
+    def try_reserve(self, *, peer_id: str) -> bool:
+        current = self._active_by_peer.get(peer_id, 0)
+
+        if self.enforce_inclusive_boundary:
+            exceeds = current >= self.max_reservations_per_peer
+        else:
+            exceeds = current > self.max_reservations_per_peer
+
+        if exceeds:
+            self.rejected_requests += 1
+            return False
+
+        self._active_by_peer[peer_id] = current + 1
+        return True
+
+    def active_reservations(self, *, peer_id: str) -> int:
+        return self._active_by_peer.get(peer_id, 0)
+

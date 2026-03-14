@@ -61,6 +61,21 @@ Policies are small, explicit mechanisms that keep invariants intact when failure
 - **Failure modes covered**
   - [FM_002 unbounded pagination state](../failure_modes/FM_002_unbounded_pagination_state/spec.md)
 
+## Inclusive per-principal quota boundary checks
+- **Inputs**
+  - Principal identity (`peer_id`/tenant/actor)
+  - Active allocation count for that principal
+  - Configured per-principal maximum (`max_reservations_per_peer`)
+- **Outputs**
+  - Deterministic admission decision at boundary (`reject when current >= max`)
+  - Active allocation count bounded by configuration
+  - Detectable policy pressure via rejected request counters
+- **Invariant(s) enforced**
+  - [INV_007](01_invariants.md#inv_007----per-principal-active-allocations-must-not-exceed-quota)
+  - [INV_005](01_invariants.md#inv_005----failure-must-be-detectable)
+- **Failure modes covered**
+  - [FM_003 quota boundary off-by-one](../failure_modes/FM_003_quota_boundary_off_by_one/spec.md)
+
 ## Audit & observability
 - **Inputs**
   - State transition events from queue/worker/store

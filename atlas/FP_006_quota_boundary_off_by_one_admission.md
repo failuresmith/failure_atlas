@@ -3,11 +3,11 @@ ID: FP_006
 Title: Quota Boundary Off-by-One Admission
 Class: Policy Enforcement
 Severity: availability
-Status: draft
+Status: validated
 reproduced_in:
-  - pending (external report)
+  - FM_003
 mitigated_by:
-  - pending
+  - GR_006
 ---
 
 # Failure Pattern
@@ -60,18 +60,18 @@ For any principal: `active_allocations(principal_id) > configured_max(principal_
 ## Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update
 
 - **Real failure:** reservation admission allows one extra allocation at boundary
-- **Minimal reproduction:** planned deterministic two-request same-principal admission test
+- **Minimal reproduction:** deterministic FM_003 boundary matrix (`max=0,1,N`) with repeated same-principal admissions
 - **Mechanism:** strict boundary comparator (`>` vs `>=`) in pre-admit check
 - **Guardrail:** inclusive boundary policy + explicit edge-case regression tests
-- **Atlas update:** this FP entry (draft pending local lab proof)
+- **Atlas update:** FP_006 linked to validated FM_003 + GR_006 artifacts
 
 ## Lab Reproduction
 
-- `pending (proposed: lab/failure_modes/FM_003_quota_boundary_off_by_one/)`
+- `lab/failure_modes/FM_003_quota_boundary_off_by_one/`
 
 ## Relevant Guardrails
 
-- `pending (proposed: guardrails/GR_006_inclusive_quota_boundary_checks.md)`
+- `guardrails/GR_006_inclusive_quota_boundary_checks.md`
 
 ## Related Patterns
 

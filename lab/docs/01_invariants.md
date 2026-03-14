@@ -77,6 +77,16 @@ For protocol surfaces reachable by untrusted remote peers:
 - growth must not be unbounded under protocol-compliant traffic
 - overflow behavior (evict/reject/expire) must be deterministic and auditable
 
+---
+
+## INV_007 -- Per-principal active allocations must not exceed quota
+
+For any principal identity (peer/tenant/actor):
+
+- active allocations must satisfy `active <= configured_max`
+- admission checks must enforce inclusive boundaries at exact limits
+- boundary behavior must be covered by deterministic regression tests (`0`, `1`, `N`)
+
 --- 
 
 # Invariant discipline

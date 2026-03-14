@@ -54,6 +54,14 @@ For protocol surfaces reachable by untrusted remote peers:
 - protocol-compliant traffic must not induce unbounded growth
 - overflow behavior (evict/reject/expire) must be deterministic and auditable
 
+## INV_007 — Per-principal active allocations respect configured quotas
+
+For any principal identity (peer/tenant/actor):
+
+- active allocations must always satisfy `active <= configured_max`
+- admission logic must enforce inclusive boundary semantics at exact limits
+- boundary conditions (`0`, `1`, `N`) require explicit regression coverage
+
 ---
 
 ## Pipeline mapping
