@@ -46,6 +46,14 @@ After recovery, the system must not:
 
 For every known failure mode there must be a clear, machine-detectable signal.
 
+## INV_006 — Remote request-driven state growth is bounded
+
+For protocol surfaces reachable by untrusted remote peers:
+
+- server-maintained request-derived state must have explicit upper bounds
+- protocol-compliant traffic must not induce unbounded growth
+- overflow behavior (evict/reject/expire) must be deterministic and auditable
+
 ---
 
 ## Pipeline mapping

@@ -46,6 +46,21 @@ Policies are small, explicit mechanisms that keep invariants intact when failure
 - **Failure modes covered**
   - Retry-storm class failures (tracked in this lab as FM_XXX as added)
 
+## Bounded pagination state registry
+- **Inputs**
+  - Incoming discover/list requests that allocate pagination cookies
+  - Configured cookie state budget (`MAX_COOKIES_TRACKED`)
+  - Existing ordered cookie state table
+- **Outputs**
+  - Bounded cookie registry size (`cookie_count <= MAX_COOKIES_TRACKED`)
+  - Deterministic overflow behavior (FIFO eviction in FM_002)
+  - Auditable pressure signal (`evicted_count`)
+- **Invariant(s) enforced**
+  - [INV_006](01_invariants.md#inv_006----remote-request-driven-state-growth-must-be-bounded)
+  - [INV_005](01_invariants.md#inv_005----failure-must-be-detectable)
+- **Failure modes covered**
+  - [FM_002 unbounded pagination state](../failure_modes/FM_002_unbounded_pagination_state/spec.md)
+
 ## Audit & observability
 - **Inputs**
   - State transition events from queue/worker/store

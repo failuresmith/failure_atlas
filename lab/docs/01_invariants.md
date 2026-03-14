@@ -67,6 +67,16 @@ For every known failure:
 - detection must not rely on manual inspection
 - ambiguity must be treated as failure 
 
+---
+
+## INV_006 -- Remote request-driven state growth must be bounded
+
+For protocol surfaces reachable by untrusted remote peers:
+
+- server-maintained per-request state must have explicit upper bounds
+- growth must not be unbounded under protocol-compliant traffic
+- overflow behavior (evict/reject/expire) must be deterministic and auditable
+
 --- 
 
 # Invariant discipline

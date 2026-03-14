@@ -3,11 +3,11 @@ ID: FP_005
 Title: Unbounded Pagination Cookie State Amplification
 Class: Resource Exhaustion
 Severity: availability
-Status: draft
+Status: validated
 reproduced_in:
-  - pending (external report)
+  - FM_002
 mitigated_by:
-  - pending
+  - GR_005
 ---
 
 # Failure Pattern
@@ -60,18 +60,18 @@ DISCOVER-style traffic.
 ## Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update
 
 - **Real failure:** unbounded DISCOVER cookie tracking allows remote memory amplification
-- **Minimal reproduction:** planned lab FM with deterministic repeated pagination requests
+- **Minimal reproduction:** deterministic FM_002 repeated discover-request harness
 - **Mechanism:** unbounded server-side pagination state table
-- **Guardrail:** bounded cookie registry and/or stateless authenticated cookies
-- **Atlas update:** this FP entry (draft pending local lab proof)
+- **Guardrail:** bounded cookie registry with deterministic overflow behavior
+- **Atlas update:** FP_005 linked to validated FM_002 + GR_005 artifacts
 
 ## Lab Reproduction
 
-- `pending (proposed: lab/failure_modes/FM_002_unbounded_pagination_state/)`
+- `lab/failure_modes/FM_002_unbounded_pagination_state/`
 
 ## Relevant Guardrails
 
-- `pending (proposed: guardrails/GR_005_bounded_pagination_state.md)`
+- `guardrails/GR_005_bounded_pagination_state.md`
 
 ## Related Patterns
 

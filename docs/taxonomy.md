@@ -25,7 +25,7 @@ This taxonomy is the catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`.
 | Policy Enforcement | FP_002 Extension Authority Persistence | FM_001 | GR_002 |
 | Policy Enforcement | FP_003 Read-only Enforcement Gap | FM_001 | GR_003 |
 | Model Behavior | FP_004 Anthropomorphic Misinterpretation | n/a | GR_004 |
-| Resource Exhaustion | FP_005 Unbounded Pagination Cookie State Amplification | pending (external report) | pending |
+| Resource Exhaustion | FP_005 Unbounded Pagination Cookie State Amplification | FM_002 | GR_005 |
 | Policy Enforcement | FP_006 Quota Boundary Off-by-One Admission | pending (external report) | pending |
 
 > Notes:
