@@ -1,15 +1,19 @@
 UV ?= uv
 PYTEST ?= $(UV) run pytest
 
-.PHONY: sync test test-fm1 test-fm1-fix
+.PHONY: sync test test-001 test-fm1 test-fm1-fix
 
 # Setup deterministic env from uv.lock (includes dev deps like pytest)
 sync:
 	$(UV) sync --dev
 
-# Run cross-cutting happy-path plus all FM tests
+# Run happy-path coverage plus all FM tests
 test:
-	$(PYTEST)
+	$(PYTEST) tests/test_lab_happy_path.py failure_modes
+
+# Experiment 01 only (happy path + FM_001 bundle)
+test-001:
+	$(PYTEST) tests/test_lab_happy_path.py failure_modes/FM_001_duplicate_retry/tests
 
 # Reproduce FM_001 (expected failure in baseline scenario)
 test-fm1:

@@ -100,6 +100,17 @@ For participant registries keyed by credentials (e.g., TLS keys):
 
 ---
 
+## INV_009 -- Tool execution authority must be enforced outside model reasoning
+
+For LLM-driven tool runtimes:
+
+- tool execution must pass deterministic runtime authorization checks
+- sensitive tools require explicit policy authorization independent of prompt text
+- model planning output must not directly grant privileged execution rights
+- denied tool calls must produce auditable policy events
+
+--- 
+
 # Invariant discipline
 
 - Every failure mode must reference the invariant(s) it violates 

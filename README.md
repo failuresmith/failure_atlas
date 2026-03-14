@@ -36,10 +36,11 @@ GR mitigates.
 
 # example
 
-- Real failure class: duplicate execution after retry timeout
-- Failure Mode: [`FM_001_duplicate_retry`](./lab/failure_modes/FM_001_duplicate_retry/)
-- Failure Pattern: [`FP_001_duplicate_execution_after_retry_timeout`](./atlas/FP_001_duplicate_execution_after_retry_timeout.md)
-- Guardrail: [`GR_001_idempotent_commit_boundary`](./guardrails/GR_001_idempotent_commit_boundary.md)
+- Real failure class: Tool Authority Escalation via Prompt Injection
+- Failure Mode: [`FM_008_tool_authority_escalation`](./lab/failure_modes/FM_008_tool_authority_escalation/README.md)
+- Failure Pattern: [`FP_008_tool_authority_escalation_via_prompt_injection`](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md)
+- Guardrail: [`GR_008_explicit_tool_authorization_boundary`](./guardrails/GR_008_explicit_tool_authorization_boundary.md)
+- Postmortem: [`PM_008_tool_authority_escalation`](./postmortems/PM_008_tool_authority_escalation.md)
 
 # Components
 

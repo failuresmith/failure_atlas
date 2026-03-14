@@ -71,6 +71,15 @@ For any participant registry using credentials (e.g., TLS keys):
 - startup must fail fast on duplicate participant IDs or duplicate credentials
 - registries must not silently overwrite existing mappings
 
+## INV_009 — Tool execution authority is enforced outside model reasoning
+
+For any LLM-driven tool runtime:
+
+- tool execution must pass deterministic runtime authorization checks
+- sensitive tools must require explicit policy authorization independent of prompt text
+- model planning output must not directly imply privileged execution rights
+- denied tool calls must produce auditable policy events
+
 ---
 
 ## Pipeline mapping

@@ -19,6 +19,7 @@ Index (current)
 - PM_005 → FP_005 Unbounded Pagination Cookie State Amplification
 - PM_006 → FP_006 Quota Boundary Off-by-One Admission
 - PM_007 → FP_007 Identity Map Bijection Break
+- PM_008 → FP_008 Tool Authority Escalation via Prompt Injection
 
 Why IDs can differ from creation order
 - PM numbers track failure classes, not calendar order, to keep FP/PM alignment legible over time.
