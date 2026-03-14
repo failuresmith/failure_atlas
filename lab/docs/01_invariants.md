@@ -87,7 +87,18 @@ For any principal identity (peer/tenant/actor):
 - admission checks must enforce inclusive boundaries at exact limits
 - boundary behavior must be covered by deterministic regression tests (`0`, `1`, `N`)
 
---- 
+---
+
+## INV_008 -- Participant identity mapping must be bijective
+
+For participant registries keyed by credentials (e.g., TLS keys):
+
+- each credential maps to exactly one participant ID
+- participant IDs must be globally unique
+- startup must fail fast on duplicate IDs or duplicate credentials
+- registries must not silently overwrite prior mappings
+
+---
 
 # Invariant discipline
 

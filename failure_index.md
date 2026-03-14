@@ -11,5 +11,6 @@ Catalog of Failure Patterns in the FM → FP → GR pipeline (PM numbers align t
 | FP_005 | [PM_005](./lab/postmortems/PM_005_unbounded_pagination_state.md) | [Unbounded Pagination Cookie State Amplification](./atlas/FP_005_unbounded_pagination_cookie_state_amplification.md) | Resource Exhaustion | FM_002 | GR_005 |
 | FP_006 | [PM_006](./lab/postmortems/PM_006_quota_boundary_off_by_one.md) | [Quota Boundary Off-by-One Admission](./atlas/FP_006_quota_boundary_off_by_one_admission.md) | Policy Enforcement | FM_003 | GR_006 |
 | FP_007 | [PM_007](./lab/postmortems/PM_007_identity_map_bijection_break.md) | [Identity Map Bijection Break](./atlas/FP_007_identity_map_bijection_break.md) | Identity Integrity | FM_004 | GR_007 |
+| FP_008 | [PM_008](./lab/postmortems/PM_008_tool_authority_escalation_via_prompt_injection.md) | [Tool Authority Escalation via Prompt Injection](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md) | Tool / Agent Interfaces | FM_008 | GR_008 |
 
 Canonical taxonomy lives in [`docs/taxonomy.md`](./docs/taxonomy.md).
