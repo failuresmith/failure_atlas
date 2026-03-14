@@ -34,7 +34,6 @@ FM proves.
 FP explains.
 GR mitigates.
 
-
 # example
 
 - Real failure class: duplicate execution after retry timeout
@@ -42,29 +41,39 @@ GR mitigates.
 - Failure Pattern: [`FP_001_duplicate_execution_after_retry_timeout`](./atlas/FP_001_duplicate_execution_after_retry_timeout.md)
 - Guardrail: [`GR_001_idempotent_commit_boundary`](./guardrails/GR_001_idempotent_commit_boundary.md)
 
-
 # Components
 
-## [Atlas](./atlas/)  
+## [Atlas](./atlas/)
+
 Explain the failure class.
 
 Artifacts:
+
 - `FP_XXX_name.md` entries with YAML metadata
 - hidden assumption / trigger / mechanism / detection
 - links to FM reproductions and GR guardrails
 
-## [Lab](./lab/)  
+## [Lab](./lab/)
+
 Prove the failure exists.
 
 Artifacts:
+
 - `FM_XXX_*` bundles (`spec.md`, `scenario.py`, tests)
 - deterministic reproduction (happy/repro/prevent, recover when needed)
 - explicit invariant references (`INV_XXX`)
 
-## [Guardrails](./guardrails/)  
+## [Guardrails](./guardrails/)
+
 Prove the failure can be prevented or contained.
 
 Artifacts:
+
 - `GR_XXX_name.md` entries with YAML metadata
 - invariant-enforcing design pattern
 - tradeoffs and links back to FP/FM
+
+## Contribute
+
+- `make test` runs the full lab test suite in `lab/` (includes happy-path coverage)
+- `make test-001` runs only Experiment 01 tests (happy path + FM_001 bundle)
