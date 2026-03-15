@@ -44,7 +44,7 @@ Policies are small, explicit mechanisms that keep invariants intact when failure
 - **Invariant(s) enforced**
   - [INV_005](01_invariants.md#inv_005----failure-must-be-detectable)
 - **Failure modes covered**
-  - Retry-storm class failures (tracked in this lab as FM_XXX as added)
+  - Retry-storm domain failures (tracked in this lab as FM_XXX as added)
 
 ## Bounded pagination state registry
 - **Inputs**

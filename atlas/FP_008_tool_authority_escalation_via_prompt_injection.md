@@ -1,7 +1,8 @@
 ---
 ID: FP_008
 Title: Tool Authority Escalation via Prompt Injection
-Class: Tool / Agent Interfaces
+Domain: Agent Runtime
+Mechanism: Tool Authorization Conflation
 Severity: integrity
 Status: draft
 reproduced_in:
@@ -100,7 +101,7 @@ execution
 
 The guardrail keeps planning in the model, but moves authority to deterministic runtime policy.
 
-## Relevance / where this class appears
+## Relevance / where this failure appears
 
 - LLM assistant runtimes with direct tool execution
 - autonomous task agents with mixed-sensitivity tools

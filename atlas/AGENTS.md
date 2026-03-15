@@ -23,14 +23,14 @@ Each entry should include:
 2. Hidden assumption
 3. Invariant at risk
 4. Failure mechanism
-5. Relevance / where this class appears
+5. Relevance / where this failure appears
 6. Explicit links:
    - lab reproduction (`lab/failure_modes/FM_XXX_*`)
    - guardrail entry (`guardrails/GR_XXX_*` or equivalent)
 
 ## Authoring rules
 
-- Focus on class-level mechanism, not incident storytelling detail.
+- Focus on domain-level mechanism, not incident storytelling detail.
 - Keep language abstract and reusable across domains.
-- One failure class per entry.
+- One failure domain per entry.
 - If mechanism is unclear, refine the lab first before expanding atlas text.

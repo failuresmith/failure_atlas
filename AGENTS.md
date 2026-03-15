@@ -34,7 +34,7 @@ Never merge these responsibilities.
 ## Design principles
 
 1. **Minimal abstractions first**
-   - Keep the smallest model that exposes the failure class.
+   - Keep the smallest model that exposes the failure domain.
 
 2. **No product simulation**
    - The lab is not a production-like clone.
@@ -51,7 +51,7 @@ Never merge these responsibilities.
 
 ---
 
-## Standard deliverables for each new failure class
+## Standard deliverables for each new failure domain
 
 1. Atlas entry (failure knowledge)
 2. Lab failure mode bundle (repro + prevention test proof)
@@ -63,6 +63,6 @@ All three must cross-link explicitly.
 
 ## Success criterion
 
-This repository should become a map of **classes of failure** and reusable containment designs,
+This repository should become a map of **domains of failure** and reusable containment designs,
 not a catalog of isolated bugs.
 

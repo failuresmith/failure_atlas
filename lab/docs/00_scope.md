@@ -6,7 +6,7 @@ Current executable system:
 
 - **Experiment 01: Job Queue**
 
-The queue is the first proving ground, not the end-state identity of the repo. We intentionally **model a narrow class of systems** to study failure, state corruption, and recovery with precision. Breadth is rejected in favor of depth.
+The queue is the first proving ground, not the end-state identity of the repo. We intentionally **model a narrow domain of systems** to study failure, state corruption, and recovery with precision. Breadth is rejected in favor of depth.
 
 ---
 

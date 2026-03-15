@@ -1,6 +1,6 @@
 # Postmortems
 
-Purpose: anchor each failure class to a concrete real-world incident (“Real failure” in the chain).
+Purpose: anchor each failure domain to a concrete real-world incident (“Real failure” in the chain).
 
 Scope and location
 - Lives under `lab/postmortems/` because PMs feed the lab reproductions directly.

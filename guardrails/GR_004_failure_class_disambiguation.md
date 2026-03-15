@@ -1,6 +1,6 @@
 ---
 ID: GR_004
-Title: Failure-Class Disambiguation Before Mitigation
+Title: Failure-Domain Disambiguation Before Mitigation
 mitigates:
   - FP_004
 enforces:
@@ -15,11 +15,11 @@ Status: proposed
 
 ## Invariant Enforced
 
-- INV_005 — failure class assignment must be evidence-backed and testable.
+- INV_005 — failure domain assignment must be evidence-backed and testable.
 
 ## Guardrail Design
 
-Require class-disambiguation checks before assigning intent-bearing labels (e.g.,
+Require domain-disambiguation checks before assigning intent-bearing labels (e.g.,
 "deception") to model failures.
 
 ## Implementation Sketch

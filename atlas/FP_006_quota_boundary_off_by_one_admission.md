@@ -1,7 +1,8 @@
 ---
 ID: FP_006
 Title: Quota Boundary Off-by-One Admission
-Class: Policy Enforcement
+Domain: Policy Enforcement
+Mechanism: Quota Boundary Math
 Severity: availability
 Status: validated
 reproduced_in:
@@ -50,7 +51,7 @@ passes, and one additional allocation is admitted.
 
 For any principal: `active_allocations(principal_id) > configured_max(principal_id)`.
 
-## Relevance / Where This Class Appears
+## Relevance / Where This Domain Appears
 
 - connection reservation limits
 - API rate bucket admissions

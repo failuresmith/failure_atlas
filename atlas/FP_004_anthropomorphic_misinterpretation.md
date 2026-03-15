@@ -1,7 +1,8 @@
 ---
 ID: FP_004
 Title: Anthropomorphic Misinterpretation
-Class: Model Behavior
+Domain: Human Interpretation
+Mechanism: Anthropomorphic Projection
 Severity: reliability
 Status: draft
 reproduced_in:

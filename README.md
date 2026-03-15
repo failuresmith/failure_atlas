@@ -9,7 +9,7 @@ A field guide to how complex systems fail (safely).
 
 > This is an engineering experiment
 
-#### Studying classes of failure, not individual bugs
+#### Studying domains of failure, not individual bugs
 
 - Because bugs disappear
 - Failure patterns repeat forever
@@ -36,7 +36,7 @@ GR mitigates.
 
 # example
 
-- Real failure class: Tool Authority Escalation via Prompt Injection
+- Real failure domain: Tool Authority Escalation via Prompt Injection
 - Failure Mode: [`FM_008_tool_authority_escalation`](./lab/failure_modes/FM_008_tool_authority_escalation/README.md)
 - Failure Pattern: [`FP_008_tool_authority_escalation_via_prompt_injection`](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md)
 - Guardrail: [`GR_008_explicit_tool_authorization_boundary`](./guardrails/GR_008_explicit_tool_authorization_boundary.md)
@@ -46,7 +46,7 @@ GR mitigates.
 
 ## [Atlas](./atlas/)
 
-Explain the failure class.
+Explain the failure domain.
 
 Artifacts:
 

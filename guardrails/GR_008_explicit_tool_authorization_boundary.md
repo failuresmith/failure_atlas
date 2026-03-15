@@ -9,7 +9,7 @@ Type: prevention
 Status: draft
 ---
 
-# Failure class mitigated
+# Failure domain mitigated
 
 - FP_008 Tool Authority Escalation via Prompt Injection
 

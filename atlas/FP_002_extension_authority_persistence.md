@@ -1,7 +1,8 @@
 ---
 ID: FP_002
 Title: Extension Authority Persistence
-Class: Policy Enforcement
+Domain: Policy Enforcement
+Mechanism: Extension Authority Lifecycle
 Severity: integrity
 Status: draft
 reproduced_in:

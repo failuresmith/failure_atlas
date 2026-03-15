@@ -1,7 +1,8 @@
 ---
 ID: FP_007
 Title: Identity Map Bijection Break
-Class: Identity Integrity
+Domain: Identity Integrity
+Mechanism: Identity Registry Collisions
 Severity: integrity
 Status: draft
 reproduced_in:

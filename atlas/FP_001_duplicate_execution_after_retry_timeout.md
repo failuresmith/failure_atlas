@@ -1,7 +1,8 @@
 ---
 ID: FP_001
 Title: Duplicate Execution After Retry Timeout
-Class: State Consistency
+Domain: State Consistency
+Mechanism: Retry Idempotence Window
 Severity: integrity
 Status: validated
 reproduced_in:

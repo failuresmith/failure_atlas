@@ -1,7 +1,8 @@
 ---
 ID: FP_005
 Title: Unbounded Pagination Cookie State Amplification
-Class: Resource Exhaustion
+Domain: Resource Exhaustion
+Mechanism: Server-side Cursor Growth
 Severity: availability
 Status: validated
 reproduced_in:
@@ -51,7 +52,7 @@ table grows monotonically with attacker-controlled request volume.
 `cookie_state_entries` grows without bound under repeated unauthenticated
 DISCOVER-style traffic.
 
-## Relevance / Where This Class Appears
+## Relevance / Where This Failure Appears
 
 - rendezvous/discovery services
 - search/index APIs with server-side cursor registries

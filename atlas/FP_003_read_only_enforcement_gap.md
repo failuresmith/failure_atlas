@@ -1,7 +1,8 @@
 ---
 ID: FP_003
 Title: Read-only Enforcement Gap
-Class: Policy Enforcement
+Domain: Policy Enforcement
+Mechanism: Read/Write Boundary Drift
 Severity: integrity
 Status: draft
 reproduced_in:
