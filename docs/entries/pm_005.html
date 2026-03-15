@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PM_005 · PM_005 — Unbounded pagination cookie state growth</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>PM_005</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>PM_005 · PM_005 — Unbounded pagination cookie state growth</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>PM</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>Resource Exhaustion</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Server-side Cursor Growth</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>—</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/postmortems/PM_005_unbounded_pagination_state.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fm_002.html">FM_002</a> ·         <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/gr_005.html">GR_005</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="pm_005-unbounded-pagination-cookie-state-growth">PM_005 — Unbounded pagination cookie state growth</h1>
+<h2 id="summary">Summary</h2>
+<p>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_002/FP_005.</p>
+<h2 id="impact">Impact</h2>
+<ul>
+<li>Violated <code>INV_006</code> (remote-driven state must be bounded)</li>
+<li>Memory footprint grew linearly with request volume</li>
+<li>Denial-of-service risk from unauthenticated traffic</li>
+</ul>
+<h2 id="timeline-deterministic-reproduction">Timeline (deterministic reproduction)</h2>
+<ol>
+<li>Peer issues repeated DISCOVER requests.</li>
+<li>Each request inserts a new pagination cookie in the registry.</li>
+<li>No budget/eviction is enforced; <code>cookie_count</code> increases monotonically.</li>
+<li>Memory pressure rises; registry exceeds intended safety budget.</li>
+</ol>
+<h2 id="root-cause">Root cause</h2>
+<ul>
+<li>Pagination state table had no hard cap or eviction path.</li>
+<li>Assumed "typical" client behavior would keep cookie count small.</li>
+</ul>
+<h2 id="detection">Detection</h2>
+<ul>
+<li><code>cookie_count &gt; MAX_COOKIES_TRACKED</code></li>
+<li>Monotonic <code>cookie_count</code> growth under repeated unauthenticated requests</li>
+</ul>
+<h2 id="corrective-actions">Corrective actions</h2>
+<ol>
+<li>Added bounded registry guardrail (FIFO eviction) in FM_002 harness.</li>
+<li>Added prevention test enforcing <code>cookie_count &lt;= MAX_COOKIES_TRACKED</code>.</li>
+</ol>
+<h2 id="verification">Verification</h2>
+<ul>
+<li><code>test_repro_fm002.py</code> proves unbounded growth in the broken baseline.</li>
+<li><code>test_prevent_fm002.py</code> proves bounded behavior with guardrail.</li>
+</ul>
+<h2 id="occurrences">Occurrences</h2>
+<ul>
+<li>Rendezvous DISCOVER cookie handling allowed unbounded server-side cookie accumulation under repeated requests.</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li>Failure mode: <code>lab/failure_modes/FM_002_unbounded_pagination_state/</code></li>
+<li>Failure pattern: <code>atlas/FP_005_unbounded_pagination_cookie_state_amplification.md</code></li>
+<li>Guardrail: <code>guardrails/GR_005_bounded_pagination_state.md</code></li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

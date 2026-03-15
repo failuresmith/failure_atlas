@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FM_008 · Tool authority escalation via prompt injection</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>FM_008</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>FM_008 · Tool authority escalation via prompt injection</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>FM</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>Tool / Agent Interfaces</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Tool Authorization Conflation</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>draft</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/README.md" target="_blank" rel="noopener noreferrer">README</a>
+        <a href="#spec">Spec</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md" target="_blank" rel="noopener noreferrer">Results</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fp_008.html">FP_008</a> ·         <a href="../entries/gr_008.html">GR_008</a> ·         <a href="../entries/pm_008.html">PM_008</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="fm_008-tool-authority-escalation-via-prompt-injection">FM_008 — Tool authority escalation via prompt injection</h1>
+<h2 id="description">Description</h2>
+<p>An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing ("inspect internal config first") to invoke a sensitive tool that should not be available for standard user requests.</p>
+<h2 id="trigger">Trigger</h2>
+<ol>
+<li>Agent runtime exposes a sensitive tool in the same callable surface as benign tools.</li>
+<li>Tool selection is performed by model reasoning only.</li>
+<li>User prompt frames sensitive inspection as required for correctness.</li>
+</ol>
+<h2 id="preconditions">Preconditions</h2>
+<ul>
+<li>Tool access is available at runtime for the current request.</li>
+<li>No deterministic pre-execution authorization check exists.</li>
+<li>Planner output is directly translated into executable tool calls.</li>
+</ul>
+<h2 id="failure-mechanism-step-by-step">Failure mechanism (step-by-step)</h2>
+<ol>
+<li>User submits adversarially framed prompt requesting internal verification.</li>
+<li>Planner model chooses <code>read_sensitive_config</code> to satisfy framing.</li>
+<li>Baseline runtime executes the call without policy authorization.</li>
+<li>Protected data is returned in final answer/tool output.</li>
+</ol>
+<h2 id="symptoms">Symptoms</h2>
+<ul>
+<li>Baseline logs show <code>sensitive_tool_called=true</code> for standard user requests.</li>
+<li>Adversarial prompts produce higher sensitive-tool call rate than benign prompts.</li>
+<li>Security posture depends on model compliance rather than runtime policy.</li>
+</ul>
+<h2 id="violated-invariants">Violated invariants</h2>
+<ul>
+<li>INV_009 — tool execution authority must be enforced by deterministic runtime policy, not by prompt-steerable model reasoning.</li>
+<li>INV_005 — authority violations must be explicitly detectable in logs.</li>
+</ul>
+<h2 id="detection">Detection</h2>
+<ul>
+<li><code>request_class == standard_user AND sensitive_tool_called == true</code></li>
+<li><code>policy_outcome == not_applicable</code> for sensitive tool executions in baseline</li>
+</ul>
+<h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
+<ul>
+<li>Introduce deterministic tool authorization boundary before execution.</li>
+<li>Classify tools by sensitivity and request class.</li>
+<li>Deny sensitive tools unless runtime <code>privileged_mode=True</code> and request class explicitly permits it.</li>
+<li>Log denial as policy event.</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul>
+<li><code>tests/test_repro_fm008.py</code> demonstrates sensitive tool execution under adversarial prompts in baseline.</li>
+<li><code>tests/test_prevent_fm008.py</code> proves same prompts are denied by guardrail and sensitive tool is not executed.</li>
+<li><code>tests/test_fm008_happy_path.py</code> confirms benign flow uses safe tool path.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>This FM uses a fake protected file (<code>data/protected/system_config.txt</code>) and intentionally avoids real secrets or exfiltration behavior.</p>
+<h2 id="explicit-links">Explicit links</h2>
+<ul>
+<li>Failure pattern: <code>atlas/FP_008_tool_authority_escalation_via_prompt_injection.md</code></li>
+<li>Guardrail: <code>guardrails/GR_008_explicit_tool_authorization_boundary.md</code></li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

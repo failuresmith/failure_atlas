@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FM_001 · Duplicate execution caused by retry after timeout</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>FM_001</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>FM_001 · Duplicate execution caused by retry after timeout</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>FM</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>State Consistency</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Retry Idempotence Window</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>validated</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="#spec">Spec</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fp_001.html">FP_001</a> ·         <a href="../entries/gr_001.html">GR_001</a> ·         <a href="../entries/pm_001.html">PM_001</a> ·         <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/gr_002.html">GR_002</a> ·         <a href="../entries/pm_002.html">PM_002</a> ·         <a href="../entries/fp_003.html">FP_003</a> ·         <a href="../entries/gr_003.html">GR_003</a> ·         <a href="../entries/pm_003.html">PM_003</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="fm_001-duplicate-execution-caused-by-retry-after-timeout">FM_001 — Duplicate execution caused by retry after timeout</h1>
+<h2 id="context">Context</h2>
+<p>Systems with at-least-once delivery can legitimately retry work after a timeout.
+If commit semantics are not idempotent at the logical job boundary, retries can
+amplify side effects.</p>
+<h2 id="hidden-assumption">Hidden assumption</h2>
+<p>"If a worker times out, its attempt did not commit any irreversible effect."</p>
+<h2 id="violated-invariant">Violated invariant</h2>
+<ul>
+<li><code>INV_001</code> — Job execution is logically idempotent.</li>
+</ul>
+<h2 id="description">Description</h2>
+<p>When the first worker exceeds lease timeout, the queue re-leases the same job to
+another worker. Without an idempotent commit boundary, both workers can apply
+the logical effect.</p>
+<h2 id="trigger">Trigger</h2>
+<ol>
+<li>Worker A leases job <code>J</code>.</li>
+<li>Worker A starts work and lease expires.</li>
+<li>Worker B leases the same job <code>J</code> as retry.</li>
+<li>Both workers finish and apply effects.</li>
+</ol>
+<h2 id="failure-mechanism">Failure mechanism</h2>
+<ol>
+<li>Worker A leases <code>job J</code> and starts processing.</li>
+<li>Lease expires before A reaches terminal completion.</li>
+<li>Queue re-leases <code>job J</code> to Worker B (at-least-once behavior).</li>
+<li>Both attempts cross effect application without a durable single-commit boundary.</li>
+<li>Logical effect is applied twice.</li>
+</ol>
+<h2 id="symptoms">Symptoms</h2>
+<ul>
+<li>duplicate side effects for the same <code>job_id</code></li>
+<li>two successful executions for one logical job</li>
+</ul>
+<h2 id="violated-invariants">Violated invariants</h2>
+<ul>
+<li><code>INV_001</code> (logical idempotency)</li>
+<li><code>INV_002</code> (partial execution crash consistency risk)</li>
+<li><code>INV_004</code> (recovery must restore correctness after crash)</li>
+</ul>
+<h2 id="detection">Detection</h2>
+<ul>
+<li>count of side effects by <code>job_id</code> &gt; 1</li>
+<li>more than one execution reaching terminal success semantics for the same job</li>
+</ul>
+<h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
+<ul>
+<li>enforce a durable <code>COMMITTED</code> boundary per <code>job_id</code></li>
+<li>only first commit is accepted</li>
+<li>duplicate attempts must no-op safely</li>
+</ul>
+<h2 id="expected-impact">Expected impact</h2>
+<ul>
+<li>correctness loss due to duplicated irreversible effects</li>
+<li>downstream reconciliation burden</li>
+<li>hidden financial/state integrity risk in retry-heavy paths</li>
+</ul>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul>
+<li><code>test_repro_fm001.py</code> proves duplicate effects in baseline mode</li>
+<li><code>test_prevent_fm001.py</code> proves exactly one effect after commit boundary</li>
+<li><code>test_recover_fm001.py</code> proves crash-after-commit reconciles to correct terminal state without duplicate effects</li>
+<li><code>test_fm001_happy_path.py</code> proves invariant-preserving baseline flow</li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

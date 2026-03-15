@@ -1,0 +1,590 @@
+{
+  "generated_at": "2026-03-15T13:13:41.799786+00:00",
+  "entries": [
+    {
+      "id": "FP_001",
+      "type": "FP",
+      "title": "Duplicate Execution After Retry Timeout",
+      "failure_domain": "State Consistency",
+      "mechanism": "Retry Idempotence Window",
+      "summary": "At-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists.",
+      "source_path": "atlas/FP_001_duplicate_execution_after_retry_timeout.md",
+      "entry_path": "entries/fp_001.html",
+      "related_ids": [
+        "FM_001",
+        "GR_001",
+        "PM_001",
+        "FP_002",
+        "FP_003"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "FM_001",
+      "type": "FM",
+      "title": "Duplicate execution caused by retry after timeout",
+      "failure_domain": "State Consistency",
+      "mechanism": "Retry Idempotence Window",
+      "summary": "Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can amplify side effects.",
+      "source_path": "lab/failure_modes/FM_001_duplicate_retry/spec.md",
+      "entry_path": "entries/fm_001.html",
+      "related_ids": [
+        "FP_001",
+        "GR_001",
+        "PM_001",
+        "FP_002",
+        "GR_002",
+        "PM_002",
+        "FP_003",
+        "GR_003",
+        "PM_003"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_001_duplicate_retry",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_001_duplicate_retry/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry/spec.md"
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "id": "GR_001",
+      "type": "GR",
+      "title": "Idempotent Commit Boundary",
+      "failure_domain": "State Consistency",
+      "mechanism": "Retry Idempotence Window",
+      "summary": "Introduce a durable single-commit boundary (COMMITTED) per logical job. Only the first execution may cross this boundary; subsequent retries no-op.",
+      "source_path": "guardrails/GR_001_idempotent_commit_boundary.md",
+      "entry_path": "entries/gr_001.html",
+      "related_ids": [
+        "FP_001",
+        "FM_001",
+        "PM_001"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "PM_001",
+      "type": "PM",
+      "title": "PM_001 — Duplicate execution after retry timeout",
+      "failure_domain": "State Consistency",
+      "mechanism": "Retry Idempotence Window",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_001_duplicate_execution.md",
+      "entry_path": "entries/pm_001.html",
+      "related_ids": [
+        "FP_001",
+        "FM_001",
+        "GR_001",
+        "FM_002"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_002",
+      "type": "FP",
+      "title": "Extension Authority Persistence",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Extension Authority Lifecycle",
+      "summary": "Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.",
+      "source_path": "atlas/FP_002_extension_authority_persistence.md",
+      "entry_path": "entries/fp_002.html",
+      "related_ids": [
+        "FP_001",
+        "FM_001",
+        "GR_002",
+        "PM_002",
+        "FP_003"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "FM_002",
+      "type": "FM",
+      "title": "Unbounded pagination cookie state under repeated discover requests",
+      "failure_domain": "Resource Exhaustion",
+      "mechanism": "Server-side Cursor Growth",
+      "summary": "Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.",
+      "source_path": "lab/failure_modes/FM_002_unbounded_pagination_state/spec.md",
+      "entry_path": "entries/fm_002.html",
+      "related_ids": [
+        "FP_005",
+        "GR_005",
+        "PM_005"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_002_unbounded_pagination_state",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_002_unbounded_pagination_state/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/spec.md"
+        }
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "GR_002",
+      "type": "GR",
+      "title": "Lifecycle-Bound Authority Registry",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Extension Authority Lifecycle",
+      "summary": "Authority entries are derived views of active components, not independent mutable state.",
+      "source_path": "guardrails/GR_002_lifecycle_bound_authority.md",
+      "entry_path": "entries/gr_002.html",
+      "related_ids": [
+        "FM_001",
+        "FP_002",
+        "PM_002",
+        "FP_003"
+      ],
+      "bundle_links": [],
+      "status": "proposed"
+    },
+    {
+      "id": "PM_002",
+      "type": "PM",
+      "title": "PM_002 — Extension authority persists after uninstall",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Extension Authority Lifecycle",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_002_extension_authority_persistence.md",
+      "entry_path": "entries/pm_002.html",
+      "related_ids": [
+        "FM_001",
+        "FP_002",
+        "GR_002"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_003",
+      "type": "FP",
+      "title": "Read-only Enforcement Gap",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Read/Write Boundary Drift",
+      "summary": "Declared read-only policy is not enforced at capability exposure boundaries.",
+      "source_path": "atlas/FP_003_read_only_enforcement_gap.md",
+      "entry_path": "entries/fp_003.html",
+      "related_ids": [
+        "FP_001",
+        "FM_001",
+        "FP_002",
+        "GR_003",
+        "PM_003"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "FM_003",
+      "type": "FM",
+      "title": "Per-peer reservation quota off-by-one at boundary",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Quota Boundary Math",
+      "summary": "Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.",
+      "source_path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md",
+      "entry_path": "entries/fm_003.html",
+      "related_ids": [
+        "FP_006",
+        "GR_006",
+        "PM_006"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md"
+        }
+      ],
+      "status": "validated"
+    },
+    {
+      "id": "GR_003",
+      "type": "GR",
+      "title": "Capability Surface Reduction at Startup",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Read/Write Boundary Drift",
+      "summary": "Project policy mode into the runtime capability surface during registration, not at invocation hints.",
+      "source_path": "guardrails/GR_003_capability_surface_reduction.md",
+      "entry_path": "entries/gr_003.html",
+      "related_ids": [
+        "FM_001",
+        "FP_002",
+        "FP_003",
+        "PM_003"
+      ],
+      "bundle_links": [],
+      "status": "proposed"
+    },
+    {
+      "id": "PM_003",
+      "type": "PM",
+      "title": "PM_003 — Read-only intent not enforced in MCP server",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Read/Write Boundary Drift",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_003_read_only_enforcement_gap.md",
+      "entry_path": "entries/pm_003.html",
+      "related_ids": [
+        "FM_001",
+        "FP_003",
+        "GR_003"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_004",
+      "type": "FP",
+      "title": "Anthropomorphic Misinterpretation",
+      "failure_domain": "Human Interpretation",
+      "mechanism": "Anthropomorphic Projection",
+      "summary": "Statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation.",
+      "source_path": "atlas/FP_004_anthropomorphic_misinterpretation.md",
+      "entry_path": "entries/fp_004.html",
+      "related_ids": [
+        "FM_001",
+        "FP_003",
+        "GR_004"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "FM_004",
+      "type": "FM",
+      "title": "Participant identity map bijection not enforced",
+      "failure_domain": "Identity Integrity",
+      "mechanism": "Identity Registry Collisions",
+      "summary": "No summary available yet.",
+      "source_path": "lab/failure_modes/FM_004_identity_map_bijection/spec.md",
+      "entry_path": "entries/fm_004.html",
+      "related_ids": [
+        "FP_007",
+        "GR_007",
+        "PM_007"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_004_identity_map_bijection",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_004_identity_map_bijection/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection/spec.md"
+        }
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "GR_004",
+      "type": "GR",
+      "title": "Failure-Domain Disambiguation Before Mitigation",
+      "failure_domain": "Model Behavior",
+      "mechanism": "Anthropomorphic Projection",
+      "summary": "Require domain-disambiguation checks before assigning intent-bearing labels (e.g., \"deception\") to model failures.",
+      "source_path": "guardrails/GR_004_failure_class_disambiguation.md",
+      "entry_path": "entries/gr_004.html",
+      "related_ids": [
+        "FP_004"
+      ],
+      "bundle_links": [],
+      "status": "proposed"
+    },
+    {
+      "id": "FP_005",
+      "type": "FP",
+      "title": "Unbounded Pagination Cookie State Amplification",
+      "failure_domain": "Resource Exhaustion",
+      "mechanism": "Server-side Cursor Growth",
+      "summary": "Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.",
+      "source_path": "atlas/FP_005_unbounded_pagination_cookie_state_amplification.md",
+      "entry_path": "entries/fp_005.html",
+      "related_ids": [
+        "FM_002",
+        "GR_005",
+        "PM_005",
+        "FP_006"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "GR_005",
+      "type": "GR",
+      "title": "Bounded Pagination State Registry",
+      "failure_domain": "Resource Exhaustion",
+      "mechanism": "Server-side Cursor Growth",
+      "summary": "Project pagination into a deterministic bounded state budget. Every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire).",
+      "source_path": "guardrails/GR_005_bounded_pagination_state.md",
+      "entry_path": "entries/gr_005.html",
+      "related_ids": [
+        "FM_002",
+        "FP_005",
+        "PM_005"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "PM_005",
+      "type": "PM",
+      "title": "PM_005 — Unbounded pagination cookie state growth",
+      "failure_domain": "Resource Exhaustion",
+      "mechanism": "Server-side Cursor Growth",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_005_unbounded_pagination_state.md",
+      "entry_path": "entries/pm_005.html",
+      "related_ids": [
+        "FM_002",
+        "FP_005",
+        "GR_005"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_006",
+      "type": "FP",
+      "title": "Quota Boundary Off-by-One Admission",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Quota Boundary Math",
+      "summary": "Resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota.",
+      "source_path": "atlas/FP_006_quota_boundary_off_by_one_admission.md",
+      "entry_path": "entries/fp_006.html",
+      "related_ids": [
+        "FM_003",
+        "FP_005",
+        "GR_006",
+        "PM_006"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "GR_006",
+      "type": "GR",
+      "title": "Inclusive Quota Boundary Admission Checks",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Quota Boundary Math",
+      "summary": "Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.",
+      "source_path": "guardrails/GR_006_inclusive_quota_boundary_checks.md",
+      "entry_path": "entries/gr_006.html",
+      "related_ids": [
+        "FM_003",
+        "FP_006",
+        "PM_006"
+      ],
+      "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "PM_006",
+      "type": "PM",
+      "title": "PM_006 — Quota boundary off-by-one admission",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Quota Boundary Math",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_006_quota_boundary_off_by_one.md",
+      "entry_path": "entries/pm_006.html",
+      "related_ids": [
+        "FM_003",
+        "FP_006",
+        "GR_006"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_007",
+      "type": "FP",
+      "title": "Identity Map Bijection Break",
+      "failure_domain": "Identity Integrity",
+      "mechanism": "Identity Registry Collisions",
+      "summary": "Participant identity registry allows duplicate credentials or IDs to overwrite existing entries, breaking the required bijection between participant IDs and TLS keys.",
+      "source_path": "atlas/FP_007_identity_map_bijection_break.md",
+      "entry_path": "entries/fp_007.html",
+      "related_ids": [
+        "FP_001",
+        "FM_004",
+        "GR_007",
+        "PM_007"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "GR_007",
+      "type": "GR",
+      "title": "Identity Bijection Startup Validation",
+      "failure_domain": "Identity Integrity",
+      "mechanism": "Identity Registry Collisions",
+      "summary": "Validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant IDs and credentials (TLS keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; ",
+      "source_path": "guardrails/GR_007_identity_bijection_startup_validation.md",
+      "entry_path": "entries/gr_007.html",
+      "related_ids": [
+        "FM_004",
+        "FP_007",
+        "PM_007"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "PM_007",
+      "type": "PM",
+      "title": "PM_007 — Participant identity ↔ TLS key bijection not enforced",
+      "failure_domain": "Identity Integrity",
+      "mechanism": "Identity Registry Collisions",
+      "summary": "No summary available yet.",
+      "source_path": "lab/postmortems/PM_007_identity_map_bijection_break.md",
+      "entry_path": "entries/pm_007.html",
+      "related_ids": [
+        "FM_004",
+        "FP_007",
+        "GR_007"
+      ],
+      "bundle_links": [],
+      "status": ""
+    },
+    {
+      "id": "FP_008",
+      "type": "FP",
+      "title": "Tool Authority Escalation via Prompt Injection",
+      "failure_domain": "Agent Runtime",
+      "mechanism": "Tool Authorization Conflation",
+      "summary": "If tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority.",
+      "source_path": "atlas/FP_008_tool_authority_escalation_via_prompt_injection.md",
+      "entry_path": "entries/fp_008.html",
+      "related_ids": [
+        "FP_002",
+        "FP_003",
+        "FM_008",
+        "GR_008",
+        "PM_008"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "FM_008",
+      "type": "FM",
+      "title": "Tool authority escalation via prompt injection",
+      "failure_domain": "Tool / Agent Interfaces",
+      "mechanism": "Tool Authorization Conflation",
+      "summary": "An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing (\"inspect internal config first\") to invoke a sensitive tool that should not be available for standard user requests.",
+      "source_path": "lab/failure_modes/FM_008_tool_authority_escalation/spec.md",
+      "entry_path": "entries/fm_008.html",
+      "related_ids": [
+        "FP_008",
+        "GR_008",
+        "PM_008"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_008_tool_authority_escalation",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_008_tool_authority_escalation/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_008_tool_authority_escalation/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/spec.md"
+        },
+        {
+          "label": "Results",
+          "path": "lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md"
+        }
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "GR_008",
+      "type": "GR",
+      "title": "Explicit Tool Authorization Boundary",
+      "failure_domain": "Tool / Agent Interfaces",
+      "mechanism": "Tool Authorization Conflation",
+      "summary": "Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.",
+      "source_path": "guardrails/GR_008_explicit_tool_authorization_boundary.md",
+      "entry_path": "entries/gr_008.html",
+      "related_ids": [
+        "FP_008",
+        "FM_008",
+        "PM_008"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
+      "id": "PM_008",
+      "type": "PM",
+      "title": "PM_008 — Tool Authority Escalation via Prompt Injection",
+      "failure_domain": "Tool / Agent Interfaces",
+      "mechanism": "Tool Authorization Conflation",
+      "summary": "In FM008, a tool-using LLM agent was configured with:",
+      "source_path": "postmortems/PM_008_tool_authority_escalation.md",
+      "entry_path": "entries/pm_008.html",
+      "related_ids": [
+        "FP_008",
+        "FM_008",
+        "GR_008"
+      ],
+      "bundle_links": [],
+      "status": ""
+    }
+  ],
+  "domains": [
+    "Agent Runtime",
+    "Human Interpretation",
+    "Identity Integrity",
+    "Model Behavior",
+    "Policy Enforcement",
+    "Resource Exhaustion",
+    "State Consistency",
+    "Tool / Agent Interfaces"
+  ],
+  "mechanisms": [
+    "Anthropomorphic Projection",
+    "Extension Authority Lifecycle",
+    "Identity Registry Collisions",
+    "Quota Boundary Math",
+    "Read/Write Boundary Drift",
+    "Retry Idempotence Window",
+    "Server-side Cursor Growth",
+    "Tool Authorization Conflation"
+  ],
+  "types": [
+    "FP",
+    "FM",
+    "GR",
+    "PM"
+  ]
+}

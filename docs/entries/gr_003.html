@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GR_003 · Capability Surface Reduction at Startup</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>GR_003</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>GR_003 · Capability Surface Reduction at Startup</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>GR</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>Policy Enforcement</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Read/Write Boundary Drift</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>proposed</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_003_capability_surface_reduction.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fm_001.html">FM_001</a> ·         <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/fp_003.html">FP_003</a> ·         <a href="../entries/pm_003.html">PM_003</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="failure-pattern-mitigated">Failure Pattern Mitigated</h1>
+<ul>
+<li>FP_003 Read-only Enforcement Gap</li>
+</ul>
+<h2 id="invariant-enforced">Invariant Enforced</h2>
+<ul>
+<li>INV_003 — policy state must map to explicit executable state transitions.</li>
+</ul>
+<h2 id="guardrail-design">Guardrail Design</h2>
+<p>Project policy mode into the runtime capability surface during registration, not
+at invocation hints.</p>
+<h2 id="implementation-sketch">Implementation Sketch</h2>
+<ul>
+<li>if <code>read_only=true</code>, do not register write tools</li>
+<li>return "not found" for write operations in read-only mode</li>
+<li>include startup assertion for forbidden capability exposure</li>
+</ul>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<ul>
+<li>reduced operational flexibility without restart/reconfiguration</li>
+<li>explicit mode switching semantics required</li>
+</ul>
+<h2 id="related-failure-patterns">Related Failure Patterns</h2>
+<ul>
+<li>FP_003</li>
+<li>FP_002</li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Failure Atlas</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-search-index-url="search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+
+<section class="controls" aria-label="Atlas filters">
+  <div class="filter-row">
+    <label for="filter-domain">Failure domain</label>
+    <select id="filter-domain">
+      <option value="">All domains</option>
+      <option value="Agent Runtime">Agent Runtime</option>
+      <option value="Human Interpretation">Human Interpretation</option>
+      <option value="Identity Integrity">Identity Integrity</option>
+      <option value="Model Behavior">Model Behavior</option>
+      <option value="Policy Enforcement">Policy Enforcement</option>
+      <option value="Resource Exhaustion">Resource Exhaustion</option>
+      <option value="State Consistency">State Consistency</option>
+      <option value="Tool / Agent Interfaces">Tool / Agent Interfaces</option>
+    </select>
+  </div>
+
+  <div class="filter-row">
+    <label for="filter-mechanism">Mechanism</label>
+    <select id="filter-mechanism">
+      <option value="">All mechanisms</option>
+      <option value="Anthropomorphic Projection">Anthropomorphic Projection</option>
+      <option value="Extension Authority Lifecycle">Extension Authority Lifecycle</option>
+      <option value="Identity Registry Collisions">Identity Registry Collisions</option>
+      <option value="Quota Boundary Math">Quota Boundary Math</option>
+      <option value="Read/Write Boundary Drift">Read/Write Boundary Drift</option>
+      <option value="Retry Idempotence Window">Retry Idempotence Window</option>
+      <option value="Server-side Cursor Growth">Server-side Cursor Growth</option>
+      <option value="Tool Authorization Conflation">Tool Authorization Conflation</option>
+    </select>
+  </div>
+
+  <div class="filter-row">
+    <label for="filter-type">Artifact type</label>
+    <select id="filter-type">
+      <option value="">All types</option>
+      <option value="FP">FP</option>
+      <option value="FM">FM</option>
+      <option value="GR">GR</option>
+      <option value="PM">PM</option>
+    </select>
+  </div>
+
+  <div class="filter-row filter-row-wide">
+    <label for="filter-keyword">Quick keyword filter</label>
+    <input id="filter-keyword" type="text" placeholder="Filter visible rows by keyword" autocomplete="off" />
+  </div>
+
+  <button id="clear-filters" class="quiet-button" type="button">Clear filters</button>
+  <p id="visible-count" class="result-count"></p>
+</section>
+
+<section class="table-section" aria-label="Atlas entries">
+  <table class="atlas-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Domain</th>
+        <th>Mechanism</th>
+        <th>Type</th>
+        <th>Related</th>
+        <th>Summary</th>
+      </tr>
+    </thead>
+    <tbody id="atlas-table-body">
+      <tr
+        class="atlas-row"
+        data-id="fp_001"
+        data-title="duplicate execution after retry timeout"
+        data-type="fp"
+        data-domain="state consistency"
+        data-mechanism="retry idempotence window"
+        data-summary="at-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists."
+      >
+        <td><a href="entries/fp_001.html">FP_001</a></td>
+        <td>Duplicate Execution After Retry Timeout</td>
+        <td>State Consistency</td>
+        <td>Retry Idempotence Window</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
+        <td>At-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_001"
+        data-title="duplicate execution caused by retry after timeout"
+        data-type="fm"
+        data-domain="state consistency"
+        data-mechanism="retry idempotence window"
+        data-summary="systems with at-least-once delivery can legitimately retry work after a timeout. if commit semantics are not idempotent at the logical job boundary, retries can amplify side effects."
+      >
+        <td><a href="entries/fm_001.html">FM_001</a></td>
+        <td>Duplicate execution caused by retry after timeout</td>
+        <td>State Consistency</td>
+        <td>Retry Idempotence Window</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+        <td>Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can amplify side effects.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_001"
+        data-title="idempotent commit boundary"
+        data-type="gr"
+        data-domain="state consistency"
+        data-mechanism="retry idempotence window"
+        data-summary="introduce a durable single-commit boundary (committed) per logical job. only the first execution may cross this boundary; subsequent retries no-op."
+      >
+        <td><a href="entries/gr_001.html">GR_001</a></td>
+        <td>Idempotent Commit Boundary</td>
+        <td>State Consistency</td>
+        <td>Retry Idempotence Window</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/pm_001.html">PM_001</a>        </td>
+        <td>Introduce a durable single-commit boundary (COMMITTED) per logical job. Only the first execution may cross this boundary; subsequent retries no-op.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_001"
+        data-title="pm_001 — duplicate execution after retry timeout"
+        data-type="pm"
+        data-domain="state consistency"
+        data-mechanism="retry idempotence window"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_001.html">PM_001</a></td>
+        <td>PM_001 — Duplicate execution after retry timeout</td>
+        <td>State Consistency</td>
+        <td>Retry Idempotence Window</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/fm_002.html">FM_002</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_002"
+        data-title="extension authority persistence"
+        data-type="fp"
+        data-domain="policy enforcement"
+        data-mechanism="extension authority lifecycle"
+        data-summary="authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope."
+      >
+        <td><a href="entries/fp_002.html">FP_002</a></td>
+        <td>Extension Authority Persistence</td>
+        <td>Policy Enforcement</td>
+        <td>Extension Authority Lifecycle</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
+        <td>Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_002"
+        data-title="unbounded pagination cookie state under repeated discover requests"
+        data-type="fm"
+        data-domain="resource exhaustion"
+        data-mechanism="server-side cursor growth"
+        data-summary="server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound."
+      >
+        <td><a href="entries/fm_002.html">FM_002</a></td>
+        <td>Unbounded pagination cookie state under repeated discover requests</td>
+        <td>Resource Exhaustion</td>
+        <td>Server-side Cursor Growth</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
+        <td>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_002"
+        data-title="lifecycle-bound authority registry"
+        data-type="gr"
+        data-domain="policy enforcement"
+        data-mechanism="extension authority lifecycle"
+        data-summary="authority entries are derived views of active components, not independent mutable state."
+      >
+        <td><a href="entries/gr_002.html">GR_002</a></td>
+        <td>Lifecycle-Bound Authority Registry</td>
+        <td>Policy Enforcement</td>
+        <td>Extension Authority Lifecycle</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
+        <td>Authority entries are derived views of active components, not independent mutable state.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_002"
+        data-title="pm_002 — extension authority persists after uninstall"
+        data-type="pm"
+        data-domain="policy enforcement"
+        data-mechanism="extension authority lifecycle"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_002.html">PM_002</a></td>
+        <td>PM_002 — Extension authority persists after uninstall</td>
+        <td>Policy Enforcement</td>
+        <td>Extension Authority Lifecycle</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_003"
+        data-title="read-only enforcement gap"
+        data-type="fp"
+        data-domain="policy enforcement"
+        data-mechanism="read/write boundary drift"
+        data-summary="declared read-only policy is not enforced at capability exposure boundaries."
+      >
+        <td><a href="entries/fp_003.html">FP_003</a></td>
+        <td>Read-only Enforcement Gap</td>
+        <td>Policy Enforcement</td>
+        <td>Read/Write Boundary Drift</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+        <td>Declared read-only policy is not enforced at capability exposure boundaries.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_003"
+        data-title="per-peer reservation quota off-by-one at boundary"
+        data-type="fm"
+        data-domain="policy enforcement"
+        data-mechanism="quota boundary math"
+        data-summary="per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy."
+      >
+        <td><a href="entries/fm_003.html">FM_003</a></td>
+        <td>Per-peer reservation quota off-by-one at boundary</td>
+        <td>Policy Enforcement</td>
+        <td>Quota Boundary Math</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+        <td>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_003"
+        data-title="capability surface reduction at startup"
+        data-type="gr"
+        data-domain="policy enforcement"
+        data-mechanism="read/write boundary drift"
+        data-summary="project policy mode into the runtime capability surface during registration, not at invocation hints."
+      >
+        <td><a href="entries/gr_003.html">GR_003</a></td>
+        <td>Capability Surface Reduction at Startup</td>
+        <td>Policy Enforcement</td>
+        <td>Read/Write Boundary Drift</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+        <td>Project policy mode into the runtime capability surface during registration, not at invocation hints.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_003"
+        data-title="pm_003 — read-only intent not enforced in mcp server"
+        data-type="pm"
+        data-domain="policy enforcement"
+        data-mechanism="read/write boundary drift"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_003.html">PM_003</a></td>
+        <td>PM_003 — Read-only intent not enforced in MCP server</td>
+        <td>Policy Enforcement</td>
+        <td>Read/Write Boundary Drift</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_004"
+        data-title="anthropomorphic misinterpretation"
+        data-type="fp"
+        data-domain="human interpretation"
+        data-mechanism="anthropomorphic projection"
+        data-summary="statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation."
+      >
+        <td><a href="entries/fp_004.html">FP_004</a></td>
+        <td>Anthropomorphic Misinterpretation</td>
+        <td>Human Interpretation</td>
+        <td>Anthropomorphic Projection</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_004.html">GR_004</a>        </td>
+        <td>Statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_004"
+        data-title="participant identity map bijection not enforced"
+        data-type="fm"
+        data-domain="identity integrity"
+        data-mechanism="identity registry collisions"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/fm_004.html">FM_004</a></td>
+        <td>Participant identity map bijection not enforced</td>
+        <td>Identity Integrity</td>
+        <td>Identity Registry Collisions</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_004"
+        data-title="failure-domain disambiguation before mitigation"
+        data-type="gr"
+        data-domain="model behavior"
+        data-mechanism="anthropomorphic projection"
+        data-summary="require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures."
+      >
+        <td><a href="entries/gr_004.html">GR_004</a></td>
+        <td>Failure-Domain Disambiguation Before Mitigation</td>
+        <td>Model Behavior</td>
+        <td>Anthropomorphic Projection</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fp_004.html">FP_004</a>        </td>
+        <td>Require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_005"
+        data-title="unbounded pagination cookie state amplification"
+        data-type="fp"
+        data-domain="resource exhaustion"
+        data-mechanism="server-side cursor growth"
+        data-summary="unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion."
+      >
+        <td><a href="entries/fp_005.html">FP_005</a></td>
+        <td>Unbounded Pagination Cookie State Amplification</td>
+        <td>Resource Exhaustion</td>
+        <td>Server-side Cursor Growth</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a> ·                 <a href="entries/fp_006.html">FP_006</a>        </td>
+        <td>Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_005"
+        data-title="bounded pagination state registry"
+        data-type="gr"
+        data-domain="resource exhaustion"
+        data-mechanism="server-side cursor growth"
+        data-summary="project pagination into a deterministic bounded state budget. every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire)."
+      >
+        <td><a href="entries/gr_005.html">GR_005</a></td>
+        <td>Bounded Pagination State Registry</td>
+        <td>Resource Exhaustion</td>
+        <td>Server-side Cursor Growth</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
+        <td>Project pagination into a deterministic bounded state budget. Every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire).</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_005"
+        data-title="pm_005 — unbounded pagination cookie state growth"
+        data-type="pm"
+        data-domain="resource exhaustion"
+        data-mechanism="server-side cursor growth"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_005.html">PM_005</a></td>
+        <td>PM_005 — Unbounded pagination cookie state growth</td>
+        <td>Resource Exhaustion</td>
+        <td>Server-side Cursor Growth</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_006"
+        data-title="quota boundary off-by-one admission"
+        data-type="fp"
+        data-domain="policy enforcement"
+        data-mechanism="quota boundary math"
+        data-summary="resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota."
+      >
+        <td><a href="entries/fp_006.html">FP_006</a></td>
+        <td>Quota Boundary Off-by-One Admission</td>
+        <td>Policy Enforcement</td>
+        <td>Quota Boundary Math</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+        <td>Resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_006"
+        data-title="inclusive quota boundary admission checks"
+        data-type="gr"
+        data-domain="policy enforcement"
+        data-mechanism="quota boundary math"
+        data-summary="quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted."
+      >
+        <td><a href="entries/gr_006.html">GR_006</a></td>
+        <td>Inclusive Quota Boundary Admission Checks</td>
+        <td>Policy Enforcement</td>
+        <td>Quota Boundary Math</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+        <td>Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_006"
+        data-title="pm_006 — quota boundary off-by-one admission"
+        data-type="pm"
+        data-domain="policy enforcement"
+        data-mechanism="quota boundary math"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_006.html">PM_006</a></td>
+        <td>PM_006 — Quota boundary off-by-one admission</td>
+        <td>Policy Enforcement</td>
+        <td>Quota Boundary Math</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_007"
+        data-title="identity map bijection break"
+        data-type="fp"
+        data-domain="identity integrity"
+        data-mechanism="identity registry collisions"
+        data-summary="participant identity registry allows duplicate credentials or ids to overwrite existing entries, breaking the required bijection between participant ids and tls keys."
+      >
+        <td><a href="entries/fp_007.html">FP_007</a></td>
+        <td>Identity Map Bijection Break</td>
+        <td>Identity Integrity</td>
+        <td>Identity Registry Collisions</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+        <td>Participant identity registry allows duplicate credentials or IDs to overwrite existing entries, breaking the required bijection between participant IDs and TLS keys.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_007"
+        data-title="identity bijection startup validation"
+        data-type="gr"
+        data-domain="identity integrity"
+        data-mechanism="identity registry collisions"
+        data-summary="validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant ids and credentials (tls keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; "
+      >
+        <td><a href="entries/gr_007.html">GR_007</a></td>
+        <td>Identity Bijection Startup Validation</td>
+        <td>Identity Integrity</td>
+        <td>Identity Registry Collisions</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+        <td>Validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant IDs and credentials (TLS keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; </td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_007"
+        data-title="pm_007 — participant identity ↔ tls key bijection not enforced"
+        data-type="pm"
+        data-domain="identity integrity"
+        data-mechanism="identity registry collisions"
+        data-summary="no summary available yet."
+      >
+        <td><a href="entries/pm_007.html">PM_007</a></td>
+        <td>PM_007 — Participant identity ↔ TLS key bijection not enforced</td>
+        <td>Identity Integrity</td>
+        <td>Identity Registry Collisions</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a>        </td>
+        <td>No summary available yet.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fp_008"
+        data-title="tool authority escalation via prompt injection"
+        data-type="fp"
+        data-domain="agent runtime"
+        data-mechanism="tool authorization conflation"
+        data-summary="if tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority."
+      >
+        <td><a href="entries/fp_008.html">FP_008</a></td>
+        <td>Tool Authority Escalation via Prompt Injection</td>
+        <td>Agent Runtime</td>
+        <td>Tool Authorization Conflation</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
+        <td>If tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_008"
+        data-title="tool authority escalation via prompt injection"
+        data-type="fm"
+        data-domain="tool / agent interfaces"
+        data-mechanism="tool authorization conflation"
+        data-summary="an llm agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests."
+      >
+        <td><a href="entries/fm_008.html">FM_008</a></td>
+        <td>Tool authority escalation via prompt injection</td>
+        <td>Tool / Agent Interfaces</td>
+        <td>Tool Authorization Conflation</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/gr_008.html">GR_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
+        <td>An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_008"
+        data-title="explicit tool authorization boundary"
+        data-type="gr"
+        data-domain="tool / agent interfaces"
+        data-mechanism="tool authorization conflation"
+        data-summary="real failure → minimal reproduction → mechanism → guardrail → atlas update."
+      >
+        <td><a href="entries/gr_008.html">GR_008</a></td>
+        <td>Explicit Tool Authorization Boundary</td>
+        <td>Tool / Agent Interfaces</td>
+        <td>Tool Authorization Conflation</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
+        <td>Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="pm_008"
+        data-title="pm_008 — tool authority escalation via prompt injection"
+        data-type="pm"
+        data-domain="tool / agent interfaces"
+        data-mechanism="tool authorization conflation"
+        data-summary="in fm008, a tool-using llm agent was configured with:"
+      >
+        <td><a href="entries/pm_008.html">PM_008</a></td>
+        <td>PM_008 — Tool Authority Escalation via Prompt Injection</td>
+        <td>Tool / Agent Interfaces</td>
+        <td>Tool Authorization Conflation</td>
+        <td>PM</td>
+        <td class="related-cell">
+                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a>        </td>
+        <td>In FM008, a tool-using LLM agent was configured with:</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="assets/app.js"></script>
+</body>
+</html>

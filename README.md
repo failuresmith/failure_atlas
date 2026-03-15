@@ -78,3 +78,20 @@ Artifacts:
 
 - `make test` runs the full lab test suite in `lab/` (includes happy-path coverage)
 - `make test-001` runs only Experiment 01 tests (happy path + FM_001 bundle)
+
+### Adding or editing atlas items (FP/FM/GR/PM)
+
+- **Do not create/edit `docs/*.html` manually.**
+- Markdown is the source of truth:
+  - `atlas/FP_XXX_*.md`
+  - `guardrails/GR_XXX_*.md`
+  - `lab/postmortems/PM_XXX_*.md`
+  - `lab/failure_modes/FM_XXX_*/spec.md` (or `README.md` fallback)
+- Regenerate the static docs with:
+  - `make site` (or `python site/build.py`)
+
+### Site update policy
+
+- The GitHub Pages deployment workflow builds the site from Markdown on every push to `main`.
+- That means contributors should focus on source artifacts (FP/FM/GR/PM markdown + tests), not hand-maintained HTML.
+- Local rebuild (`make site`) is still useful for preview/review before pushing.

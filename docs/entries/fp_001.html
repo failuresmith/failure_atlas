@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FP_001 · Duplicate Execution After Retry Timeout</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>FP_001</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>FP_001 · Duplicate Execution After Retry Timeout</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>FP</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>State Consistency</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Retry Idempotence Window</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>validated</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_001_duplicate_execution_after_retry_timeout.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fm_001.html">FM_001</a> ·         <a href="../entries/gr_001.html">GR_001</a> ·         <a href="../entries/pm_001.html">PM_001</a> ·         <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/fp_003.html">FP_003</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="failure-pattern">Failure Pattern</h1>
+<p>At-least-once retry after lease timeout can apply one logical effect more than
+once unless a durable idempotency boundary exists.</p>
+<h2 id="hidden-assumption">Hidden Assumption</h2>
+<p>"Timeout implies no committed side effect was produced."</p>
+<h2 id="trigger-condition">Trigger Condition</h2>
+<p>Worker A lease expires before completion; Worker B retries the same job while A
+may still complete.</p>
+<h2 id="failure-mechanism">Failure Mechanism</h2>
+<p>Two executions race toward effect application.
+Without first-commit gating, both cross the effect boundary.</p>
+<h2 id="observable-symptoms">Observable Symptoms</h2>
+<ul>
+<li><code>count_effects(job_id) &gt; 1</code></li>
+<li>multiple successful executions for one logical job</li>
+<li>correctness drift requiring reconciliation</li>
+</ul>
+<h2 id="detection">Detection</h2>
+<p><code>count_effects(job_id) &gt; 1</code></p>
+<h2 id="lab-reproduction">Lab Reproduction</h2>
+<ul>
+<li><code>lab/failure_modes/FM_001_duplicate_retry/</code></li>
+</ul>
+<h2 id="relevant-guardrails">Relevant Guardrails</h2>
+<ul>
+<li><code>guardrails/GR_001_idempotent_commit_boundary.md</code></li>
+</ul>
+<h2 id="postmortem">Postmortem</h2>
+<ul>
+<li><code>lab/postmortems/PM_001_duplicate_execution.md</code></li>
+</ul>
+<h2 id="related-patterns">Related Patterns</h2>
+<ul>
+<li>FP_002 Extension Authority Persistence</li>
+<li>FP_003 Read-only Enforcement Gap</li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

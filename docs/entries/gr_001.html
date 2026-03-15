@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GR_001 · Idempotent Commit Boundary</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>GR_001</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>GR_001 · Idempotent Commit Boundary</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>GR</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>State Consistency</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Retry Idempotence Window</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>validated</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_001_idempotent_commit_boundary.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fp_001.html">FP_001</a> ·         <a href="../entries/fm_001.html">FM_001</a> ·         <a href="../entries/pm_001.html">PM_001</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="failure-pattern-mitigated">Failure Pattern Mitigated</h1>
+<ul>
+<li>FP_001 Duplicate Execution After Retry Timeout</li>
+</ul>
+<h2 id="invariant-enforced">Invariant Enforced</h2>
+<ul>
+<li>INV_001 — logical effects are applied at most once per job.</li>
+</ul>
+<h2 id="guardrail-design">Guardrail Design</h2>
+<p>Introduce a durable single-commit boundary (<code>COMMITTED</code>) per logical job.
+Only the first execution may cross this boundary; subsequent retries no-op.</p>
+<h2 id="implementation-sketch">Implementation Sketch</h2>
+<ul>
+<li>maintain durable <code>committed_exec_id</code> keyed by <code>job_id</code></li>
+<li>on commit attempt:</li>
+<li>if none exists: persist <code>committed_exec_id</code>, apply effect</li>
+<li>if exists: reject/no-op duplicate effect</li>
+<li>finalize <code>COMMITTED -&gt; DONE</code> separately to support crash-safe recovery</li>
+</ul>
+<h2 id="tradeoffs">Tradeoffs</h2>
+<ul>
+<li>adds commit-state bookkeeping</li>
+<li>requires recovery reconciliation path for <code>COMMITTED</code> but not <code>DONE</code></li>
+</ul>
+<h2 id="related-failure-patterns">Related Failure Patterns</h2>
+<ul>
+<li>FP_001</li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

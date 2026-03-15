@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FP_003 · Read-only Enforcement Gap</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>FP_003</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>FP_003 · Read-only Enforcement Gap</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>FP</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>Policy Enforcement</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Read/Write Boundary Drift</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>draft</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_003_read_only_enforcement_gap.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fp_001.html">FP_001</a> ·         <a href="../entries/fm_001.html">FM_001</a> ·         <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/gr_003.html">GR_003</a> ·         <a href="../entries/pm_003.html">PM_003</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="failure-pattern">Failure Pattern</h1>
+<p>Declared read-only policy is not enforced at capability exposure boundaries.</p>
+<h2 id="hidden-assumption">Hidden Assumption</h2>
+<p>Advisory metadata/hints are assumed to provide hard runtime enforcement.</p>
+<h2 id="trigger-condition">Trigger Condition</h2>
+<p>System is launched in "read-only" intent while write-capable operations remain
+registered and invocable.</p>
+<h2 id="failure-mechanism">Failure Mechanism</h2>
+<p>Policy is represented only in metadata and never projected into executable tool
+registration/dispatch constraints.</p>
+<h2 id="observable-symptoms">Observable Symptoms</h2>
+<ul>
+<li>write tools appear in read-only mode tool registry</li>
+<li>write operations succeed when policy says they should be impossible</li>
+<li>policy compliance depends on caller behavior</li>
+</ul>
+<h2 id="detection">Detection</h2>
+<p><code>read_only == true AND write_tools ∈ exposed_toolset</code></p>
+<h2 id="lab-reproduction">Lab Reproduction</h2>
+<ul>
+<li><code>lab/failure_modes/FM_001_duplicate_retry/</code></li>
+</ul>
+<h2 id="relevant-guardrails">Relevant Guardrails</h2>
+<ul>
+<li><code>guardrails/GR_003_capability_surface_reduction.md</code></li>
+</ul>
+<h2 id="postmortem">Postmortem</h2>
+<ul>
+<li><code>lab/postmortems/PM_003_read_only_enforcement_gap.md</code></li>
+</ul>
+<h2 id="related-patterns">Related Patterns</h2>
+<ul>
+<li>FP_001 Duplicate Execution After Retry Timeout</li>
+<li>FP_002 Extension Authority Persistence</li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@ System type:
 Severity:
 Reference:
 
-Use an existing mechanisms from [`docs/taxonomy.md`](../docs/taxonomy.md). Only mint a new mechanism when at least two FPs need the same discriminator.
+Use an existing mechanisms from [`taxonomy.md`](../taxonomy.md). Only mint a new mechanism when at least two FPs need the same discriminator.
 
 ## Question
 

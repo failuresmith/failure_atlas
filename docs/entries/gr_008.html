@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GR_008 · Explicit Tool Authorization Boundary</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body data-search-index-url="../search-index.json">
+  <div id="page-content" class="page-shell">
+    <header class="site-header">
+      <div class="header-main">
+        <a href="../index.html" class="brand-link">Failure Atlas</a>
+        <button id="open-search" class="search-button btn btn-sm" type="button" aria-haspopup="dialog" aria-controls="search-modal">
+          🔍
+        </button>
+      </div>
+      <p class="subtitle">
+        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+      </p>
+      <div class="legend" aria-label="Artifact Legend">
+        <span><strong>FP</strong> = Failure Pattern</span>
+        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
+        <span><strong>GR</strong> = Guardrail</span>
+        <span><strong>PM</strong> = Postmortem</span>
+      </div>
+    </header>
+
+    <main>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Atlas Index</a>
+  <span>›</span>
+  <span>GR_008</span>
+</nav>
+
+<article class="entry-article">
+  <header class="entry-header">
+    <h1>GR_008 · Explicit Tool Authorization Boundary</h1>
+    <dl class="meta-grid">
+      <div>
+        <dt>Type</dt>
+        <dd>GR</dd>
+      </div>
+      <div>
+        <dt>Failure domain</dt>
+        <dd>Tool / Agent Interfaces</dd>
+      </div>
+      <div>
+        <dt>Mechanism</dt>
+        <dd>Tool Authorization Conflation</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>draft</dd>
+      </div>
+    </dl>
+
+    <div class="entry-links">
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_008_explicit_tool_authorization_boundary.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+    </div>
+  </header>
+
+  <section class="related-strip">
+    <h2>Related artifacts</h2>
+    <p>
+        <a href="../entries/fp_008.html">FP_008</a> ·         <a href="../entries/fm_008.html">FM_008</a> ·         <a href="../entries/pm_008.html">PM_008</a>    </p>
+  </section>
+
+  <section id="spec" class="entry-body markdown-body">
+    <h1 id="failure-domain-mitigated">Failure domain mitigated</h1>
+<ul>
+<li>FP_008 Tool Authority Escalation via Prompt Injection</li>
+</ul>
+<p>Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</p>
+<h2 id="invariant-enforced">Invariant enforced</h2>
+<ul>
+<li>INV_009 — tool execution authority is enforced outside model reasoning.</li>
+</ul>
+<h2 id="design-principle">Design principle</h2>
+<p>Separate <strong>tool availability</strong> from <strong>tool authorization</strong>. Model planning may propose a tool, but execution must pass deterministic policy checks in runtime.</p>
+<h2 id="boundary-architecture">Boundary architecture</h2>
+<p>Baseline vs guarded flow</p>
+<pre><code class="language-mermaid">flowchart TB
+  subgraph Baseline
+    u[User prompt]
+    r[LLM reasoning]
+    t[tool call]
+    x[execution]
+    u --&gt; r --&gt; t --&gt; x
+  end
+</code></pre>
+<pre><code class="language-mermaid">flowchart TB
+  subgraph Guarded
+    u2[User prompt]
+    r2[LLM reasoning]
+    tr[tool request]
+    pa[policy authorization]
+    x2[execution]
+    d[[deny]]
+    u2 --&gt; r2 --&gt; tr --&gt; pa
+    pa --&gt;|allow| x2
+    pa --&gt;|deny| d
+  end
+</code></pre>
+<p>Security boundary: the authorization step is outside model reasoning and is evaluated by deterministic runtime policy.</p>
+<h2 id="implementation-sketch-minimal">Implementation sketch (minimal)</h2>
+<ol>
+<li>Classify tools by sensitivity (<code>public</code>, <code>sensitive</code>).</li>
+<li>Assign allowed tools per request class (<code>standard_user</code>, <code>privileged_diagnostic</code>).</li>
+<li>At dispatch, call policy authorizer before executing tool.</li>
+<li>If denied, do not execute tool and return policy refusal event.</li>
+<li>Log all denials with request class, tool, and reason.</li>
+</ol>
+<h2 id="empirical-evidence-fm_008">Empirical evidence (FM_008)</h2>
+<table>
+<thead>
+<tr>
+<th>model</th>
+<th style="text-align: right;">adversarial prompts</th>
+<th style="text-align: right;">baseline sensitive calls</th>
+<th style="text-align: right;">guarded sensitive calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qwen2.5-coder:7b</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>qwen2.5-coder:1.5b</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Result interpretation:</p>
+<ul>
+<li>Baseline permits prompt-steered sensitive tool execution.</li>
+<li>Guarded runtime policy reduces sensitive calls on adversarial prompts to zero in this experiment.</li>
+</ul>
+<h2 id="tradeoffs-limits-failure-of-guardrail-itself">Tradeoffs / limits / failure of guardrail itself</h2>
+<ul>
+<li>Misclassified tools can under- or over-block.</li>
+<li>Coarse request classes may not capture nuanced legitimate workflows.</li>
+<li>Prompt-driven escalation can still occur through indirect capabilities hidden in “safe” tools.</li>
+</ul>
+<h2 id="explicit-links">Explicit links</h2>
+<ul>
+<li>atlas entry: <code>atlas/FP_008_tool_authority_escalation_via_prompt_injection.md</code></li>
+<li>lab proof: <code>lab/failure_modes/FM_008_tool_authority_escalation/</code></li>
+</ul>
+  </section>
+</article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Static documentation for reliability pattern navigation.</span>
+    </footer>
+  </div>
+
+  <div id="search-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+    <div id="search-overlay" class="modal-overlay"></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="search-modal-title">Search Atlas</h2>
+        <button id="close-search" class="close-button btn btn-sm" type="button" aria-label="Close search">×</button>
+      </div>
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Search by ID, title, domain, mechanism, summary, or mechanism text"
+      />
+      <p class="modal-hint">Type to filter immediately. Press Esc to close.</p>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script defer src="../assets/app.js"></script>
+</body>
+</html>
