@@ -2,11 +2,11 @@
 
 This repository is a **reliability methodology lab**.
 
-Current executable system:
+Current runtime systems (modelling a narrow domain to reproduce the failure):
 
 - **Experiment 01: Job Queue**
-
-The queue is the first proving ground, not the end-state identity of the repo. We intentionally **model a narrow domain of systems** to study failure, state corruption, and recovery with precision. Breadth is rejected in favor of depth.
+- **Experiment 02: Pagination Cookie Registry**
+- **Experiment 03: Per-Peer Quota Admission**
 
 ---
 
@@ -25,7 +25,9 @@ This system models (see [`state_model`](./02_state_model.md)):
 
 Focus: **correctness under failure** (see [`invariants`](./01_invariants.md)), not performance or scale.
 
-Default approach: add new `FM_XXX` scenarios inside Experiment 01 until a failure mode cannot be represented faithfully in the queue model.
+How to read this: experiments are runtimes; failure modes (`FM_XXX`) are bundles that run on a runtime. Multiple FMs can share a runtime (e.g., FM_001 on Experiment 01, FM_002 on Experiment 02, FM_003/FM_004 on Experiment 03, FM_008 exercises an authorization harness rather than adding a new runtime).
+
+Default approach: add new `FM_XXX` scenarios inside Experiment 01 until a failure mode cannot be represented faithfully in the queue model, then introduce a new experiment runtime.
 
 ---
 
@@ -55,7 +57,6 @@ Each change must satisfy at least one:
 - Prevent state corruption
 - Enable safe recovery
 
-
 Adding a new experiment/runtime requires explicit justification:
 
 - The target failure mode cannot be modeled with queue + policies + deterministic fault injection, **or**
@@ -65,5 +66,5 @@ Adding a new experiment/runtime requires explicit justification:
 
 ## Guiding assumption
 
-* We prefer deterministic proofs over best-effort recovery
-* Failure is not an exception. Failure is the **normal operating condition** under which the system must remain correct.
+- We prefer deterministic proofs over best-effort recovery
+- Failure is not an exception. Failure is the **normal operating condition** under which the system must remain correct.

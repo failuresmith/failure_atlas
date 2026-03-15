@@ -73,6 +73,8 @@ Tool availability and authorization are conflated. A prompt that frames internal
 
 Observed in [`lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md`](../lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md).
 
+We intentionally omit agent frameworks in the reproduction to keep the authority gap legible and deterministic. The same pattern applies to any framework that executes model-chosen tools without a pre-execution authorization gate.
+
 ## Guardrail boundary clarity
 
 Baseline
