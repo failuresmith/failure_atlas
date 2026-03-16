@@ -40,9 +40,9 @@ This repository includes a minimal static documentation generator for the atlas.
 From repository root:
 
 ```bash
-python -m pip install -r site/requirements.txt
-python site/build.py
-python -m http.server 8000 --directory docs
+uv sync --project site --frozen
+uv run --project site python site/build.py
+make site && make serve
 ```
 
 Then open `http://localhost:8000`.
