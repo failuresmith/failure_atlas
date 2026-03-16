@@ -1,3 +1,10 @@
+---
+ID: PM_002
+Title: PM_002 — Extension authority persists after uninstall
+Summary: |-
+  Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP_002.
+---
+
 # PM_002 — Extension authority persists after uninstall
 
 ## Summary

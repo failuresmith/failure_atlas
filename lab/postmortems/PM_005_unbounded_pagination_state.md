@@ -1,3 +1,10 @@
+---
+ID: PM_005
+Title: PM_005 — Unbounded pagination cookie state growth
+Summary: |-
+  Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_002/FP_005.
+---
+
 # PM_005 — Unbounded pagination cookie state growth
 
 ## Summary

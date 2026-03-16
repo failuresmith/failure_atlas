@@ -12,9 +12,7 @@ related_pattern:
 
 ## Description
 
-Per-peer quota enforcement can fail at the exact limit if the admission guard
-uses strict-greater (`>`) instead of greater-or-equal (`>=`), allowing one extra
-allocation beyond policy.
+Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater (`>`) instead of greater-or-equal (`>=`), allowing one extra allocation beyond policy.
 
 ## Trigger
 
@@ -63,5 +61,4 @@ allocation beyond policy.
 
 ## Notes
 
-This FM isolates admission-boundary semantics only; it intentionally excludes
-connection lifecycle complexity to keep mechanism legible and deterministic.
+This FM isolates admission-boundary semantics only; it intentionally excludes connection lifecycle complexity to keep mechanism legible and deterministic.

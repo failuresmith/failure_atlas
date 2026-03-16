@@ -1,3 +1,10 @@
+---
+ID: PM_003
+Title: PM_003 — Read-only intent not enforced in MCP server
+Summary: |-
+  The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP_003.
+---
+
 # PM_003 — Read-only intent not enforced in MCP server
 
 ## Summary

@@ -154,7 +154,7 @@
         data-type="pm"
         data-domain="state consistency"
         data-mechanism="retry idempotence window"
-        data-summary="no summary available yet."
+        data-summary="fm001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. without an explicit idempotent commit boundary, both attempts could apply logical effects."
       >
         <td><a href="entries/pm_001.html">PM_001</a></td>
         <td>PM_001 — Duplicate execution after retry timeout</td>
@@ -163,7 +163,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/fm_002.html">FM_002</a>        </td>
-        <td>No summary available yet.</td>
+        <td>FM001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -226,7 +226,7 @@
         data-type="pm"
         data-domain="policy enforcement"
         data-mechanism="extension authority lifecycle"
-        data-summary="no summary available yet."
+        data-summary="credential mappings registered by an extension were not revoked on uninstall/deactivate, so http credential injection authority could outlive the extension until process restart. this incident seeded fp002."
       >
         <td><a href="entries/pm_002.html">PM_002</a></td>
         <td>PM_002 — Extension authority persists after uninstall</td>
@@ -235,7 +235,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a>        </td>
-        <td>No summary available yet.</td>
+        <td>Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -298,7 +298,7 @@
         data-type="pm"
         data-domain="policy enforcement"
         data-mechanism="read/write boundary drift"
-        data-summary="no summary available yet."
+        data-summary="the filesystem mcp server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. this incident seeded fp003."
       >
         <td><a href="entries/pm_003.html">PM_003</a></td>
         <td>PM_003 — Read-only intent not enforced in MCP server</td>
@@ -307,7 +307,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
-        <td>No summary available yet.</td>
+        <td>The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -334,7 +334,7 @@
         data-type="fm"
         data-domain="identity integrity"
         data-mechanism="identity registry collisions"
-        data-summary="no summary available yet."
+        data-summary="startup builds a tlskey → participantid registry using overwrite semantics. if two participants share the same tls key (or duplicate ids), the later insert replaces the earlier mapping. runtime attribution becomes ambiguous."
       >
         <td><a href="entries/fm_004.html">FM_004</a></td>
         <td>Participant identity map bijection not enforced</td>
@@ -343,7 +343,7 @@
         <td>FM</td>
         <td class="related-cell">
                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
-        <td>No summary available yet.</td>
+        <td>Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -406,7 +406,7 @@
         data-type="pm"
         data-domain="resource exhaustion"
         data-mechanism="server-side cursor growth"
-        data-summary="no summary available yet."
+        data-summary="repeated discover-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. a single remote peer could grow the cookie registry until memory pressure/oom. this was the field incident that m"
       >
         <td><a href="entries/pm_005.html">PM_005</a></td>
         <td>PM_005 — Unbounded pagination cookie state growth</td>
@@ -415,7 +415,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a>        </td>
-        <td>No summary available yet.</td>
+        <td>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m</td>
       </tr>
       <tr
         class="atlas-row"
@@ -460,7 +460,7 @@
         data-type="pm"
         data-domain="policy enforcement"
         data-mechanism="quota boundary math"
-        data-summary="no summary available yet."
+        data-summary="per-peer reservation admission used a strict-greater () comparator. when a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. this field bug motivated fm003/fp006."
       >
         <td><a href="entries/pm_006.html">PM_006</a></td>
         <td>PM_006 — Quota boundary off-by-one admission</td>
@@ -469,7 +469,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a>        </td>
-        <td>No summary available yet.</td>
+        <td>Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM003/FP006.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -514,7 +514,7 @@
         data-type="pm"
         data-domain="identity integrity"
         data-mechanism="identity registry collisions"
-        data-summary="no summary available yet."
+        data-summary="during tls key rotation/scale-out, two participants shared the same tls key. the identity map used hashmap::insert, so the later insert overwrote the earlier one. runtime attribution could map authenticated traffic to the wrong participant,"
       >
         <td><a href="entries/pm_007.html">PM_007</a></td>
         <td>PM_007 — Participant identity ↔ TLS key bijection not enforced</td>
@@ -523,7 +523,7 @@
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a>        </td>
-        <td>No summary available yet.</td>
+        <td>During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,</td>
       </tr>
       <tr
         class="atlas-row"
@@ -603,7 +603,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Generated 2026-03-16 04:39 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

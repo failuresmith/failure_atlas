@@ -1,3 +1,10 @@
+---
+ID: PM_007
+Title: PM_007 — Participant identity ↔ TLS key bijection not enforced
+Summary: |-
+  During TLS key rotation/scale-out, two participants shared the same TLS key and the identity map used `HashMap::insert`, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant, weakening protocol identity guarantees.
+---
+
 # PM_007 — Participant identity ↔ TLS key bijection not enforced
 
 ## Summary

@@ -71,8 +71,7 @@
   <section id="spec" class="entry-body markdown-body">
     <h1 id="fm_002-unbounded-pagination-cookie-state-under-repeated-discover-requests">FM_002 — Unbounded pagination cookie state under repeated discover requests</h1>
 <h2 id="description">Description</h2>
-<p>Server-side pagination that persists cookies/cursors per request can become a
-remote memory amplification vector when cookie state has no enforced bound.</p>
+<p>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</p>
 <h2 id="trigger">Trigger</h2>
 <ol>
 <li>A remote peer sends repeated DISCOVER-style requests.</li>
@@ -119,14 +118,13 @@ remote memory amplification vector when cookie state has no enforced bound.</p>
 <li><code>test_prevent_fm002.py</code> proves cookie count stays within budget with guardrail</li>
 </ul>
 <h2 id="notes">Notes</h2>
-<p>This FM intentionally models mechanism only (state budget boundary), not
-protocol implementation details.</p>
+<p>This FM intentionally models mechanism only (state budget boundary), not protocol implementation details.</p>
   </section>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Generated 2026-03-16 04:39 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

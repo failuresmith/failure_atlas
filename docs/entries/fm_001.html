@@ -71,8 +71,7 @@
   <section id="spec" class="entry-body markdown-body">
     <h1 id="fm_001-duplicate-execution-caused-by-retry-after-timeout">FM_001 — Duplicate execution caused by retry after timeout</h1>
 <h2 id="context">Context</h2>
-<p>Systems with at-least-once delivery can legitimately retry work after a timeout.
-If commit semantics are not idempotent at the logical job boundary, retries can
+<p>Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can
 amplify side effects.</p>
 <h2 id="hidden-assumption">Hidden assumption</h2>
 <p>"If a worker times out, its attempt did not commit any irreversible effect."</p>
@@ -81,8 +80,7 @@ amplify side effects.</p>
 <li><code>INV_001</code> — Job execution is logically idempotent.</li>
 </ul>
 <h2 id="description">Description</h2>
-<p>When the first worker exceeds lease timeout, the queue re-leases the same job to
-another worker. Without an idempotent commit boundary, both workers can apply
+<p>When the first worker exceeds lease timeout, the queue re-leases the same job to another worker. Without an idempotent commit boundary, both workers can apply
 the logical effect.</p>
 <h2 id="trigger">Trigger</h2>
 <ol>
@@ -139,7 +137,7 @@ the logical effect.</p>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Generated 2026-03-16 04:39 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

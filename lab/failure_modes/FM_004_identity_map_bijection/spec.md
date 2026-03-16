@@ -11,6 +11,7 @@ related_pattern:
 # FM_004 — Participant identity map bijection not enforced
 
 ## Description
+
 Startup builds a `tls_key → participant_id` registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.
 
 ## Trigger

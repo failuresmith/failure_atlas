@@ -144,7 +144,12 @@ def infer_summary(body: str) -> str:
         if not cleaned:
             continue
         if cleaned.startswith("#"):
-            continue
+            lines = cleaned.splitlines()
+            while lines and lines[0].strip().startswith("#"):
+                lines.pop(0)
+            cleaned = " ".join(lines).strip()
+            if not cleaned:
+                continue
         if cleaned.startswith("```"):
             continue
         if cleaned.startswith("|"):

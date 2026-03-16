@@ -71,9 +71,7 @@
   <section id="spec" class="entry-body markdown-body">
     <h1 id="fm_003-per-peer-reservation-quota-off-by-one-at-boundary">FM_003 — Per-peer reservation quota off-by-one at boundary</h1>
 <h2 id="description">Description</h2>
-<p>Per-peer quota enforcement can fail at the exact limit if the admission guard
-uses strict-greater (<code>&gt;</code>) instead of greater-or-equal (<code>&gt;=</code>), allowing one extra
-allocation beyond policy.</p>
+<p>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater (<code>&gt;</code>) instead of greater-or-equal (<code>&gt;=</code>), allowing one extra allocation beyond policy.</p>
 <h2 id="trigger">Trigger</h2>
 <ol>
 <li>A peer reaches <code>active_reservations == max_reservations_per_peer</code>.</li>
@@ -120,14 +118,13 @@ allocation beyond policy.</p>
 <li><code>test_prevent_fm003.py</code> proves inclusive comparator enforces the configured limit</li>
 </ul>
 <h2 id="notes">Notes</h2>
-<p>This FM isolates admission-boundary semantics only; it intentionally excludes
-connection lifecycle complexity to keep mechanism legible and deterministic.</p>
+<p>This FM isolates admission-boundary semantics only; it intentionally excludes connection lifecycle complexity to keep mechanism legible and deterministic.</p>
   </section>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-15 13:13 UTC</span>
+      <span>Generated 2026-03-16 04:39 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

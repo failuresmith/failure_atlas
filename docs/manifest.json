@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-15T13:13:41.799786+00:00",
+  "generated_at": "2026-03-16T04:39:37.079102+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -77,7 +77,7 @@
       "title": "PM_001 — Duplicate execution after retry timeout",
       "failure_domain": "State Consistency",
       "mechanism": "Retry Idempotence Window",
-      "summary": "No summary available yet.",
+      "summary": "FM001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.",
       "source_path": "lab/postmortems/PM_001_duplicate_execution.md",
       "entry_path": "entries/pm_001.html",
       "related_ids": [
@@ -160,7 +160,7 @@
       "title": "PM_002 — Extension authority persists after uninstall",
       "failure_domain": "Policy Enforcement",
       "mechanism": "Extension Authority Lifecycle",
-      "summary": "No summary available yet.",
+      "summary": "Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.",
       "source_path": "lab/postmortems/PM_002_extension_authority_persistence.md",
       "entry_path": "entries/pm_002.html",
       "related_ids": [
@@ -242,7 +242,7 @@
       "title": "PM_003 — Read-only intent not enforced in MCP server",
       "failure_domain": "Policy Enforcement",
       "mechanism": "Read/Write Boundary Drift",
-      "summary": "No summary available yet.",
+      "summary": "The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.",
       "source_path": "lab/postmortems/PM_003_read_only_enforcement_gap.md",
       "entry_path": "entries/pm_003.html",
       "related_ids": [
@@ -276,7 +276,7 @@
       "title": "Participant identity map bijection not enforced",
       "failure_domain": "Identity Integrity",
       "mechanism": "Identity Registry Collisions",
-      "summary": "No summary available yet.",
+      "summary": "Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.",
       "source_path": "lab/failure_modes/FM_004_identity_map_bijection/spec.md",
       "entry_path": "entries/fm_004.html",
       "related_ids": [
@@ -354,7 +354,7 @@
       "title": "PM_005 — Unbounded pagination cookie state growth",
       "failure_domain": "Resource Exhaustion",
       "mechanism": "Server-side Cursor Growth",
-      "summary": "No summary available yet.",
+      "summary": "Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m",
       "source_path": "lab/postmortems/PM_005_unbounded_pagination_state.md",
       "entry_path": "entries/pm_005.html",
       "related_ids": [
@@ -406,7 +406,7 @@
       "title": "PM_006 — Quota boundary off-by-one admission",
       "failure_domain": "Policy Enforcement",
       "mechanism": "Quota Boundary Math",
-      "summary": "No summary available yet.",
+      "summary": "Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM003/FP006.",
       "source_path": "lab/postmortems/PM_006_quota_boundary_off_by_one.md",
       "entry_path": "entries/pm_006.html",
       "related_ids": [
@@ -458,7 +458,7 @@
       "title": "PM_007 — Participant identity ↔ TLS key bijection not enforced",
       "failure_domain": "Identity Integrity",
       "mechanism": "Identity Registry Collisions",
-      "summary": "No summary available yet.",
+      "summary": "During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,",
       "source_path": "lab/postmortems/PM_007_identity_map_bijection_break.md",
       "entry_path": "entries/pm_007.html",
       "related_ids": [

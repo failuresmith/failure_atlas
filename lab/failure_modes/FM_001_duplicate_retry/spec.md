@@ -12,8 +12,7 @@ related_pattern:
 
 ## Context
 
-Systems with at-least-once delivery can legitimately retry work after a timeout.
-If commit semantics are not idempotent at the logical job boundary, retries can
+Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can
 amplify side effects.
 
 ## Hidden assumption
@@ -26,8 +25,7 @@ amplify side effects.
 
 ## Description
 
-When the first worker exceeds lease timeout, the queue re-leases the same job to
-another worker. Without an idempotent commit boundary, both workers can apply
+When the first worker exceeds lease timeout, the queue re-leases the same job to another worker. Without an idempotent commit boundary, both workers can apply
 the logical effect.
 
 ## Trigger

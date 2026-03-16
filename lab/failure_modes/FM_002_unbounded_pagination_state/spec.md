@@ -12,8 +12,7 @@ related_pattern:
 
 ## Description
 
-Server-side pagination that persists cookies/cursors per request can become a
-remote memory amplification vector when cookie state has no enforced bound.
+Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.
 
 ## Trigger
 
@@ -62,5 +61,4 @@ remote memory amplification vector when cookie state has no enforced bound.
 
 ## Notes
 
-This FM intentionally models mechanism only (state budget boundary), not
-protocol implementation details.
+This FM intentionally models mechanism only (state budget boundary), not protocol implementation details.

@@ -1,3 +1,10 @@
+---
+ID: PM_001
+Title: PM_001 — Duplicate execution after retry timeout
+Summary: |-
+  FM_001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.
+---
+
 # PM_001 — Duplicate execution after retry timeout
 
 ## Summary
