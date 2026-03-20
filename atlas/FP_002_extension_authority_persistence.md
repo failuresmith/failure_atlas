@@ -6,7 +6,7 @@ Mechanism: Extension Authority Lifecycle
 Severity: integrity
 Status: draft
 reproduced_in:
-  - FM_001
+  - FM_009
 mitigated_by:
   - GR_002
 ---

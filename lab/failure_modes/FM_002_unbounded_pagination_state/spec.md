@@ -3,7 +3,7 @@ ID: FM_002
 Title: Unbounded pagination cookie state under repeated discover requests
 Hypothesis: Repeated protocol-compliant discover requests can force unbounded server-side cookie state growth when no hard state budget is enforced.
 Invariant: INV_006
-Status: draft
+Status: validated
 related_pattern:
   - FP_005
 ---

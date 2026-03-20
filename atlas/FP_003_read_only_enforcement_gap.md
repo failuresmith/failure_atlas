@@ -6,7 +6,7 @@ Mechanism: Read/Write Boundary Drift
 Severity: integrity
 Status: draft
 reproduced_in:
-  - FM_001
+  - FM_010
 mitigated_by:
   - GR_003
 ---

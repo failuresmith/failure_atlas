@@ -3,7 +3,7 @@ ID: FM_004
 Title: Participant identity map bijection not enforced
 Hypothesis: Duplicate participant IDs or TLS keys can silently overwrite prior mappings at startup, breaking identity attribution.
 Invariant: INV_008
-Status: draft
+Status: validated
 related_pattern:
   - FP_007
 ---
