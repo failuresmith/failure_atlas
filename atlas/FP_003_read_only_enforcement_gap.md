@@ -19,6 +19,10 @@ Declared read-only policy is not enforced at capability exposure boundaries.
 
 Advisory metadata/hints are assumed to provide hard runtime enforcement.
 
+## Invariant at Risk
+
+INV_003 — policy intent must project into the executable capability surface.
+
 ## Trigger Condition
 
 System is launched in "read-only" intent while write-capable operations remain
@@ -41,7 +45,7 @@ registration/dispatch constraints.
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_001_duplicate_retry/`
+- `lab/failure_modes/FM_010_read_only_enforcement_gap/`
 
 ## Relevant Guardrails
 
