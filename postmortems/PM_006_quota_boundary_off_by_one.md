@@ -1,3 +1,10 @@
+---
+ID: PM_006
+Title: PM_006 — Quota boundary off-by-one admission
+Summary: |-
+  Per-peer reservation admission used a strict-greater (`>`) comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a `max + 1` reservation. This field bug motivated FM_003/FP_006.
+---
+
 # PM_006 — Quota boundary off-by-one admission
 
 ## Summary
@@ -37,7 +44,6 @@ Per-peer reservation admission used a strict-greater (`>`) comparator. When a pe
 - Failure mode: `lab/failure_modes/FM_003_quota_boundary_off_by_one/`
 - Failure pattern: `atlas/FP_006_quota_boundary_off_by_one_admission.md`
 - Guardrail: `guardrails/GR_006_inclusive_quota_boundary_checks.md`
----
 ID: PM_006
 Title: PM_006 — Quota boundary off-by-one admission
 Summary: |-
