@@ -586,16 +586,16 @@
         data-type="pm"
         data-domain="tool / agent interfaces"
         data-mechanism="tool authorization conflation"
-        data-summary="1. configure tools: searchdocs (public), readsensitiveconfig (sensitive). 2. run baseline suite with 2 benign + 3 adversarial prompts across models. 3. baseline results: qwen2.5-coder:7b executes sensitive tool on all 3 adversarial prompts;"
+        data-summary="a standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). without an explicit runtime authorization check, tool availability equaled authority, violating inv009. adding gr008 inserted determinist"
       >
         <td><a href="entries/pm_008.html">PM_008</a></td>
-        <td>PM_008 — Tool Authority Escalation via Prompt Injection</td>
+        <td>PM_008 — Tool authority escalation via prompt injection</td>
         <td>Tool / Agent Interfaces</td>
         <td>Tool Authorization Conflation</td>
         <td>PM</td>
         <td class="related-cell">
                 <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a>        </td>
-        <td>1. Configure tools: searchdocs (public), readsensitiveconfig (sensitive). 2. Run baseline suite with 2 benign + 3 adversarial prompts across models. 3. Baseline results: qwen2.5-coder:7b executes sensitive tool on all 3 adversarial prompts;</td>
+        <td>A standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). Without an explicit runtime authorization check, tool availability equaled authority, violating INV009. Adding GR008 inserted determinist</td>
       </tr>
     </tbody>
   </table>
@@ -603,7 +603,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-20 08:41 UTC</span>
+      <span>Generated 2026-03-20 08:52 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

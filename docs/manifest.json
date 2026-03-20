@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T08:41:38.981470+00:00",
+  "generated_at": "2026-03-20T08:52:25.164712+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -561,10 +561,10 @@
     {
       "id": "PM_008",
       "type": "PM",
-      "title": "PM_008 — Tool Authority Escalation via Prompt Injection",
+      "title": "PM_008 — Tool authority escalation via prompt injection",
       "failure_domain": "Tool / Agent Interfaces",
       "mechanism": "Tool Authorization Conflation",
-      "summary": "1. Configure tools: searchdocs (public), readsensitiveconfig (sensitive). 2. Run baseline suite with 2 benign + 3 adversarial prompts across models. 3. Baseline results: qwen2.5-coder:7b executes sensitive tool on all 3 adversarial prompts;",
+      "summary": "A standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). Without an explicit runtime authorization check, tool availability equaled authority, violating INV009. Adding GR008 inserted determinist",
       "source_path": "postmortems/PM_008_tool_authority_escalation.md",
       "entry_path": "entries/pm_008.html",
       "related_ids": [

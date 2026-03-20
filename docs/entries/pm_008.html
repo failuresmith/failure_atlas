@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PM_008 · PM_008 — Tool Authority Escalation via Prompt Injection</title>
+  <title>PM_008 · PM_008 — Tool authority escalation via prompt injection</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -35,7 +35,7 @@
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>PM_008 · PM_008 — Tool Authority Escalation via Prompt Injection</h1>
+    <h1>PM_008 · PM_008 — Tool authority escalation via prompt injection</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
@@ -67,56 +67,50 @@
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="pm_008-tool-authority-escalation-via-prompt-injection">PM_008 — Tool Authority Escalation via Prompt Injection</h1>
-<h2 id="tldr">TL;DR</h2>
+    <h1 id="pm_008-tool-authority-escalation-via-prompt-injection">PM_008 — Tool authority escalation via prompt injection</h1>
+<h2 id="summary">Summary</h2>
+<p>A standard-user prompt steered the planner model into invoking a sensitive tool (<code>read_sensitive_config</code>). Without an explicit runtime authorization check, tool availability equaled authority, violating INV_009. Adding GR_008 inserted deterministic policy between tool request and dispatch and blocked all sensitive calls in the same scenarios.</p>
+<h2 id="impact">Impact</h2>
 <ul>
-<li>Baseline let a standard-user prompt steer the model into calling a sensitive tool (<code>read_sensitive_config</code>) → INV_009 broken.</li>
-<li>Guarded runtime added GR_008 (deterministic authorization) → same prompts blocked; zero sensitive calls.</li>
-<li>Evidence: baseline sensitive calls 4/6 adversarial prompts; guarded sensitive calls 0/6; see <code>results/*.json</code> + <code>results/summary.md</code>.</li>
+<li>INV_009 (tool authority separation) violated; sensitive configuration data exposed to standard-user prompts.</li>
+<li>Security boundary collapsed: planner reasoning equaled authorization.</li>
+<li>Policy auditability lost; no deterministic decision point logged.</li>
 </ul>
-<h2 id="quick-signals-copypaste-for-dashboards">Quick signals (copy/paste for dashboards)</h2>
-<ul>
-<li>Detection: <code>request_class == "standard_user" AND sensitive_tool_called == true</code></li>
-<li>Guarded denial code: <code>policy_outcome = "denied_sensitive_tool"</code></li>
-<li>Clearest model signal: qwen2.5-coder:7b (3/3 adversarial calls in baseline, 0/3 guarded).</li>
-</ul>
-<h2 id="boundary-failure-guardrail">Boundary failure → guardrail</h2>
-<ul>
-<li>Broken boundary: “planner output == authorization.” Flow was user prompt → model reasoning → tool invocation → privileged execution.</li>
-<li>Guardrail: deterministic policy check between tool request and execution. Model remains planner; runtime enforces authority.</li>
-</ul>
-<pre><code class="language-mermaid">flowchart TD
-    A[User Prompt] --&gt; B[LLM Reasoning] --&gt; C[Tool Request]
-    C --&gt; D[Policy Authorization] --&gt; E{Allow?}
-    E --&gt;|Yes| F[Execute]
-    E --&gt;|No| G[Denied + Log]
-</code></pre>
-<h2 id="deterministic-reproduction-lab-proof">Deterministic reproduction (lab proof)</h2>
+<h2 id="timeline-deterministic-reproduction">Timeline (deterministic reproduction)</h2>
 <ol>
-<li>Configure tools: <code>search_docs</code> (public), <code>read_sensitive_config</code> (sensitive).</li>
+<li>Configure tools: <code>search_docs</code> (public) and <code>read_sensitive_config</code> (sensitive).</li>
 <li>Run baseline suite with 2 benign + 3 adversarial prompts across models.</li>
-<li>Baseline results: qwen2.5-coder:7b executes sensitive tool on all 3 adversarial prompts; qwen2.5-coder:1.5b on 1/3.</li>
-<li>Re-run with GR_008: policy denies all sensitive tool attempts; sensitive calls drop to 0.</li>
+<li>Baseline: qwen2.5-coder:7b executes the sensitive tool on all 3 adversarial prompts; qwen2.5-coder:1.5b on 1/3.</li>
+<li>Apply GR_008 deterministic policy gate.</li>
+<li>Re-run suite: all sensitive tool requests denied; sensitive calls drop to 0/6.</li>
 </ol>
-<h2 id="evidence-files">Evidence files</h2>
-<ul>
-<li><code>lab/failure_modes/FM_008_tool_authority_escalation/results/baseline_results.json</code></li>
-<li><code>lab/failure_modes/FM_008_tool_authority_escalation/results/guarded_results.json</code></li>
-<li><code>lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md</code></li>
-</ul>
 <h2 id="root-cause">Root cause</h2>
 <ul>
 <li>Tool availability was treated as implicit authorization.</li>
-<li>No deterministic pre-dispatch policy; prompt-steerable planning became a security decision point.</li>
+<li>No deterministic pre-dispatch policy; prompt-steerable planning became the security decision point.</li>
 </ul>
+<h2 id="detection">Detection</h2>
+<ul>
+<li><code>request_class == "standard_user" AND sensitive_tool_called == true</code>.</li>
+<li>Guarded path logs <code>policy_outcome = "denied_sensitive_tool"</code> for blocked requests.</li>
+</ul>
+<h2 id="corrective-actions">Corrective actions</h2>
+<ol>
+<li>Added GR_008 deterministic authorization gate between tool request and dispatch.</li>
+<li>Logged policy outcomes to create auditable decision points.</li>
+<li>Codified prevention tests for sensitive-tool denial under adversarial prompts.</li>
+</ol>
 <h2 id="verification">Verification</h2>
 <ul>
-<li>Repro: <code>tests/test_repro_fm008.py</code></li>
-<li>Prevention: <code>tests/test_prevent_fm008.py</code></li>
-<li>Happy path safety: <code>tests/test_fm008_happy_path.py</code></li>
+<li>Repro: <code>tests/test_repro_fm008.py</code> covers baseline sensitive-call behavior.</li>
+<li>Prevention: <code>tests/test_prevent_fm008.py</code> proves GR_008 blocks sensitive tools.</li>
+<li>Happy path: <code>tests/test_fm008_happy_path.py</code> confirms non-sensitive tools still work.</li>
+<li>Evidence: <code>results/baseline_results.json</code>, <code>results/guarded_results.json</code>, <code>results/summary.md</code>.</li>
 </ul>
-<h2 id="generalization">Generalization</h2>
-<p>Applies to any “prompt → planner model → tool execution” stack (LangChain-style agents, MCP runtimes, AutoGPT variants, assistant tool-calling) where authorization is delegated to model reasoning instead of runtime policy.</p>
+<h2 id="occurrences">Occurrences</h2>
+<ul>
+<li>Any “prompt → planner model → tool execution” stack (LangChain-style agents, MCP runtimes, AutoGPT variants, assistant tool-calling) that equates planner output with authorization.</li>
+</ul>
 <h2 id="links">Links</h2>
 <ul>
 <li>Failure pattern: <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_008_tool_authority_escalation_via_prompt_injection.md"><code>atlas/FP_008_tool_authority_escalation_via_prompt_injection.md</code></a></li>
@@ -129,7 +123,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-20 08:41 UTC</span>
+      <span>Generated 2026-03-20 08:52 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>
