@@ -5,8 +5,6 @@ Domain: Human Interpretation
 Mechanism: Anthropomorphic Projection
 Severity: reliability
 Status: draft
-reproduced_in:
-  - FM_001
 mitigated_by:
   - GR_004
 ---
@@ -42,9 +40,9 @@ prediction behavior, collapsing distinct failure classes.
 - probe representation stability for truth/falsehood clusters
 - apply causal/context perturbation tests before assigning intent labels
 
-## Lab Reproduction
+## Lab Status
 
-- `lab/failure_modes/FM_001_duplicate_retry/`
+The pattern is currently theoretical; no FM reproduction is available yet.
 
 ## Relevant Guardrails
 
