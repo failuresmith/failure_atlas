@@ -126,7 +126,7 @@
         <td>Retry Idempotence Window</td>
         <td>FM</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
         <td>Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can amplify side effects.</td>
       </tr>
       <tr
@@ -180,7 +180,7 @@
         <td>Extension Authority Lifecycle</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
         <td>Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.</td>
       </tr>
       <tr
@@ -216,7 +216,7 @@
         <td>Extension Authority Lifecycle</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
         <td>Authority entries are derived views of active components, not independent mutable state.</td>
       </tr>
       <tr
@@ -234,7 +234,7 @@
         <td>Extension Authority Lifecycle</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a>        </td>
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
         <td>Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.</td>
       </tr>
       <tr
@@ -252,7 +252,7 @@
         <td>Read/Write Boundary Drift</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
         <td>Declared read-only policy is not enforced at capability exposure boundaries.</td>
       </tr>
       <tr
@@ -288,7 +288,7 @@
         <td>Read/Write Boundary Drift</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/pm_003.html">PM_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
         <td>Project policy mode into the runtime capability surface during registration, not at invocation hints.</td>
       </tr>
       <tr
@@ -306,7 +306,7 @@
         <td>Read/Write Boundary Drift</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
+                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
         <td>The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.</td>
       </tr>
       <tr
@@ -597,13 +597,49 @@
                 <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a>        </td>
         <td>A standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). Without an explicit runtime authorization check, tool availability equaled authority, violating INV009. Adding GR008 inserted determinist</td>
       </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_009"
+        data-title="extension authority persists after uninstall"
+        data-type="fm"
+        data-domain="policy enforcement"
+        data-mechanism="extension authority lifecycle"
+        data-summary="authority entries registered by an extension are stored independently of extension lifecycle. uninstalling the extension leaves stale credential/tool bindings active until restart."
+      >
+        <td><a href="entries/fm_009.html">FM_009</a></td>
+        <td>Extension authority persists after uninstall</td>
+        <td>Policy Enforcement</td>
+        <td>Extension Authority Lifecycle</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a>        </td>
+        <td>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_010"
+        data-title="read-only flag does not remove write tools"
+        data-type="fm"
+        data-domain="policy enforcement"
+        data-mechanism="read/write boundary drift"
+        data-summary="the server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration."
+      >
+        <td><a href="entries/fm_010.html">FM_010</a></td>
+        <td>Read-only flag does not remove write tools</td>
+        <td>Policy Enforcement</td>
+        <td>Read/Write Boundary Drift</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+        <td>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</td>
+      </tr>
     </tbody>
   </table>
 </section>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-20 09:02 UTC</span>
+      <span>Generated 2026-03-20 10:21 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>

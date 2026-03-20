@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FM_004 · Participant identity map bijection not enforced</title>
+  <title>FM_010 · Read-only flag does not remove write tools</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -30,12 +30,12 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <a href="../index.html">Atlas Index</a>
   <span>›</span>
-  <span>FM_004</span>
+  <span>FM_010</span>
 </nav>
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>FM_004 · Participant identity map bijection not enforced</h1>
+    <h1>FM_010 · Read-only flag does not remove write tools</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
@@ -43,21 +43,22 @@
       </div>
       <div>
         <dt>Failure domain</dt>
-        <dd>Identity Integrity</dd>
+        <dd>Policy Enforcement</dd>
       </div>
       <div>
         <dt>Mechanism</dt>
-        <dd>Identity Registry Collisions</dd>
+        <dd>Read/Write Boundary Drift</dd>
       </div>
       <div>
         <dt>Status</dt>
-        <dd>validated</dd>
+        <dd>draft</dd>
       </div>
     </dl>
 
     <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection" target="_blank" rel="noopener noreferrer">Directory</a>
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/README.md" target="_blank" rel="noopener noreferrer">README</a>
         <a href="#spec">Spec</a>
     </div>
   </header>
@@ -65,56 +66,53 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fp_007.html">FP_007</a> ·         <a href="../entries/gr_007.html">GR_007</a> ·         <a href="../entries/pm_007.html">PM_007</a>    </p>
+        <a href="../entries/fp_003.html">FP_003</a> ·         <a href="../entries/gr_003.html">GR_003</a> ·         <a href="../entries/pm_003.html">PM_003</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="fm_004-participant-identity-map-bijection-not-enforced">FM_004 — Participant identity map bijection not enforced</h1>
+    <h1 id="fm_010-read-only-flag-does-not-remove-write-tools">FM_010 — Read-only flag does not remove write tools</h1>
 <h2 id="description">Description</h2>
-<p>Startup builds a <code>tls_key → participant_id</code> registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</p>
+<p>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</p>
 <h2 id="trigger">Trigger</h2>
-<ol>
-<li>Configuration contains duplicate participant IDs or duplicate TLS keys.</li>
-<li>Registry construction uses insert/overwrite without validation.</li>
-<li>Startup completes without error.</li>
-</ol>
+<ul>
+<li>Server started with <code>read_only=True</code>.</li>
+<li>Tool registry still includes destructive operations.</li>
+</ul>
 <h2 id="preconditions">Preconditions</h2>
 <ul>
-<li>Participant identities and TLS keys are provided via configuration.</li>
-<li>Registry is constructed in-memory without uniqueness checks.</li>
+<li>Read-only intent is represented only as metadata, not enforced in registration.</li>
+<li>Tool dispatch does not check read-only mode before exposing operations.</li>
 </ul>
 <h2 id="failure-mechanism-step-by-step">Failure mechanism (step-by-step)</h2>
 <ol>
-<li>Load participant configs.</li>
-<li>Insert each into the registry keyed by TLS key.</li>
-<li>Later duplicate overwrites earlier mapping.</li>
-<li>Authenticated traffic for the shared key resolves to the last-written participant.</li>
+<li>Server starts with <code>read_only=True</code>.</li>
+<li>Tool registration path unconditionally registers read and write tools.</li>
+<li>Client discovery lists write tools; invocations succeed.</li>
 </ol>
 <h2 id="symptoms">Symptoms</h2>
 <ul>
-<li>Authenticated traffic attributed to the wrong participant ID.</li>
-<li>Conflicting participants cannot be distinguished at runtime.</li>
-<li>Operator diagnostics show mismatched IDs vs credentials.</li>
+<li><code>list_tools</code> contains write operations in read-only mode.</li>
+<li>Write tool invocations succeed instead of returning <code>METHOD_NOT_FOUND</code>.</li>
 </ul>
 <h2 id="violated-invariants">Violated invariants</h2>
 <ul>
-<li>INV_008 — participant identity mapping must be bijective.</li>
-<li>INV_005 — failure should be detectable but goes unnoticed at startup.</li>
+<li>INV_005 — failure must be detectable and prevented; policy intent drifts from runtime surface.</li>
 </ul>
 <h2 id="detection">Detection</h2>
 <ul>
-<li><code>len(unique_tls_keys) != len(participants)</code></li>
-<li><code>len(set(participant_ids)) != len(participants)</code></li>
+<li><code>read_only == true AND write_tools ∈ exposed_toolset</code>.</li>
+<li>Audit that no destructive tools are present when read-only is enabled.</li>
 </ul>
 <h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
 <ul>
-<li>Fail fast during startup if bijection is not satisfied.</li>
-<li>Emit clear diagnostics listing conflicting IDs/keys.</li>
+<li>Condition tool registration on the read-only flag.</li>
+<li>Reject write tool invocations with deterministic errors when read-only.</li>
 </ul>
 <h2 id="acceptance-criteria">Acceptance criteria</h2>
 <ul>
-<li><code>test_repro_fm004.py</code> demonstrates overwrite when duplicates exist.</li>
-<li><code>test_prevent_fm004.py</code> proves startup validation rejects duplicates and preserves bijection.</li>
+<li><code>tests/test_repro_fm010.py</code> shows write tools exposed in read-only baseline.</li>
+<li><code>tests/test_prevent_fm010.py</code> shows write tools absent in guarded registry when read-only.</li>
+<li><code>tests/test_fm010_happy_path.py</code> shows write tools available in standard mode.</li>
 </ul>
   </section>
 </article>

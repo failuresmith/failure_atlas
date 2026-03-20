@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T09:02:38.900110+00:00",
+  "generated_at": "2026-03-20T10:21:59.967070+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -35,10 +35,8 @@
         "PM_001",
         "FP_002",
         "GR_002",
-        "PM_002",
         "FP_003",
-        "GR_003",
-        "PM_003"
+        "GR_003"
       ],
       "bundle_links": [
         {
@@ -108,7 +106,8 @@
         "FM_001",
         "GR_002",
         "PM_002",
-        "FP_003"
+        "FP_003",
+        "FM_009"
       ],
       "bundle_links": [],
       "status": "draft"
@@ -144,7 +143,7 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/spec.md"
         }
       ],
-      "status": "draft"
+      "status": "validated"
     },
     {
       "id": "GR_002",
@@ -159,7 +158,8 @@
         "FM_001",
         "FP_002",
         "PM_002",
-        "FP_003"
+        "FP_003",
+        "FM_009"
       ],
       "bundle_links": [],
       "status": "proposed"
@@ -174,9 +174,9 @@
       "source_path": "postmortems/PM_002_extension_authority_persistence.md",
       "entry_path": "entries/pm_002.html",
       "related_ids": [
-        "FM_001",
         "FP_002",
-        "GR_002"
+        "GR_002",
+        "FM_009"
       ],
       "bundle_links": [],
       "status": ""
@@ -195,7 +195,8 @@
         "FM_001",
         "FP_002",
         "GR_003",
-        "PM_003"
+        "PM_003",
+        "FM_010"
       ],
       "bundle_links": [],
       "status": "draft"
@@ -246,7 +247,8 @@
         "FM_001",
         "FP_002",
         "FP_003",
-        "PM_003"
+        "PM_003",
+        "FM_010"
       ],
       "bundle_links": [],
       "status": "proposed"
@@ -261,9 +263,9 @@
       "source_path": "postmortems/PM_003_read_only_enforcement_gap.md",
       "entry_path": "entries/pm_003.html",
       "related_ids": [
-        "FM_001",
         "FP_003",
-        "GR_003"
+        "GR_003",
+        "FM_010"
       ],
       "bundle_links": [],
       "status": ""
@@ -311,7 +313,7 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection/spec.md"
         }
       ],
-      "status": "draft"
+      "status": "validated"
     },
     {
       "id": "GR_004",
@@ -574,6 +576,72 @@
       ],
       "bundle_links": [],
       "status": ""
+    },
+    {
+      "id": "FM_009",
+      "type": "FM",
+      "title": "Extension authority persists after uninstall",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Extension Authority Lifecycle",
+      "summary": "Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.",
+      "source_path": "lab/failure_modes/FM_009_extension_authority_persistence/spec.md",
+      "entry_path": "entries/fm_009.html",
+      "related_ids": [
+        "FP_002",
+        "GR_002",
+        "PM_002"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_009_extension_authority_persistence",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_009_extension_authority_persistence/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_009_extension_authority_persistence/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence/spec.md"
+        }
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "FM_010",
+      "type": "FM",
+      "title": "Read-only flag does not remove write tools",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Read/Write Boundary Drift",
+      "summary": "The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.",
+      "source_path": "lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md",
+      "entry_path": "entries/fm_010.html",
+      "related_ids": [
+        "FP_003",
+        "GR_003",
+        "PM_003"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md"
+        }
+      ],
+      "status": "draft"
     }
   ],
   "domains": [
