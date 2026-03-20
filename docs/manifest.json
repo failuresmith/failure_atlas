@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-16T05:02:27.205564+00:00",
+  "generated_at": "2026-03-20T08:41:38.981470+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -47,6 +47,11 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry"
         },
         {
+          "label": "README",
+          "path": "lab/failure_modes/FM_001_duplicate_retry/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry/README.md"
+        },
+        {
           "label": "Spec",
           "path": "lab/failure_modes/FM_001_duplicate_retry/spec.md",
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_001_duplicate_retry/spec.md"
@@ -78,7 +83,7 @@
       "failure_domain": "State Consistency",
       "mechanism": "Retry Idempotence Window",
       "summary": "FM001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.",
-      "source_path": "lab/postmortems/PM_001_duplicate_execution.md",
+      "source_path": "postmortems/PM_001_duplicate_execution.md",
       "entry_path": "entries/pm_001.html",
       "related_ids": [
         "FP_001",
@@ -129,6 +134,11 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state"
         },
         {
+          "label": "README",
+          "path": "lab/failure_modes/FM_002_unbounded_pagination_state/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/README.md"
+        },
+        {
           "label": "Spec",
           "path": "lab/failure_modes/FM_002_unbounded_pagination_state/spec.md",
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/spec.md"
@@ -161,7 +171,7 @@
       "failure_domain": "Policy Enforcement",
       "mechanism": "Extension Authority Lifecycle",
       "summary": "Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.",
-      "source_path": "lab/postmortems/PM_002_extension_authority_persistence.md",
+      "source_path": "postmortems/PM_002_extension_authority_persistence.md",
       "entry_path": "entries/pm_002.html",
       "related_ids": [
         "FM_001",
@@ -211,6 +221,11 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one"
         },
         {
+          "label": "README",
+          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/README.md"
+        },
+        {
           "label": "Spec",
           "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md",
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md"
@@ -243,7 +258,7 @@
       "failure_domain": "Policy Enforcement",
       "mechanism": "Read/Write Boundary Drift",
       "summary": "The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.",
-      "source_path": "lab/postmortems/PM_003_read_only_enforcement_gap.md",
+      "source_path": "postmortems/PM_003_read_only_enforcement_gap.md",
       "entry_path": "entries/pm_003.html",
       "related_ids": [
         "FM_001",
@@ -355,7 +370,7 @@
       "failure_domain": "Resource Exhaustion",
       "mechanism": "Server-side Cursor Growth",
       "summary": "Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m",
-      "source_path": "lab/postmortems/PM_005_unbounded_pagination_state.md",
+      "source_path": "postmortems/PM_005_unbounded_pagination_state.md",
       "entry_path": "entries/pm_005.html",
       "related_ids": [
         "FM_002",
@@ -407,7 +422,7 @@
       "failure_domain": "Policy Enforcement",
       "mechanism": "Quota Boundary Math",
       "summary": "Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM003/FP006.",
-      "source_path": "lab/postmortems/PM_006_quota_boundary_off_by_one.md",
+      "source_path": "postmortems/PM_006_quota_boundary_off_by_one.md",
       "entry_path": "entries/pm_006.html",
       "related_ids": [
         "FM_003",
@@ -459,7 +474,7 @@
       "failure_domain": "Identity Integrity",
       "mechanism": "Identity Registry Collisions",
       "summary": "During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,",
-      "source_path": "lab/postmortems/PM_007_identity_map_bijection_break.md",
+      "source_path": "postmortems/PM_007_identity_map_bijection_break.md",
       "entry_path": "entries/pm_007.html",
       "related_ids": [
         "FM_004",
@@ -549,7 +564,7 @@
       "title": "PM_008 — Tool Authority Escalation via Prompt Injection",
       "failure_domain": "Tool / Agent Interfaces",
       "mechanism": "Tool Authorization Conflation",
-      "summary": "In FM008, a tool-using LLM agent was configured with:",
+      "summary": "1. Configure tools: searchdocs (public), readsensitiveconfig (sensitive). 2. Run baseline suite with 2 benign + 3 adversarial prompts across models. 3. Baseline results: qwen2.5-coder:7b executes sensitive tool on all 3 adversarial prompts;",
       "source_path": "postmortems/PM_008_tool_authority_escalation.md",
       "entry_path": "entries/pm_008.html",
       "related_ids": [
