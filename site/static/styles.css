@@ -315,9 +315,37 @@ a:hover {
   color: var(--muted);
   font-size: 0.82rem;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
   flex-wrap: wrap;
+  text-align: center;
+}
+
+.footer-github {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: inherit;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.footer-github svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--muted);
+}
+
+.footer-github:hover,
+.footer-github:focus-visible {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
 }
 
 .modal {
