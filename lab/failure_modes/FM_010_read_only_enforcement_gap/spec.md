@@ -2,7 +2,7 @@
 ID: FM_010
 Title: Read-only flag does not remove write tools
 Hypothesis: A read-only runtime flag is advisory only, so write tools remain registered and callable.
-Invariant: INV_005
+Invariant: INV_003
 Status: draft
 related_pattern:
   - FP_003
@@ -31,7 +31,7 @@ The server exposes write-capable tools even when launched in read-only mode beca
 - Write tool invocations succeed instead of returning `METHOD_NOT_FOUND`.
 
 ## Violated invariants
-- INV_005 — failure must be detectable and prevented; policy intent drifts from runtime surface.
+- INV_003 — policy intent is not projected into explicit capability-state transitions.
 
 ## Detection
 - `read_only == true AND write_tools ∈ exposed_toolset`.
