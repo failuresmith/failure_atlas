@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T10:21:59.967070+00:00",
+  "generated_at": "2026-03-20T11:00:04.361947+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -280,7 +280,6 @@
       "source_path": "atlas/FP_004_anthropomorphic_misinterpretation.md",
       "entry_path": "entries/fp_004.html",
       "related_ids": [
-        "FM_001",
         "FP_003",
         "GR_004"
       ],

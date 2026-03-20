@@ -71,6 +71,8 @@
 <p>Declared read-only policy is not enforced at capability exposure boundaries.</p>
 <h2 id="hidden-assumption">Hidden Assumption</h2>
 <p>Advisory metadata/hints are assumed to provide hard runtime enforcement.</p>
+<h2 id="invariant-at-risk">Invariant at Risk</h2>
+<p>INV_003 — policy intent must project into the executable capability surface.</p>
 <h2 id="trigger-condition">Trigger Condition</h2>
 <p>System is launched in "read-only" intent while write-capable operations remain
 registered and invocable.</p>
@@ -87,7 +89,7 @@ registration/dispatch constraints.</p>
 <p><code>read_only == true AND write_tools ∈ exposed_toolset</code></p>
 <h2 id="lab-reproduction">Lab Reproduction</h2>
 <ul>
-<li><code>lab/failure_modes/FM_001_duplicate_retry/</code></li>
+<li><code>lab/failure_modes/FM_010_read_only_enforcement_gap/</code></li>
 </ul>
 <h2 id="relevant-guardrails">Relevant Guardrails</h2>
 <ul>
@@ -107,7 +109,7 @@ registration/dispatch constraints.</p>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-20 10:21 UTC</span>
+      <span>Generated 2026-03-20 11:00 UTC</span>
       <span>Static documentation for reliability pattern navigation.</span>
     </footer>
   </div>
