@@ -3,7 +3,7 @@
 Purpose: anchor each failure domain to a concrete real-world incident (“Real failure” in the chain).
 
 Scope and location
-- Lives under `lab/postmortems/` because PMs feed the lab reproductions directly.
+- Canonical PM files now live at repo root `postmortems/` to avoid drift; keep this directory as a convenience mirror/placeholder.
 - Each PM links to its Failure Pattern (FP), Failure Mode (FM) lab (when available), and Guardrail (GR).
 
 Numbering convention

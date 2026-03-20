@@ -44,6 +44,10 @@ GR mitigates.
 
 # Components
 
+## Where to find postmortems
+- Canonical PMs live in `postmortems/PM_XXX_*.md`.
+- `lab/postmortems/PM_XXX_*.md` are thin pointers to the root to prevent drift; edit the root files only.
+
 ## [Atlas](./atlas/)
 
 Explain the failure domain.

@@ -73,6 +73,10 @@ make sync
 make test
 ```
 
+### Where to read experiment outputs
+- Every test can call the shared `experiment_log` fixture. It writes JSONL to that test's temporary directory (`.../tmp*/experiment_log.jsonl`) with inputs and observed signals.
+- Use `jq`/`rg` on the JSONL file after a run to compare counts across scenarios without opening test code.
+
 ## Current Failure Mode
 
 **FM_001 — Retry duplication → double execution**
