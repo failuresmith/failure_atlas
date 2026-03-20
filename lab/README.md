@@ -77,17 +77,24 @@ make test
 - Every test can call the shared `experiment_log` fixture. It writes JSONL to that test's temporary directory (`.../tmp*/experiment_log.jsonl`) with inputs and observed signals.
 - Use `jq`/`rg` on the JSONL file after a run to compare counts across scenarios without opening test code.
 
-## Current Failure Mode
+## Current Failure Modes
 
-**FM_001 — Retry duplication → double execution**
-
-Reproduce and verify the fix:
+The lab now exercises multiple invariants beyond FM_001. Run the full suite to
+cover all bundles:
 
 ```bash
-make sync           # install required packages
-make test-fm1       # reproduces
-make test-fm1-fix   # proves prevention boundary
+make sync   # install required packages
+make test   # happy path + all FM bundles (001, 002, 003, 004, 008, 009, 010)
 ```
+
+To focus on a single failure mode, point pytest at its bundle, e.g.:
+
+```bash
+uv run pytest failure_modes/FM_003_quota_boundary_off_by_one/tests
+```
+
+The canonical list of active FMs and their invariants lives in
+`docs/failure_mode_index.md`.
 
 ## Repository Map
 

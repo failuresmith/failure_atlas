@@ -6,7 +6,7 @@ Mechanism: Anthropomorphic Projection
 Severity: reliability
 Status: draft
 mitigated_by:
-  - GR_004
+  - "GR_004 (proposed; unvalidated until FM exists)"
 ---
 
 # Failure Pattern
@@ -42,11 +42,13 @@ prediction behavior, collapsing distinct failure classes.
 
 ## Lab Status
 
-The pattern is currently theoretical; no FM reproduction is available yet.
+The pattern is currently theoretical; no FM reproduction is available yet. Do
+not treat any guardrail as validated until a dedicated FM bundle reproduces the
+mechanism and exercises the mitigation.
 
 ## Relevant Guardrails
 
-- `guardrails/GR_004_failure_class_disambiguation.md`
+- `guardrails/GR_004_failure_class_disambiguation.md` (proposed; pending FM)
 
 ## Related Patterns
 
