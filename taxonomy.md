@@ -20,8 +20,8 @@ Reserved headers (define when needed): Concurrency; Recovery & Reconciliation; D
 | Domain                  | Mechanism                     | Failure Pattern                                                                                                              | FM     | GR     |
 | ----------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------ | ------ |
 | State Consistency       | Retry Idempotence Window      | [FP_001 Duplicate Execution After Retry Timeout](./atlas/FP_001_duplicate_execution_after_retry_timeout.md)                 | FM_001 | GR_001 |
-| Policy Enforcement      | Extension Authority Lifecycle | [FP_002 Extension Authority Persistence](./atlas/FP_002_extension_authority_persistence.md)                                 | FM_001 | GR_002 |
-| Policy Enforcement      | Read/Write Boundary Drift     | [FP_003 Read-only Enforcement Gap](./atlas/FP_003_read_only_enforcement_gap.md)                                             | FM_001 | GR_003 |
+| Policy Enforcement      | Extension Authority Lifecycle | [FP_002 Extension Authority Persistence](./atlas/FP_002_extension_authority_persistence.md)                                 | FM_009 | GR_002 |
+| Policy Enforcement      | Read/Write Boundary Drift     | [FP_003 Read-only Enforcement Gap](./atlas/FP_003_read_only_enforcement_gap.md)                                             | FM_010 | GR_003 |
 | Model Behavior          | Anthropomorphic Projection    | [FP_004 Anthropomorphic Misinterpretation](./atlas/FP_004_anthropomorphic_misinterpretation.md)                             | n/a    | GR_004 |
 | Resource Exhaustion     | Server-side Cursor Growth     | [FP_005 Unbounded Pagination Cookie State Amplification](./atlas/FP_005_unbounded_pagination_cookie_state_amplification.md) | FM_002 | GR_005 |
 | Policy Enforcement      | Quota Boundary Math           | [FP_006 Quota Boundary Off-by-One Admission](./atlas/FP_006_quota_boundary_off_by_one_admission.md)                         | FM_003 | GR_006 |
@@ -32,3 +32,4 @@ Notes:
 
 - `reproduced_in` and `mitigated_by` are list-valued in artifact metadata.
 - Multiple FMs and GRs may link to one FP as the atlas grows.
+- FM IDs 005–007 are intentionally unused; numbering stays aligned with FP IDs while their lab reproductions are covered by FM_002–FM_004.
