@@ -12,5 +12,6 @@ Catalog of Failure Patterns in the FM → FP → GR pipeline (PM numbers align t
 | FP_006 | [PM_006](./postmortems/PM_006_quota_boundary_off_by_one.md) | [Quota Boundary Off-by-One Admission](./atlas/FP_006_quota_boundary_off_by_one_admission.md) | Policy Enforcement | Quota Boundary Math | FM_003 | GR_006 |
 | FP_007 | [PM_007](./postmortems/PM_007_identity_map_bijection_break.md) | [Identity Map Bijection Break](./atlas/FP_007_identity_map_bijection_break.md) | Identity Integrity | Identity Registry Collisions | FM_004 | GR_007 |
 | FP_008 | [PM_008](./postmortems/PM_008_tool_authority_escalation.md) | [Tool Authority Escalation via Prompt Injection](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md) | Tool / Agent Interfaces | Tool Authorization Conflation | FM_008 | GR_008 |
+| FP_009 | — (no PM yet) | [Progress Stall Detection Gap](./atlas/FP_009_progress_stall_detection_gap.md) | Agent Runtime | Progress Ledger Omission | FM_011 | GR_009 |
 
 Canonical taxonomy lives in [`taxonomy.md`](./taxonomy.md).

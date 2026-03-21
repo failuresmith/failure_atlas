@@ -12,6 +12,7 @@ Canonical catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`. Keep just e
 - **Resource Exhaustion / Server-side Cursor Growth** — pagination/cursor state grows without a hard cap.
 - **Model Behavior / Anthropomorphic Projection** — human intent is imputed to stochastic model output.
 - **Tool / Agent Interfaces / Tool Authorization Conflation** — planner-selected tool invocations execute without runtime policy gate.
+- **Agent Runtime / Progress Ledger Omission** — agent loop counts steps but lacks state-change detection, so it spins on identical failures.
 
 Reserved headers (define when needed): Concurrency; Recovery & Reconciliation; Distributed Coordination; Economic / Incentive Failures; Input Validation; Boundary Violations.
 
@@ -27,6 +28,7 @@ Reserved headers (define when needed): Concurrency; Recovery & Reconciliation; D
 | Policy Enforcement      | Quota Boundary Math           | [FP_006 Quota Boundary Off-by-One Admission](./atlas/FP_006_quota_boundary_off_by_one_admission.md)                         | FM_003 | GR_006 |
 | Identity Integrity      | Identity Registry Collisions  | [FP_007 Identity Map Bijection Break](./atlas/FP_007_identity_map_bijection_break.md)                                       | FM_004 | GR_007 |
 | Tool / Agent Interfaces | Tool Authorization Conflation | [FP_008 Tool Authority Escalation via Prompt Injection](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md)   | FM_008 | GR_008 |
+| Agent Runtime           | Progress Ledger Omission      | [FP_009 Progress Stall Detection Gap](./atlas/FP_009_progress_stall_detection_gap.md)                                       | FM_011 | GR_009 |
 
 Notes:
 

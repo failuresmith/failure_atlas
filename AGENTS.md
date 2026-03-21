@@ -49,6 +49,9 @@ Never merge these responsibilities.
 5. **One failure mode per change set**
    - Avoid mixed-scope changes.
 
+6. **Agent loops require explicit progress detection**
+   - When modeling agents, include a deterministically checkable progress/stuck signal (e.g., sliding window of step signatures) instead of relying on iteration caps.
+
 ---
 
 ## Standard deliverables for each new failure domain
@@ -65,4 +68,3 @@ All three must cross-link explicitly.
 
 This repository should become a map of **domains of failure** and reusable containment designs,
 not a catalog of isolated bugs.
-
