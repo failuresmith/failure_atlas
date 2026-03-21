@@ -63,7 +63,7 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fm_003.html">FM_003</a> ·         <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/gr_006.html">GR_006</a> ·         <a href="../entries/pm_006.html">PM_006</a>    </p>
+        <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/fm_006.html">FM_006</a> ·         <a href="../entries/gr_006.html">GR_006</a> ·         <a href="../entries/pm_006.html">PM_006</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
@@ -103,15 +103,15 @@ passes, and one additional allocation is admitted.</p>
 <h2 id="real-failure-minimal-reproduction-mechanism-guardrail-atlas-update">Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update</h2>
 <ul>
 <li><strong>Real failure:</strong> reservation admission allows one extra allocation at boundary</li>
-<li><strong>Minimal reproduction:</strong> deterministic FM_003 boundary matrix (<code>max=0,1,N</code>) with repeated same-principal admissions</li>
+<li><strong>Minimal reproduction:</strong> deterministic FM_006 boundary matrix (<code>max=0,1,N</code>) with repeated same-principal admissions</li>
 <li><strong>Mechanism:</strong> strict boundary comparator (<code>&gt;</code> vs <code>&gt;=</code>) in pre-admit check</li>
 <li><strong>Guardrail:</strong> inclusive boundary policy + explicit edge-case regression tests</li>
-<li><strong>Atlas update:</strong> FP_006 linked to validated FM_003 + GR_006 artifacts</li>
+<li><strong>Atlas update:</strong> FP_006 linked to validated FM_006 + GR_006 artifacts</li>
 <li><strong>Postmortem:</strong> lab/postmortems/PM_006_quota_boundary_off_by_one.md</li>
 </ul>
 <h2 id="lab-reproduction">Lab Reproduction</h2>
 <ul>
-<li><code>lab/failure_modes/FM_003_quota_boundary_off_by_one/</code></li>
+<li><code>lab/failure_modes/FM_006_quota_boundary_off_by_one/</code></li>
 </ul>
 <h2 id="relevant-guardrails">Relevant Guardrails</h2>
 <ul>
@@ -126,7 +126,7 @@ passes, and one additional allocation is admitted.</p>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

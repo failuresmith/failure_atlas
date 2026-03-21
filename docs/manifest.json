@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-21T09:50:44.616386+00:00",
+  "generated_at": "2026-03-21T13:15:26.168146+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -99,47 +99,46 @@
       "entry_path": "entries/fp_002.html",
       "related_ids": [
         "FP_001",
-        "FM_001",
+        "FM_002",
         "GR_002",
         "PM_002",
-        "FP_003",
-        "FM_009"
+        "FP_003"
       ],
       "bundle_links": [],
-      "status": "draft"
+      "status": "validated"
     },
     {
       "id": "FM_002",
       "type": "FM",
-      "title": "Unbounded pagination cookie state under repeated discover requests",
-      "failure_domain": "Resource Exhaustion",
-      "mechanism": "Server-side Cursor Growth",
-      "summary": "Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.",
-      "source_path": "lab/failure_modes/FM_002_unbounded_pagination_state/spec.md",
+      "title": "Extension authority persists after uninstall",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Extension Authority Lifecycle",
+      "summary": "Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.",
+      "source_path": "lab/failure_modes/FM_002_extension_authority_persistence/spec.md",
       "entry_path": "entries/fm_002.html",
       "related_ids": [
-        "FP_005",
-        "GR_005",
-        "PM_005"
+        "FP_002",
+        "GR_002",
+        "PM_002"
       ],
       "bundle_links": [
         {
           "label": "Directory",
-          "path": "lab/failure_modes/FM_002_unbounded_pagination_state",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state"
+          "path": "lab/failure_modes/FM_002_extension_authority_persistence",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence"
         },
         {
           "label": "README",
-          "path": "lab/failure_modes/FM_002_unbounded_pagination_state/README.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/README.md"
+          "path": "lab/failure_modes/FM_002_extension_authority_persistence/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence/README.md"
         },
         {
           "label": "Spec",
-          "path": "lab/failure_modes/FM_002_unbounded_pagination_state/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/spec.md"
+          "path": "lab/failure_modes/FM_002_extension_authority_persistence/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence/spec.md"
         }
       ],
-      "status": "validated"
+      "status": "draft"
     },
     {
       "id": "GR_002",
@@ -152,9 +151,9 @@
       "entry_path": "entries/gr_002.html",
       "related_ids": [
         "FP_002",
+        "FM_002",
         "PM_002",
-        "FP_003",
-        "FM_009"
+        "FP_003"
       ],
       "bundle_links": [],
       "status": "proposed"
@@ -170,8 +169,8 @@
       "entry_path": "entries/pm_002.html",
       "related_ids": [
         "FP_002",
-        "GR_002",
-        "FM_009"
+        "FM_002",
+        "GR_002"
       ],
       "bundle_links": [],
       "status": ""
@@ -188,45 +187,45 @@
       "related_ids": [
         "FP_001",
         "FP_002",
+        "FM_003",
         "GR_003",
-        "PM_003",
-        "FM_010"
+        "PM_003"
       ],
       "bundle_links": [],
-      "status": "draft"
+      "status": "validated"
     },
     {
       "id": "FM_003",
       "type": "FM",
-      "title": "Per-peer reservation quota off-by-one at boundary",
+      "title": "Read-only flag does not remove write tools",
       "failure_domain": "Policy Enforcement",
-      "mechanism": "Quota Boundary Math",
-      "summary": "Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.",
-      "source_path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md",
+      "mechanism": "Read/Write Boundary Drift",
+      "summary": "The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.",
+      "source_path": "lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md",
       "entry_path": "entries/fm_003.html",
       "related_ids": [
-        "FP_006",
-        "GR_006",
-        "PM_006"
+        "FP_003",
+        "GR_003",
+        "PM_003"
       ],
       "bundle_links": [
         {
           "label": "Directory",
-          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one"
+          "path": "lab/failure_modes/FM_003_read_only_enforcement_gap",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap"
         },
         {
           "label": "README",
-          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/README.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/README.md"
+          "path": "lab/failure_modes/FM_003_read_only_enforcement_gap/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/README.md"
         },
         {
           "label": "Spec",
-          "path": "lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md"
+          "path": "lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md"
         }
       ],
-      "status": "validated"
+      "status": "draft"
     },
     {
       "id": "GR_003",
@@ -240,8 +239,8 @@
       "related_ids": [
         "FP_002",
         "FP_003",
-        "PM_003",
-        "FM_010"
+        "FM_003",
+        "PM_003"
       ],
       "bundle_links": [],
       "status": "proposed"
@@ -257,8 +256,8 @@
       "entry_path": "entries/pm_003.html",
       "related_ids": [
         "FP_003",
-        "GR_003",
-        "FM_010"
+        "FM_003",
+        "GR_003"
       ],
       "bundle_links": [],
       "status": ""
@@ -278,34 +277,6 @@
       ],
       "bundle_links": [],
       "status": "draft"
-    },
-    {
-      "id": "FM_004",
-      "type": "FM",
-      "title": "Participant identity map bijection not enforced",
-      "failure_domain": "Identity Integrity",
-      "mechanism": "Identity Registry Collisions",
-      "summary": "Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.",
-      "source_path": "lab/failure_modes/FM_004_identity_map_bijection/spec.md",
-      "entry_path": "entries/fm_004.html",
-      "related_ids": [
-        "FP_007",
-        "GR_007",
-        "PM_007"
-      ],
-      "bundle_links": [
-        {
-          "label": "Directory",
-          "path": "lab/failure_modes/FM_004_identity_map_bijection",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection"
-        },
-        {
-          "label": "Spec",
-          "path": "lab/failure_modes/FM_004_identity_map_bijection/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_004_identity_map_bijection/spec.md"
-        }
-      ],
-      "status": "validated"
     },
     {
       "id": "GR_004",
@@ -332,12 +303,45 @@
       "source_path": "atlas/FP_005_unbounded_pagination_cookie_state_amplification.md",
       "entry_path": "entries/fp_005.html",
       "related_ids": [
-        "FM_002",
+        "FM_005",
         "GR_005",
         "PM_005",
         "FP_006"
       ],
       "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "FM_005",
+      "type": "FM",
+      "title": "Unbounded pagination cookie state under repeated discover requests",
+      "failure_domain": "Resource Exhaustion",
+      "mechanism": "Server-side Cursor Growth",
+      "summary": "Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.",
+      "source_path": "lab/failure_modes/FM_005_unbounded_pagination_state/spec.md",
+      "entry_path": "entries/fm_005.html",
+      "related_ids": [
+        "FP_005",
+        "GR_005",
+        "PM_005"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_005_unbounded_pagination_state",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_005_unbounded_pagination_state"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_005_unbounded_pagination_state/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_005_unbounded_pagination_state/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_005_unbounded_pagination_state/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_005_unbounded_pagination_state/spec.md"
+        }
+      ],
       "status": "validated"
     },
     {
@@ -350,8 +354,8 @@
       "source_path": "guardrails/GR_005_bounded_pagination_state.md",
       "entry_path": "entries/gr_005.html",
       "related_ids": [
-        "FM_002",
         "FP_005",
+        "FM_005",
         "PM_005"
       ],
       "bundle_links": [],
@@ -367,8 +371,8 @@
       "source_path": "postmortems/PM_005_unbounded_pagination_state.md",
       "entry_path": "entries/pm_005.html",
       "related_ids": [
-        "FM_002",
         "FP_005",
+        "FM_005",
         "GR_005"
       ],
       "bundle_links": [],
@@ -384,12 +388,45 @@
       "source_path": "atlas/FP_006_quota_boundary_off_by_one_admission.md",
       "entry_path": "entries/fp_006.html",
       "related_ids": [
-        "FM_003",
         "FP_005",
+        "FM_006",
         "GR_006",
         "PM_006"
       ],
       "bundle_links": [],
+      "status": "validated"
+    },
+    {
+      "id": "FM_006",
+      "type": "FM",
+      "title": "Per-peer reservation quota off-by-one at boundary",
+      "failure_domain": "Policy Enforcement",
+      "mechanism": "Quota Boundary Math",
+      "summary": "Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.",
+      "source_path": "lab/failure_modes/FM_006_quota_boundary_off_by_one/spec.md",
+      "entry_path": "entries/fm_006.html",
+      "related_ids": [
+        "FP_006",
+        "GR_006",
+        "PM_006"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_006_quota_boundary_off_by_one",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_006_quota_boundary_off_by_one"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_006_quota_boundary_off_by_one/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_006_quota_boundary_off_by_one/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_006_quota_boundary_off_by_one/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_006_quota_boundary_off_by_one/spec.md"
+        }
+      ],
       "status": "validated"
     },
     {
@@ -402,8 +439,8 @@
       "source_path": "guardrails/GR_006_inclusive_quota_boundary_checks.md",
       "entry_path": "entries/gr_006.html",
       "related_ids": [
-        "FM_003",
         "FP_006",
+        "FM_006",
         "PM_006"
       ],
       "bundle_links": [],
@@ -415,12 +452,12 @@
       "title": "PM_006 — Quota boundary off-by-one admission",
       "failure_domain": "Policy Enforcement",
       "mechanism": "Quota Boundary Math",
-      "summary": "Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM003/FP006.",
+      "summary": "Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM006/FP006.",
       "source_path": "postmortems/PM_006_quota_boundary_off_by_one.md",
       "entry_path": "entries/pm_006.html",
       "related_ids": [
-        "FM_003",
         "FP_006",
+        "FM_006",
         "GR_006"
       ],
       "bundle_links": [],
@@ -437,12 +474,40 @@
       "entry_path": "entries/fp_007.html",
       "related_ids": [
         "FP_001",
-        "FM_004",
+        "FM_007",
         "GR_007",
         "PM_007"
       ],
       "bundle_links": [],
       "status": "draft"
+    },
+    {
+      "id": "FM_007",
+      "type": "FM",
+      "title": "Participant identity map bijection not enforced",
+      "failure_domain": "Identity Integrity",
+      "mechanism": "Identity Registry Collisions",
+      "summary": "Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.",
+      "source_path": "lab/failure_modes/FM_007_identity_map_bijection/spec.md",
+      "entry_path": "entries/fm_007.html",
+      "related_ids": [
+        "FP_007",
+        "GR_007",
+        "PM_007"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_007_identity_map_bijection",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_007_identity_map_bijection"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_007_identity_map_bijection/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_007_identity_map_bijection/spec.md"
+        }
+      ],
+      "status": "validated"
     },
     {
       "id": "GR_007",
@@ -454,8 +519,8 @@
       "source_path": "guardrails/GR_007_identity_bijection_startup_validation.md",
       "entry_path": "entries/gr_007.html",
       "related_ids": [
-        "FM_004",
         "FP_007",
+        "FM_007",
         "PM_007"
       ],
       "bundle_links": [],
@@ -471,8 +536,8 @@
       "source_path": "postmortems/PM_007_identity_map_bijection_break.md",
       "entry_path": "entries/pm_007.html",
       "related_ids": [
-        "FM_004",
         "FP_007",
+        "FM_007",
         "GR_007"
       ],
       "bundle_links": [],
@@ -579,8 +644,8 @@
       "source_path": "atlas/FP_009_progress_stall_detection_gap.md",
       "entry_path": "entries/fp_009.html",
       "related_ids": [
-        "GR_009",
-        "FM_011"
+        "FM_009",
+        "GR_009"
       ],
       "bundle_links": [],
       "status": "draft"
@@ -588,35 +653,34 @@
     {
       "id": "FM_009",
       "type": "FM",
-      "title": "Extension authority persists after uninstall",
-      "failure_domain": "Policy Enforcement",
-      "mechanism": "Extension Authority Lifecycle",
-      "summary": "Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.",
-      "source_path": "lab/failure_modes/FM_009_extension_authority_persistence/spec.md",
+      "title": "Progress-stall loop from repeated invalid tool call",
+      "failure_domain": "Agent Runtime",
+      "mechanism": "Progress Ledger Omission",
+      "summary": "LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.",
+      "source_path": "lab/failure_modes/FM_009_progress_stall_loop/spec.md",
       "entry_path": "entries/fm_009.html",
       "related_ids": [
-        "FP_002",
-        "GR_002",
-        "PM_002"
+        "FP_009",
+        "GR_009"
       ],
       "bundle_links": [
         {
           "label": "Directory",
-          "path": "lab/failure_modes/FM_009_extension_authority_persistence",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence"
+          "path": "lab/failure_modes/FM_009_progress_stall_loop",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_progress_stall_loop"
         },
         {
           "label": "README",
-          "path": "lab/failure_modes/FM_009_extension_authority_persistence/README.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence/README.md"
+          "path": "lab/failure_modes/FM_009_progress_stall_loop/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_progress_stall_loop/README.md"
         },
         {
           "label": "Spec",
-          "path": "lab/failure_modes/FM_009_extension_authority_persistence/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence/spec.md"
+          "path": "lab/failure_modes/FM_009_progress_stall_loop/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_progress_stall_loop/spec.md"
         }
       ],
-      "status": "draft"
+      "status": "validated"
     },
     {
       "id": "GR_009",
@@ -629,75 +693,10 @@
       "entry_path": "entries/gr_009.html",
       "related_ids": [
         "FP_009",
-        "FM_011"
+        "FM_009"
       ],
       "bundle_links": [],
       "status": "draft"
-    },
-    {
-      "id": "FM_010",
-      "type": "FM",
-      "title": "Read-only flag does not remove write tools",
-      "failure_domain": "Policy Enforcement",
-      "mechanism": "Read/Write Boundary Drift",
-      "summary": "The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.",
-      "source_path": "lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md",
-      "entry_path": "entries/fm_010.html",
-      "related_ids": [
-        "FP_003",
-        "GR_003",
-        "PM_003"
-      ],
-      "bundle_links": [
-        {
-          "label": "Directory",
-          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap"
-        },
-        {
-          "label": "README",
-          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap/README.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/README.md"
-        },
-        {
-          "label": "Spec",
-          "path": "lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_010_read_only_enforcement_gap/spec.md"
-        }
-      ],
-      "status": "draft"
-    },
-    {
-      "id": "FM_011",
-      "type": "FM",
-      "title": "Progress-stall loop from repeated invalid tool call",
-      "failure_domain": "Agent Runtime",
-      "mechanism": "Progress Ledger Omission",
-      "summary": "LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.",
-      "source_path": "lab/failure_modes/FM_011_progress_stall_loop/spec.md",
-      "entry_path": "entries/fm_011.html",
-      "related_ids": [
-        "FP_009",
-        "GR_009"
-      ],
-      "bundle_links": [
-        {
-          "label": "Directory",
-          "path": "lab/failure_modes/FM_011_progress_stall_loop",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop"
-        },
-        {
-          "label": "README",
-          "path": "lab/failure_modes/FM_011_progress_stall_loop/README.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop/README.md"
-        },
-        {
-          "label": "Spec",
-          "path": "lab/failure_modes/FM_011_progress_stall_loop/spec.md",
-          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop/spec.md"
-        }
-      ],
-      "status": "validated"
     }
   ],
   "domains": [

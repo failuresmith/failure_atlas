@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FM_002 · Unbounded pagination cookie state under repeated discover requests</title>
+  <title>FM_002 · Extension authority persists after uninstall</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -35,7 +35,7 @@
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>FM_002 · Unbounded pagination cookie state under repeated discover requests</h1>
+    <h1>FM_002 · Extension authority persists after uninstall</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
@@ -43,22 +43,22 @@
       </div>
       <div>
         <dt>Failure domain</dt>
-        <dd>Resource Exhaustion</dd>
+        <dd>Policy Enforcement</dd>
       </div>
       <div>
         <dt>Mechanism</dt>
-        <dd>Server-side Cursor Growth</dd>
+        <dd>Extension Authority Lifecycle</dd>
       </div>
       <div>
         <dt>Status</dt>
-        <dd>validated</dd>
+        <dd>draft</dd>
       </div>
     </dl>
 
     <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state" target="_blank" rel="noopener noreferrer">Directory</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_unbounded_pagination_state/README.md" target="_blank" rel="noopener noreferrer">README</a>
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_002_extension_authority_persistence/README.md" target="_blank" rel="noopener noreferrer">README</a>
         <a href="#spec">Spec</a>
     </div>
   </header>
@@ -66,66 +66,63 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/gr_005.html">GR_005</a> ·         <a href="../entries/pm_005.html">PM_005</a>    </p>
+        <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/gr_002.html">GR_002</a> ·         <a href="../entries/pm_002.html">PM_002</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="fm_002-unbounded-pagination-cookie-state-under-repeated-discover-requests">FM_002 — Unbounded pagination cookie state under repeated discover requests</h1>
+    <h1 id="fm_002-extension-authority-persists-after-uninstall">FM_002 — Extension authority persists after uninstall</h1>
 <h2 id="description">Description</h2>
-<p>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</p>
+<p>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</p>
 <h2 id="trigger">Trigger</h2>
-<ol>
-<li>A remote peer sends repeated DISCOVER-style requests.</li>
-<li>Each request creates a new server-side pagination cookie entry.</li>
-<li>No cap/eviction/expiry budget is enforced.</li>
-</ol>
+<ul>
+<li>Extension registers authority mappings.</li>
+<li>Extension is uninstalled or deactivated.</li>
+<li>Registry does not revoke mappings on lifecycle change.</li>
+</ul>
 <h2 id="preconditions">Preconditions</h2>
 <ul>
-<li>pagination state is stored server-side</li>
-<li>cookie creation is reachable via protocol-compliant traffic</li>
-<li>cookie registry has no hard upper bound</li>
+<li>Authority registry keyed by host/tool only, not by extension ID.</li>
+<li>In-memory registry survives uninstall events.</li>
 </ul>
 <h2 id="failure-mechanism-step-by-step">Failure mechanism (step-by-step)</h2>
 <ol>
-<li>Request arrives and pagination state is generated.</li>
-<li>New cookie is inserted into cookie registry.</li>
-<li>Registry size increases monotonically with each request.</li>
-<li>Remote caller controls growth rate by request volume.</li>
+<li>Extension installs and registers authority for host(s).</li>
+<li>Extension is uninstalled.</li>
+<li>Registry retains mappings because they are not keyed/derived from active extensions.</li>
+<li>Subsequent authority checks still succeed using stale mappings.</li>
 </ol>
 <h2 id="symptoms">Symptoms</h2>
 <ul>
-<li>monotonically increasing cookie registry size</li>
-<li>cookie count exceeds configured safety budget</li>
-<li>memory pressure grows with request volume</li>
+<li><code>registry.contains(host)</code> is true after extension uninstall.</li>
+<li>Sensitive operations still pass authority checks for removed extensions.</li>
 </ul>
 <h2 id="violated-invariants">Violated invariants</h2>
 <ul>
-<li>INV_006 — remote request-driven state growth must remain bounded.</li>
-<li>INV_005 — failure mode must be machine-detectable.</li>
+<li>INV_005 — stale authority remains undetected and active.</li>
 </ul>
 <h2 id="detection">Detection</h2>
 <ul>
-<li><code>cookie_count &gt; max_cookie_budget</code></li>
-<li>monotonic <code>cookie_count</code> growth under repeated unauthenticated requests</li>
+<li><code>registry.contains(host) AND extension_active(extension_id) == false</code>.</li>
+<li>Audit asserting zero authority entries for inactive extensions.</li>
 </ul>
 <h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
 <ul>
-<li>enforce hard cookie-state budget (<code>MAX_COOKIES_TRACKED</code>)</li>
-<li>deterministic eviction policy when budget is exceeded (FIFO in this lab)</li>
+<li>Key authority entries by extension ID.</li>
+<li>On uninstall, revoke all mappings for that extension.</li>
+<li>Derive effective authority from active extensions only.</li>
 </ul>
 <h2 id="acceptance-criteria">Acceptance criteria</h2>
 <ul>
-<li><code>test_repro_fm002.py</code> demonstrates cookie growth exceeds budget without guardrail</li>
-<li><code>test_prevent_fm002.py</code> proves cookie count stays within budget with guardrail</li>
+<li><code>tests/test_repro_fm002.py</code> shows authority persists after uninstall in baseline registry.</li>
+<li><code>tests/test_prevent_fm002.py</code> shows lifecycle-bound registry revokes authority on uninstall.</li>
+<li><code>tests/test_fm002_happy_path.py</code> shows active extension retains authority while installed.</li>
 </ul>
-<h2 id="notes">Notes</h2>
-<p>This FM intentionally models mechanism only (state budget boundary), not protocol implementation details.</p>
   </section>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

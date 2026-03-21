@@ -63,7 +63,7 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fm_002.html">FM_002</a> ·         <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/pm_005.html">PM_005</a>    </p>
+        <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/fm_005.html">FM_005</a> ·         <a href="../entries/pm_005.html">PM_005</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
@@ -84,7 +84,7 @@ behavior (evict/reject/expire).</p>
 <li>maintain a cookie registry with explicit <code>MAX_COOKIES_TRACKED</code></li>
 <li>on cookie insert:</li>
 <li>if under cap: insert</li>
-<li>if at cap: evict oldest entry first (FIFO in FM_002) and then insert</li>
+<li>if at cap: evict oldest entry first (FIFO in FM_005) and then insert</li>
 <li>expose <code>evicted_count</code> and <code>cookie_count</code> as detection signals</li>
 </ul>
 <h2 id="tradeoffs-limits">Tradeoffs / Limits</h2>
@@ -97,14 +97,14 @@ behavior (evict/reject/expire).</p>
 <h2 id="explicit-links">Explicit Links</h2>
 <ul>
 <li>atlas: <code>atlas/FP_005_unbounded_pagination_cookie_state_amplification.md</code></li>
-<li>lab proof: <code>lab/failure_modes/FM_002_unbounded_pagination_state/</code></li>
+<li>lab proof: <code>lab/failure_modes/FM_005_unbounded_pagination_state/</code></li>
 </ul>
   </section>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

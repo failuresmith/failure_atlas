@@ -63,13 +63,13 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fm_002.html">FM_002</a> ·         <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/gr_005.html">GR_005</a>    </p>
+        <a href="../entries/fp_005.html">FP_005</a> ·         <a href="../entries/fm_005.html">FM_005</a> ·         <a href="../entries/gr_005.html">GR_005</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
     <h1 id="pm_005-unbounded-pagination-cookie-state-growth">PM_005 — Unbounded pagination cookie state growth</h1>
 <h2 id="summary">Summary</h2>
-<p>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_002/FP_005.</p>
+<p>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_005/FP_005.</p>
 <h2 id="impact">Impact</h2>
 <ul>
 <li>Violated <code>INV_006</code> (remote-driven state must be bounded)</li>
@@ -95,7 +95,7 @@
 </ul>
 <h2 id="corrective-actions">Corrective actions</h2>
 <ol>
-<li>Added bounded registry guardrail (FIFO eviction) in FM_002 harness.</li>
+<li>Added bounded registry guardrail (FIFO eviction) in FM_005 harness.</li>
 <li>Added prevention test enforcing <code>cookie_count &lt;= MAX_COOKIES_TRACKED</code>.</li>
 </ol>
 <h2 id="verification">Verification</h2>
@@ -109,7 +109,7 @@
 </ul>
 <h2 id="links">Links</h2>
 <ul>
-<li>Failure mode: <code>lab/failure_modes/FM_002_unbounded_pagination_state/</code></li>
+<li>Failure mode: <code>lab/failure_modes/FM_005_unbounded_pagination_state/</code></li>
 <li>Failure pattern: <code>atlas/FP_005_unbounded_pagination_cookie_state_amplification.md</code></li>
 <li>Guardrail: <code>guardrails/GR_005_bounded_pagination_state.md</code></li>
 </ul>
@@ -118,7 +118,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

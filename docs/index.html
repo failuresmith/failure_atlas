@@ -181,26 +181,26 @@
         <td>Extension Authority Lifecycle</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
         <td>Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.</td>
       </tr>
       <tr
         class="atlas-row"
         data-id="fm_002"
-        data-title="unbounded pagination cookie state under repeated discover requests"
+        data-title="extension authority persists after uninstall"
         data-type="fm"
-        data-domain="resource exhaustion"
-        data-mechanism="server-side cursor growth"
-        data-summary="server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound."
+        data-domain="policy enforcement"
+        data-mechanism="extension authority lifecycle"
+        data-summary="authority entries registered by an extension are stored independently of extension lifecycle. uninstalling the extension leaves stale credential/tool bindings active until restart."
       >
         <td><a href="entries/fm_002.html">FM_002</a></td>
-        <td>Unbounded pagination cookie state under repeated discover requests</td>
-        <td>Resource Exhaustion</td>
-        <td>Server-side Cursor Growth</td>
+        <td>Extension authority persists after uninstall</td>
+        <td>Policy Enforcement</td>
+        <td>Extension Authority Lifecycle</td>
         <td>FM</td>
         <td class="related-cell">
-                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
-        <td>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</td>
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a>        </td>
+        <td>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -217,7 +217,7 @@
         <td>Extension Authority Lifecycle</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
         <td>Authority entries are derived views of active components, not independent mutable state.</td>
       </tr>
       <tr
@@ -235,7 +235,7 @@
         <td>Extension Authority Lifecycle</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_002.html">GR_002</a>        </td>
         <td>Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.</td>
       </tr>
       <tr
@@ -253,26 +253,26 @@
         <td>Read/Write Boundary Drift</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
         <td>Declared read-only policy is not enforced at capability exposure boundaries.</td>
       </tr>
       <tr
         class="atlas-row"
         data-id="fm_003"
-        data-title="per-peer reservation quota off-by-one at boundary"
+        data-title="read-only flag does not remove write tools"
         data-type="fm"
         data-domain="policy enforcement"
-        data-mechanism="quota boundary math"
-        data-summary="per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy."
+        data-mechanism="read/write boundary drift"
+        data-summary="the server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration."
       >
         <td><a href="entries/fm_003.html">FM_003</a></td>
-        <td>Per-peer reservation quota off-by-one at boundary</td>
+        <td>Read-only flag does not remove write tools</td>
         <td>Policy Enforcement</td>
-        <td>Quota Boundary Math</td>
+        <td>Read/Write Boundary Drift</td>
         <td>FM</td>
         <td class="related-cell">
-                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
-        <td>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.</td>
+                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
+        <td>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -289,7 +289,7 @@
         <td>Read/Write Boundary Drift</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/pm_003.html">PM_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
+                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
         <td>Project policy mode into the runtime capability surface during registration, not at invocation hints.</td>
       </tr>
       <tr
@@ -307,7 +307,7 @@
         <td>Read/Write Boundary Drift</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/fm_010.html">FM_010</a>        </td>
+                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
         <td>The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.</td>
       </tr>
       <tr
@@ -327,24 +327,6 @@
         <td class="related-cell">
                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_004.html">GR_004</a>        </td>
         <td>Statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_004"
-        data-title="participant identity map bijection not enforced"
-        data-type="fm"
-        data-domain="identity integrity"
-        data-mechanism="identity registry collisions"
-        data-summary="startup builds a tlskey → participantid registry using overwrite semantics. if two participants share the same tls key (or duplicate ids), the later insert replaces the earlier mapping. runtime attribution becomes ambiguous."
-      >
-        <td><a href="entries/fm_004.html">FM_004</a></td>
-        <td>Participant identity map bijection not enforced</td>
-        <td>Identity Integrity</td>
-        <td>Identity Registry Collisions</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
-        <td>Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -379,8 +361,26 @@
         <td>Server-side Cursor Growth</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a> ·                 <a href="entries/fp_006.html">FP_006</a>        </td>
+                <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a> ·                 <a href="entries/fp_006.html">FP_006</a>        </td>
         <td>Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_005"
+        data-title="unbounded pagination cookie state under repeated discover requests"
+        data-type="fm"
+        data-domain="resource exhaustion"
+        data-mechanism="server-side cursor growth"
+        data-summary="server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound."
+      >
+        <td><a href="entries/fm_005.html">FM_005</a></td>
+        <td>Unbounded pagination cookie state under repeated discover requests</td>
+        <td>Resource Exhaustion</td>
+        <td>Server-side Cursor Growth</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
+        <td>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -397,7 +397,7 @@
         <td>Server-side Cursor Growth</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
+                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
         <td>Project pagination into a deterministic bounded state budget. Every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire).</td>
       </tr>
       <tr
@@ -415,7 +415,7 @@
         <td>Server-side Cursor Growth</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a>        </td>
+                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/gr_005.html">GR_005</a>        </td>
         <td>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m</td>
       </tr>
       <tr
@@ -433,8 +433,26 @@
         <td>Quota Boundary Math</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
         <td>Resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_006"
+        data-title="per-peer reservation quota off-by-one at boundary"
+        data-type="fm"
+        data-domain="policy enforcement"
+        data-mechanism="quota boundary math"
+        data-summary="per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy."
+      >
+        <td><a href="entries/fm_006.html">FM_006</a></td>
+        <td>Per-peer reservation quota off-by-one at boundary</td>
+        <td>Policy Enforcement</td>
+        <td>Quota Boundary Math</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+        <td>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -451,7 +469,7 @@
         <td>Quota Boundary Math</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
+                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
         <td>Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.</td>
       </tr>
       <tr
@@ -461,7 +479,7 @@
         data-type="pm"
         data-domain="policy enforcement"
         data-mechanism="quota boundary math"
-        data-summary="per-peer reservation admission used a strict-greater () comparator. when a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. this field bug motivated fm003/fp006."
+        data-summary="per-peer reservation admission used a strict-greater () comparator. when a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. this field bug motivated fm006/fp006."
       >
         <td><a href="entries/pm_006.html">PM_006</a></td>
         <td>PM_006 — Quota boundary off-by-one admission</td>
@@ -469,8 +487,8 @@
         <td>Quota Boundary Math</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a>        </td>
-        <td>Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM003/FP006.</td>
+                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/gr_006.html">GR_006</a>        </td>
+        <td>Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM006/FP006.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -487,8 +505,26 @@
         <td>Identity Registry Collisions</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
         <td>Participant identity registry allows duplicate credentials or IDs to overwrite existing entries, breaking the required bijection between participant IDs and TLS keys.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_007"
+        data-title="participant identity map bijection not enforced"
+        data-type="fm"
+        data-domain="identity integrity"
+        data-mechanism="identity registry collisions"
+        data-summary="startup builds a tlskey → participantid registry using overwrite semantics. if two participants share the same tls key (or duplicate ids), the later insert replaces the earlier mapping. runtime attribution becomes ambiguous."
+      >
+        <td><a href="entries/fm_007.html">FM_007</a></td>
+        <td>Participant identity map bijection not enforced</td>
+        <td>Identity Integrity</td>
+        <td>Identity Registry Collisions</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+        <td>Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -505,7 +541,7 @@
         <td>Identity Registry Collisions</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
+                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
         <td>Validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant IDs and credentials (TLS keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; </td>
       </tr>
       <tr
@@ -523,7 +559,7 @@
         <td>Identity Registry Collisions</td>
         <td>PM</td>
         <td class="related-cell">
-                <a href="entries/fm_004.html">FM_004</a> ·                 <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a>        </td>
+                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/gr_007.html">GR_007</a>        </td>
         <td>During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,</td>
       </tr>
       <tr
@@ -613,26 +649,26 @@
         <td>Progress Ledger Omission</td>
         <td>FP</td>
         <td class="related-cell">
-                <a href="entries/gr_009.html">GR_009</a> ·                 <a href="entries/fm_011.html">FM_011</a>        </td>
+                <a href="entries/fm_009.html">FM_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
         <td>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</td>
       </tr>
       <tr
         class="atlas-row"
         data-id="fm_009"
-        data-title="extension authority persists after uninstall"
+        data-title="progress-stall loop from repeated invalid tool call"
         data-type="fm"
-        data-domain="policy enforcement"
-        data-mechanism="extension authority lifecycle"
-        data-summary="authority entries registered by an extension are stored independently of extension lifecycle. uninstalling the extension leaves stale credential/tool bindings active until restart."
+        data-domain="agent runtime"
+        data-mechanism="progress ledger omission"
+        data-summary="llm agents commonly bound work by max iterations. when the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached."
       >
         <td><a href="entries/fm_009.html">FM_009</a></td>
-        <td>Extension authority persists after uninstall</td>
-        <td>Policy Enforcement</td>
-        <td>Extension Authority Lifecycle</td>
+        <td>Progress-stall loop from repeated invalid tool call</td>
+        <td>Agent Runtime</td>
+        <td>Progress Ledger Omission</td>
         <td>FM</td>
         <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a>        </td>
-        <td>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</td>
+                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
+        <td>LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -649,44 +685,8 @@
         <td>Progress Ledger Omission</td>
         <td>GR</td>
         <td class="related-cell">
-                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/fm_011.html">FM_011</a>        </td>
+                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
         <td>Containment for agents that repeat the same failing tool call without making progress.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_010"
-        data-title="read-only flag does not remove write tools"
-        data-type="fm"
-        data-domain="policy enforcement"
-        data-mechanism="read/write boundary drift"
-        data-summary="the server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration."
-      >
-        <td><a href="entries/fm_010.html">FM_010</a></td>
-        <td>Read-only flag does not remove write tools</td>
-        <td>Policy Enforcement</td>
-        <td>Read/Write Boundary Drift</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
-        <td>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_011"
-        data-title="progress-stall loop from repeated invalid tool call"
-        data-type="fm"
-        data-domain="agent runtime"
-        data-mechanism="progress ledger omission"
-        data-summary="llm agents commonly bound work by max iterations. when the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached."
-      >
-        <td><a href="entries/fm_011.html">FM_011</a></td>
-        <td>Progress-stall loop from repeated invalid tool call</td>
-        <td>Agent Runtime</td>
-        <td>Progress Ledger Omission</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
-        <td>LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.</td>
       </tr>
     </tbody>
   </table>
@@ -694,7 +694,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

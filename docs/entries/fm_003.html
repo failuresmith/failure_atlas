@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FM_003 · Per-peer reservation quota off-by-one at boundary</title>
+  <title>FM_003 · Read-only flag does not remove write tools</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -35,7 +35,7 @@
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>FM_003 · Per-peer reservation quota off-by-one at boundary</h1>
+    <h1>FM_003 · Read-only flag does not remove write tools</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
@@ -47,18 +47,18 @@
       </div>
       <div>
         <dt>Mechanism</dt>
-        <dd>Quota Boundary Math</dd>
+        <dd>Read/Write Boundary Drift</dd>
       </div>
       <div>
         <dt>Status</dt>
-        <dd>validated</dd>
+        <dd>draft</dd>
       </div>
     </dl>
 
     <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one" target="_blank" rel="noopener noreferrer">Directory</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_quota_boundary_off_by_one/README.md" target="_blank" rel="noopener noreferrer">README</a>
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/README.md" target="_blank" rel="noopener noreferrer">README</a>
         <a href="#spec">Spec</a>
     </div>
   </header>
@@ -66,66 +66,60 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fp_006.html">FP_006</a> ·         <a href="../entries/gr_006.html">GR_006</a> ·         <a href="../entries/pm_006.html">PM_006</a>    </p>
+        <a href="../entries/fp_003.html">FP_003</a> ·         <a href="../entries/gr_003.html">GR_003</a> ·         <a href="../entries/pm_003.html">PM_003</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="fm_003-per-peer-reservation-quota-off-by-one-at-boundary">FM_003 — Per-peer reservation quota off-by-one at boundary</h1>
+    <h1 id="fm_003-read-only-flag-does-not-remove-write-tools">FM_003 — Read-only flag does not remove write tools</h1>
 <h2 id="description">Description</h2>
-<p>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater (<code>&gt;</code>) instead of greater-or-equal (<code>&gt;=</code>), allowing one extra allocation beyond policy.</p>
+<p>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</p>
 <h2 id="trigger">Trigger</h2>
-<ol>
-<li>A peer reaches <code>active_reservations == max_reservations_per_peer</code>.</li>
-<li>The same peer submits another reservation request.</li>
-<li>Admission check uses <code>current &gt; max</code>.</li>
-</ol>
+<ul>
+<li>Server started with <code>read_only=True</code>.</li>
+<li>Tool registry still includes destructive operations.</li>
+</ul>
 <h2 id="preconditions">Preconditions</h2>
 <ul>
-<li>resource admission is performed per peer identity</li>
-<li>quota check executes before incrementing active count</li>
-<li>comparator semantics are configurable/implemented incorrectly</li>
+<li>Read-only intent is represented only as metadata, not enforced in registration.</li>
+<li>Tool dispatch does not check read-only mode before exposing operations.</li>
 </ul>
 <h2 id="failure-mechanism-step-by-step">Failure mechanism (step-by-step)</h2>
 <ol>
-<li>Peer submits requests up to the configured max.</li>
-<li>At boundary (<code>current == max</code>), strict comparator evaluates false.</li>
-<li>Request is accepted and count increments to <code>max + 1</code>.</li>
-<li>Policy intent (<code>active &lt;= max</code>) is violated.</li>
+<li>Server starts with <code>read_only=True</code>.</li>
+<li>Tool registration path unconditionally registers read and write tools.</li>
+<li>Client discovery lists write tools; invocations succeed.</li>
 </ol>
 <h2 id="symptoms">Symptoms</h2>
 <ul>
-<li>active reservations for one peer become <code>max + 1</code></li>
-<li>boundary-only failures (often invisible under non-edge traffic)</li>
-<li>per-peer fairness/resource guarantees weaken</li>
+<li><code>list_tools</code> contains write operations in read-only mode.</li>
+<li>Write tool invocations succeed instead of returning <code>METHOD_NOT_FOUND</code>.</li>
 </ul>
 <h2 id="violated-invariants">Violated invariants</h2>
 <ul>
-<li>INV_007 — per-principal active allocations must not exceed configured quota.</li>
-<li>INV_005 — admission policy violations must be machine-detectable.</li>
+<li>INV_003 — policy intent is not projected into explicit capability-state transitions.</li>
 </ul>
 <h2 id="detection">Detection</h2>
 <ul>
-<li><code>active_reservations(peer_id) &gt; max_reservations_per_peer</code></li>
-<li>boundary regression tests at <code>max=0</code>, <code>max=1</code>, and <code>max=N</code></li>
+<li><code>read_only == true AND write_tools ∈ exposed_toolset</code>.</li>
+<li>Audit that no destructive tools are present when read-only is enabled.</li>
 </ul>
 <h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
 <ul>
-<li>enforce inclusive comparator (<code>&gt;=</code>) in pre-admission guard</li>
-<li>keep boundary regression tests as permanent policy contract tests</li>
+<li>Condition tool registration on the read-only flag.</li>
+<li>Reject write tool invocations with deterministic errors when read-only.</li>
 </ul>
 <h2 id="acceptance-criteria">Acceptance criteria</h2>
 <ul>
-<li><code>test_repro_fm003.py</code> proves strict comparator admits one extra reservation</li>
-<li><code>test_prevent_fm003.py</code> proves inclusive comparator enforces the configured limit</li>
+<li><code>tests/test_repro_fm010.py</code> shows write tools exposed in read-only baseline.</li>
+<li><code>tests/test_prevent_fm010.py</code> shows write tools absent in guarded registry when read-only.</li>
+<li><code>tests/test_fm010_happy_path.py</code> shows write tools available in standard mode.</li>
 </ul>
-<h2 id="notes">Notes</h2>
-<p>This FM isolates admission-boundary semantics only; it intentionally excludes connection lifecycle complexity to keep mechanism legible and deterministic.</p>
   </section>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

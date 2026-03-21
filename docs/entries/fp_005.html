@@ -63,7 +63,7 @@
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fm_002.html">FM_002</a> ·         <a href="../entries/gr_005.html">GR_005</a> ·         <a href="../entries/pm_005.html">PM_005</a> ·         <a href="../entries/fp_006.html">FP_006</a>    </p>
+        <a href="../entries/fm_005.html">FM_005</a> ·         <a href="../entries/gr_005.html">GR_005</a> ·         <a href="../entries/pm_005.html">PM_005</a> ·         <a href="../entries/fp_006.html">FP_006</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
@@ -103,15 +103,15 @@ DISCOVER-style traffic.</p>
 <h2 id="real-failure-minimal-reproduction-mechanism-guardrail-atlas-update">Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update</h2>
 <ul>
 <li><strong>Real failure:</strong> unbounded DISCOVER cookie tracking allows remote memory amplification</li>
-<li><strong>Minimal reproduction:</strong> deterministic FM_002 repeated discover-request harness</li>
+<li><strong>Minimal reproduction:</strong> deterministic FM_005 repeated discover-request harness</li>
 <li><strong>Mechanism:</strong> unbounded server-side pagination state table</li>
 <li><strong>Guardrail:</strong> bounded cookie registry with deterministic overflow behavior</li>
-<li><strong>Atlas update:</strong> FP_005 linked to validated FM_002 + GR_005 artifacts</li>
+<li><strong>Atlas update:</strong> FP_005 linked to validated FM_005 + GR_005 artifacts</li>
 <li><strong>Postmortem:</strong> lab/postmortems/PM_005_unbounded_pagination_state.md</li>
 </ul>
 <h2 id="lab-reproduction">Lab Reproduction</h2>
 <ul>
-<li><code>lab/failure_modes/FM_002_unbounded_pagination_state/</code></li>
+<li><code>lab/failure_modes/FM_005_unbounded_pagination_state/</code></li>
 </ul>
 <h2 id="relevant-guardrails">Relevant Guardrails</h2>
 <ul>
@@ -126,7 +126,7 @@ DISCOVER-style traffic.</p>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:50 UTC</span>
+      <span>Generated 2026-03-21 13:15 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

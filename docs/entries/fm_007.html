@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FP_001 · Duplicate Execution After Retry Timeout</title>
+  <title>FM_007 · Participant identity map bijection not enforced</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -30,24 +30,24 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <a href="../index.html">Atlas Index</a>
   <span>›</span>
-  <span>FP_001</span>
+  <span>FM_007</span>
 </nav>
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>FP_001 · Duplicate Execution After Retry Timeout</h1>
+    <h1>FM_007 · Participant identity map bijection not enforced</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
-        <dd>FP</dd>
+        <dd>FM</dd>
       </div>
       <div>
         <dt>Failure domain</dt>
-        <dd>State Consistency</dd>
+        <dd>Identity Integrity</dd>
       </div>
       <div>
         <dt>Mechanism</dt>
-        <dd>Retry Idempotence Window</dd>
+        <dd>Identity Registry Collisions</dd>
       </div>
       <div>
         <dt>Status</dt>
@@ -56,52 +56,65 @@
     </dl>
 
     <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_001_duplicate_execution_after_retry_timeout.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_007_identity_map_bijection/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_007_identity_map_bijection" target="_blank" rel="noopener noreferrer">Directory</a>
+        <a href="#spec">Spec</a>
     </div>
   </header>
 
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fm_001.html">FM_001</a> ·         <a href="../entries/gr_001.html">GR_001</a> ·         <a href="../entries/pm_001.html">PM_001</a> ·         <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/fp_003.html">FP_003</a>    </p>
+        <a href="../entries/fp_007.html">FP_007</a> ·         <a href="../entries/gr_007.html">GR_007</a> ·         <a href="../entries/pm_007.html">PM_007</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern">Failure Pattern</h1>
-<p>At-least-once retry after lease timeout can apply one logical effect more than
-once unless a durable idempotency boundary exists.</p>
-<h2 id="hidden-assumption">Hidden Assumption</h2>
-<p>"Timeout implies no committed side effect was produced."</p>
-<h2 id="trigger-condition">Trigger Condition</h2>
-<p>Worker A lease expires before completion; Worker B retries the same job while A
-may still complete.</p>
-<h2 id="failure-mechanism">Failure Mechanism</h2>
-<p>Two executions race toward effect application.
-Without first-commit gating, both cross the effect boundary.</p>
-<h2 id="observable-symptoms">Observable Symptoms</h2>
+    <h1 id="fm_007-participant-identity-map-bijection-not-enforced">FM_007 — Participant identity map bijection not enforced</h1>
+<h2 id="description">Description</h2>
+<p>Startup builds a <code>tls_key → participant_id</code> registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</p>
+<h2 id="trigger">Trigger</h2>
+<ol>
+<li>Configuration contains duplicate participant IDs or duplicate TLS keys.</li>
+<li>Registry construction uses insert/overwrite without validation.</li>
+<li>Startup completes without error.</li>
+</ol>
+<h2 id="preconditions">Preconditions</h2>
 <ul>
-<li><code>count_effects(job_id) &gt; 1</code></li>
-<li>multiple successful executions for one logical job</li>
-<li>correctness drift requiring reconciliation</li>
+<li>Participant identities and TLS keys are provided via configuration.</li>
+<li>Registry is constructed in-memory without uniqueness checks.</li>
+</ul>
+<h2 id="failure-mechanism-step-by-step">Failure mechanism (step-by-step)</h2>
+<ol>
+<li>Load participant configs.</li>
+<li>Insert each into the registry keyed by TLS key.</li>
+<li>Later duplicate overwrites earlier mapping.</li>
+<li>Authenticated traffic for the shared key resolves to the last-written participant.</li>
+</ol>
+<h2 id="symptoms">Symptoms</h2>
+<ul>
+<li>Authenticated traffic attributed to the wrong participant ID.</li>
+<li>Conflicting participants cannot be distinguished at runtime.</li>
+<li>Operator diagnostics show mismatched IDs vs credentials.</li>
+</ul>
+<h2 id="violated-invariants">Violated invariants</h2>
+<ul>
+<li>INV_008 — participant identity mapping must be bijective.</li>
+<li>INV_005 — failure should be detectable but goes unnoticed at startup.</li>
 </ul>
 <h2 id="detection">Detection</h2>
-<p><code>count_effects(job_id) &gt; 1</code></p>
-<h2 id="lab-reproduction">Lab Reproduction</h2>
 <ul>
-<li><code>lab/failure_modes/FM_001_duplicate_retry/</code></li>
+<li><code>len(unique_tls_keys) != len(participants)</code></li>
+<li><code>len(set(participant_ids)) != len(participants)</code></li>
 </ul>
-<h2 id="relevant-guardrails">Relevant Guardrails</h2>
+<h2 id="recovery-prevention-strategy">Recovery / prevention strategy</h2>
 <ul>
-<li><code>guardrails/GR_001_idempotent_commit_boundary.md</code></li>
+<li>Fail fast during startup if bijection is not satisfied.</li>
+<li>Emit clear diagnostics listing conflicting IDs/keys.</li>
 </ul>
-<h2 id="postmortem">Postmortem</h2>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
 <ul>
-<li><code>lab/postmortems/PM_001_duplicate_execution.md</code></li>
-</ul>
-<h2 id="related-patterns">Related Patterns</h2>
-<ul>
-<li>FP_002 Extension Authority Persistence</li>
-<li>FP_003 Read-only Enforcement Gap</li>
+<li><code>test_repro_fm004.py</code> demonstrates overwrite when duplicates exist.</li>
+<li><code>test_prevent_fm004.py</code> proves startup validation rejects duplicates and preserves bijection.</li>
 </ul>
   </section>
 </article>
