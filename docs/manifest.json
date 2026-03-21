@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-21T09:13:09.355205+00:00",
+  "generated_at": "2026-03-21T09:50:44.616386+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -570,6 +570,22 @@
       "status": ""
     },
     {
+      "id": "FP_009",
+      "type": "FP",
+      "title": "Progress Stall Detection Gap in Agent Loops",
+      "failure_domain": "Agent Runtime",
+      "mechanism": "Progress Ledger Omission",
+      "summary": "Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.",
+      "source_path": "atlas/FP_009_progress_stall_detection_gap.md",
+      "entry_path": "entries/fp_009.html",
+      "related_ids": [
+        "GR_009",
+        "FM_011"
+      ],
+      "bundle_links": [],
+      "status": "draft"
+    },
+    {
       "id": "FM_009",
       "type": "FM",
       "title": "Extension authority persists after uninstall",
@@ -600,6 +616,22 @@
           "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_009_extension_authority_persistence/spec.md"
         }
       ],
+      "status": "draft"
+    },
+    {
+      "id": "GR_009",
+      "type": "GR",
+      "title": "Progress Guard Middleware",
+      "failure_domain": "Agent Runtime",
+      "mechanism": "Progress Ledger Omission",
+      "summary": "Containment for agents that repeat the same failing tool call without making progress.",
+      "source_path": "guardrails/GR_009_progress_guard_middleware.md",
+      "entry_path": "entries/gr_009.html",
+      "related_ids": [
+        "FP_009",
+        "FM_011"
+      ],
+      "bundle_links": [],
       "status": "draft"
     },
     {
@@ -634,6 +666,38 @@
         }
       ],
       "status": "draft"
+    },
+    {
+      "id": "FM_011",
+      "type": "FM",
+      "title": "Progress-stall loop from repeated invalid tool call",
+      "failure_domain": "Agent Runtime",
+      "mechanism": "Progress Ledger Omission",
+      "summary": "LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.",
+      "source_path": "lab/failure_modes/FM_011_progress_stall_loop/spec.md",
+      "entry_path": "entries/fm_011.html",
+      "related_ids": [
+        "FP_009",
+        "GR_009"
+      ],
+      "bundle_links": [
+        {
+          "label": "Directory",
+          "path": "lab/failure_modes/FM_011_progress_stall_loop",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop"
+        },
+        {
+          "label": "README",
+          "path": "lab/failure_modes/FM_011_progress_stall_loop/README.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop/README.md"
+        },
+        {
+          "label": "Spec",
+          "path": "lab/failure_modes/FM_011_progress_stall_loop/spec.md",
+          "url": "https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_011_progress_stall_loop/spec.md"
+        }
+      ],
+      "status": "validated"
     }
   ],
   "domains": [
@@ -650,6 +714,7 @@
     "Anthropomorphic Projection",
     "Extension Authority Lifecycle",
     "Identity Registry Collisions",
+    "Progress Ledger Omission",
     "Quota Boundary Math",
     "Read/Write Boundary Drift",
     "Retry Idempotence Window",

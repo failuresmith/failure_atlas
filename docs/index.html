@@ -51,6 +51,7 @@
       <option value="Anthropomorphic Projection">Anthropomorphic Projection</option>
       <option value="Extension Authority Lifecycle">Extension Authority Lifecycle</option>
       <option value="Identity Registry Collisions">Identity Registry Collisions</option>
+      <option value="Progress Ledger Omission">Progress Ledger Omission</option>
       <option value="Quota Boundary Math">Quota Boundary Math</option>
       <option value="Read/Write Boundary Drift">Read/Write Boundary Drift</option>
       <option value="Retry Idempotence Window">Retry Idempotence Window</option>
@@ -599,6 +600,24 @@
       </tr>
       <tr
         class="atlas-row"
+        data-id="fp_009"
+        data-title="progress stall detection gap in agent loops"
+        data-type="fp"
+        data-domain="agent runtime"
+        data-mechanism="progress ledger omission"
+        data-summary="agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted."
+      >
+        <td><a href="entries/fp_009.html">FP_009</a></td>
+        <td>Progress Stall Detection Gap in Agent Loops</td>
+        <td>Agent Runtime</td>
+        <td>Progress Ledger Omission</td>
+        <td>FP</td>
+        <td class="related-cell">
+                <a href="entries/gr_009.html">GR_009</a> ·                 <a href="entries/fm_011.html">FM_011</a>        </td>
+        <td>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</td>
+      </tr>
+      <tr
+        class="atlas-row"
         data-id="fm_009"
         data-title="extension authority persists after uninstall"
         data-type="fm"
@@ -614,6 +633,24 @@
         <td class="related-cell">
                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a>        </td>
         <td>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</td>
+      </tr>
+      <tr
+        class="atlas-row"
+        data-id="gr_009"
+        data-title="progress guard middleware"
+        data-type="gr"
+        data-domain="agent runtime"
+        data-mechanism="progress ledger omission"
+        data-summary="containment for agents that repeat the same failing tool call without making progress."
+      >
+        <td><a href="entries/gr_009.html">GR_009</a></td>
+        <td>Progress Guard Middleware</td>
+        <td>Agent Runtime</td>
+        <td>Progress Ledger Omission</td>
+        <td>GR</td>
+        <td class="related-cell">
+                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/fm_011.html">FM_011</a>        </td>
+        <td>Containment for agents that repeat the same failing tool call without making progress.</td>
       </tr>
       <tr
         class="atlas-row"
@@ -633,13 +670,31 @@
                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
         <td>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</td>
       </tr>
+      <tr
+        class="atlas-row"
+        data-id="fm_011"
+        data-title="progress-stall loop from repeated invalid tool call"
+        data-type="fm"
+        data-domain="agent runtime"
+        data-mechanism="progress ledger omission"
+        data-summary="llm agents commonly bound work by max iterations. when the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached."
+      >
+        <td><a href="entries/fm_011.html">FM_011</a></td>
+        <td>Progress-stall loop from repeated invalid tool call</td>
+        <td>Agent Runtime</td>
+        <td>Progress Ledger Omission</td>
+        <td>FM</td>
+        <td class="related-cell">
+                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
+        <td>LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.</td>
+      </tr>
     </tbody>
   </table>
 </section>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 09:13 UTC</span>
+      <span>Generated 2026-03-21 09:50 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

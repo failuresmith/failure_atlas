@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GR_003 · Capability Surface Reduction at Startup</title>
+  <title>FP_009 · Progress Stall Detection Gap in Agent Loops</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body data-search-index-url="../search-index.json">
@@ -30,69 +30,78 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <a href="../index.html">Atlas Index</a>
   <span>›</span>
-  <span>GR_003</span>
+  <span>FP_009</span>
 </nav>
 
 <article class="entry-article">
   <header class="entry-header">
-    <h1>GR_003 · Capability Surface Reduction at Startup</h1>
+    <h1>FP_009 · Progress Stall Detection Gap in Agent Loops</h1>
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
-        <dd>GR</dd>
+        <dd>FP</dd>
       </div>
       <div>
         <dt>Failure domain</dt>
-        <dd>Policy Enforcement</dd>
+        <dd>Agent Runtime</dd>
       </div>
       <div>
         <dt>Mechanism</dt>
-        <dd>Read/Write Boundary Drift</dd>
+        <dd>Progress Ledger Omission</dd>
       </div>
       <div>
         <dt>Status</dt>
-        <dd>proposed</dd>
+        <dd>draft</dd>
       </div>
     </dl>
 
     <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_003_capability_surface_reduction.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_009_progress_stall_detection_gap.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
     </div>
   </header>
 
   <section class="related-strip">
     <h2>Related artifacts</h2>
     <p>
-        <a href="../entries/fp_002.html">FP_002</a> ·         <a href="../entries/fp_003.html">FP_003</a> ·         <a href="../entries/pm_003.html">PM_003</a> ·         <a href="../entries/fm_010.html">FM_010</a>    </p>
+        <a href="../entries/gr_009.html">GR_009</a> ·         <a href="../entries/fm_011.html">FM_011</a>    </p>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern-mitigated">Failure Pattern Mitigated</h1>
+    <h1 id="failure-pattern">Failure Pattern</h1>
+<p>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</p>
+<p>Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</p>
+<h2 id="context">Context</h2>
+<p>LLM tool loops typically bound work by <code>max_iterations</code>. In absence of a progress ledger, repeated failures are treated as "try again" rather than "stuck".</p>
+<h2 id="hidden-assumption">Hidden Assumption</h2>
+<p>"If a tool call fails repeatedly, the planner will adapt before burning the iteration budget." </p>
+<h2 id="invariant-at-risk">Invariant at Risk</h2>
 <ul>
-<li>FP_003 Read-only Enforcement Gap</li>
+<li>INV_002 — partial progress must be detectable.</li>
+<li>INV_005 — failure must be detectable.</li>
 </ul>
-<h2 id="invariant-enforced">Invariant Enforced</h2>
+<h2 id="failure-mechanism">Failure Mechanism</h2>
 <ul>
-<li>INV_003 — policy state must map to explicit executable state transitions.</li>
+<li>Planner/tool pair emits identical <code>(tool, args, error)</code> across steps.</li>
+<li>Termination guard is count-based only; no delta check on observation or action.</li>
+<li>Loop ends at iteration limit with wasted calls and unclear cause.</li>
 </ul>
-<h2 id="guardrail-design">Guardrail Design</h2>
-<p>Project policy mode into the runtime capability surface during registration, not
-at invocation hints.</p>
-<h2 id="implementation-sketch">Implementation Sketch</h2>
+<h2 id="relevance-where-this-appears">Relevance / where this appears</h2>
 <ul>
-<li>if <code>read_only=true</code>, do not register write tools</li>
-<li>return "not found" for write operations in read-only mode</li>
-<li>include startup assertion for forbidden capability exposure</li>
+<li>LangChain agents repeating invalid tool calls (<code>ValidationError</code>, auth errors).</li>
+<li>Agents with deterministic tool failures (schema mismatch, missing creds) but no stuck-state detection.</li>
+<li>Any max-iteration guard without progress criteria.</li>
 </ul>
-<h2 id="tradeoffs">Tradeoffs</h2>
+<h2 id="guardrail-overview">Guardrail (overview)</h2>
+<p>Add a progress-aware termination guard:</p>
 <ul>
-<li>reduced operational flexibility without restart/reconfiguration</li>
-<li>explicit mode switching semantics required</li>
+<li>Track last <code>N</code> step signatures (tool, args, error/output).</li>
+<li>If the last <code>K</code> are identical → emit <code>no_progress_detected</code> and stop.</li>
+<li>Configure window/threshold per agent; log the stuck signature.</li>
 </ul>
-<h2 id="related-failure-patterns">Related Failure Patterns</h2>
+<h2 id="explicit-links">Explicit links</h2>
 <ul>
-<li>FP_003</li>
-<li>FP_002</li>
+<li>lab reproduction: <code>lab/failure_modes/FM_011_progress_stall_loop/</code></li>
+<li>guardrail entry: <code>guardrails/GR_009_progress_guard_middleware.md</code></li>
 </ul>
   </section>
 </article>
