@@ -25,7 +25,7 @@ This system models (see [`state_model`](./02_state_model.md)):
 
 Focus: **correctness under failure** (see [`invariants`](./01_invariants.md)), not performance or scale.
 
-How to read this: experiments are runtimes; failure modes (`FM_XXX`) are bundles that run on a runtime. Multiple FMs can share a runtime (e.g., FM_001 on Experiment 01, FM_002 on Experiment 02, FM_003/FM_004 on Experiment 03, FM_008 exercises an authorization harness rather than adding a new runtime).
+How to read this: experiments are runtimes; failure modes (`FM_XXX`) are bundles that run on a runtime. Multiple FMs can share a runtime (e.g., FM_001 on Experiment 01, FM_005 on Experiment 02, FM_006/FM_007 on Experiment 03, FM_008 exercises an authorization harness rather than adding a new runtime).
 
 Default approach: add new `FM_XXX` scenarios inside Experiment 01 until a failure mode cannot be represented faithfully in the queue model, then introduce a new experiment runtime.
 

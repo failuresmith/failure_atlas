@@ -6,7 +6,7 @@ Mechanism: Progress Ledger Omission
 Severity: reliability
 Status: draft
 reproduced_in:
-  - FM_011
+  - FM_009
 mitigated_by:
   - GR_009
 ---
@@ -52,5 +52,5 @@ Add a progress-aware termination guard:
 
 ## Explicit links
 
-- lab reproduction: `lab/failure_modes/FM_011_progress_stall_loop/`
+- lab reproduction: `lab/failure_modes/FM_009_progress_stall_loop/`
 - guardrail entry: `guardrails/GR_009_progress_guard_middleware.md`

@@ -2,13 +2,13 @@
 ID: PM_005
 Title: PM_005 — Unbounded pagination cookie state growth
 Summary: |-
-  Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_002/FP_005.
+  Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_005/FP_005.
 ---
 
 # PM_005 — Unbounded pagination cookie state growth
 
 ## Summary
-Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_002/FP_005.
+Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that motivated FM_005/FP_005.
 
 ## Impact
 - Violated `INV_006` (remote-driven state must be bounded)
@@ -30,7 +30,7 @@ Repeated DISCOVER-style requests caused the server to allocate a new pagination 
 - Monotonic `cookie_count` growth under repeated unauthenticated requests
 
 ## Corrective actions
-1. Added bounded registry guardrail (FIFO eviction) in FM_002 harness.
+1. Added bounded registry guardrail (FIFO eviction) in FM_005 harness.
 2. Added prevention test enforcing `cookie_count <= MAX_COOKIES_TRACKED`.
 
 ## Verification
@@ -41,6 +41,6 @@ Repeated DISCOVER-style requests caused the server to allocate a new pagination 
 - Rendezvous DISCOVER cookie handling allowed unbounded server-side cookie accumulation under repeated requests.
 
 ## Links
-- Failure mode: `lab/failure_modes/FM_002_unbounded_pagination_state/`
+- Failure mode: `lab/failure_modes/FM_005_unbounded_pagination_state/`
 - Failure pattern: `atlas/FP_005_unbounded_pagination_cookie_state_amplification.md`
 - Guardrail: `guardrails/GR_005_bounded_pagination_state.md`

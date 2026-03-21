@@ -38,5 +38,5 @@ Validate participant configuration at startup before any listeners are opened:
 ## Explicit Links
 
 - atlas: `atlas/FP_007_identity_map_bijection_break.md`
-- lab proof: `lab/failure_modes/FM_004_identity_map_bijection/`
+- lab proof: `lab/failure_modes/FM_007_identity_map_bijection/`
 - postmortem: `lab/postmortems/PM_007_identity_map_bijection_break.md`

@@ -6,7 +6,7 @@ Mechanism: Identity Registry Collisions
 Severity: integrity
 Status: draft
 reproduced_in:
-  - FM_004
+  - FM_007
 mitigated_by:
   - GR_007
 ---
@@ -41,7 +41,7 @@ Registry keyed by credential replaces earlier mapping when a duplicate key is in
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_004_identity_map_bijection/`
+- `lab/failure_modes/FM_007_identity_map_bijection/`
 
 ## Relevant Guardrails
 

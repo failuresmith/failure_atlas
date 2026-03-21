@@ -2,13 +2,13 @@
 ID: PM_006
 Title: PM_006 — Quota boundary off-by-one admission
 Summary: |-
-  Per-peer reservation admission used a strict-greater (`>`) comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a `max + 1` reservation. This field bug motivated FM_003/FP_006.
+  Per-peer reservation admission used a strict-greater (`>`) comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a `max + 1` reservation. This field bug motivated FM_006/FP_006.
 ---
 
 # PM_006 — Quota boundary off-by-one admission
 
 ## Summary
-Per-peer reservation admission used a strict-greater (`>`) comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a `max + 1` reservation. This field bug motivated FM_003/FP_006.
+Per-peer reservation admission used a strict-greater (`>`) comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a `max + 1` reservation. This field bug motivated FM_006/FP_006.
 
 ## Impact
 - Violated `INV_007` (per-principal allocations must not exceed quota)
@@ -41,11 +41,11 @@ Per-peer reservation admission used a strict-greater (`>`) comparator. When a pe
 - Relay v2 reservation admission used strict `>` comparator, allowing `max + 1` reservation for a peer.
 
 ## Links
-- Failure mode: `lab/failure_modes/FM_003_quota_boundary_off_by_one/`
+- Failure mode: `lab/failure_modes/FM_006_quota_boundary_off_by_one/`
 - Failure pattern: `atlas/FP_006_quota_boundary_off_by_one_admission.md`
 - Guardrail: `guardrails/GR_006_inclusive_quota_boundary_checks.md`
 ID: PM_006
 Title: PM_006 — Quota boundary off-by-one admission
 Summary: |-
-  Per-peer reservation admission used a strict-greater comparator. At the quota boundary a peer could submit one more request and be admitted (`max + 1`), breaching the intended cap. This field bug motivated FM_003/FP_006.
+  Per-peer reservation admission used a strict-greater comparator. At the quota boundary a peer could submit one more request and be admitted (`max + 1`), breaching the intended cap. This field bug motivated FM_006/FP_006.
 ---

@@ -42,5 +42,5 @@ During TLS key rotation/scale-out, two participants shared the same TLS key. The
 
 ## Links
 - Failure pattern: `atlas/FP_007_identity_map_bijection_break.md`
-- Failure mode: `lab/failure_modes/FM_004_identity_map_bijection/`
+- Failure mode: `lab/failure_modes/FM_007_identity_map_bijection/`
 - Guardrail: `guardrails/GR_007_identity_bijection_startup_validation.md`

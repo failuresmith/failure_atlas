@@ -6,7 +6,7 @@ Mechanism: Read/Write Boundary Drift
 Severity: integrity
 Status: draft
 reproduced_in:
-  - FM_010
+  - FM_003
 mitigated_by:
   - GR_003
 ---
@@ -45,7 +45,7 @@ registration/dispatch constraints.
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_010_read_only_enforcement_gap/`
+- `lab/failure_modes/FM_003_read_only_enforcement_gap/`
 
 ## Relevant Guardrails
 

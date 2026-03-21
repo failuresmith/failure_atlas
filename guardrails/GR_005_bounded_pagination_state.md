@@ -28,7 +28,7 @@ behavior (evict/reject/expire).
 - maintain a cookie registry with explicit `MAX_COOKIES_TRACKED`
 - on cookie insert:
   - if under cap: insert
-  - if at cap: evict oldest entry first (FIFO in FM_002) and then insert
+- if at cap: evict oldest entry first (FIFO in FM_005) and then insert
 - expose `evicted_count` and `cookie_count` as detection signals
 
 ## Tradeoffs / Limits
@@ -41,4 +41,4 @@ behavior (evict/reject/expire).
 ## Explicit Links
 
 - atlas: `atlas/FP_005_unbounded_pagination_cookie_state_amplification.md`
-- lab proof: `lab/failure_modes/FM_002_unbounded_pagination_state/`
+- lab proof: `lab/failure_modes/FM_005_unbounded_pagination_state/`

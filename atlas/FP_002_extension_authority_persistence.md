@@ -6,7 +6,7 @@ Mechanism: Extension Authority Lifecycle
 Severity: integrity
 Status: draft
 reproduced_in:
-  - FM_009
+  - FM_002
 mitigated_by:
   - GR_002
 ---
@@ -43,7 +43,7 @@ Revocation path is missing or asynchronous enough to leave active stale grants.
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_001_duplicate_retry/`
+- `lab/failure_modes/FM_002_extension_authority_persistence/`
 
 ## Relevant Guardrails
 

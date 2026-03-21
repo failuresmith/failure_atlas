@@ -6,7 +6,7 @@ Mechanism: Quota Boundary Math
 Severity: availability
 Status: validated
 reproduced_in:
-  - FM_003
+  - FM_006
 mitigated_by:
   - GR_006
 ---
@@ -61,15 +61,15 @@ For any principal: `active_allocations(principal_id) > configured_max(principal_
 ## Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update
 
 - **Real failure:** reservation admission allows one extra allocation at boundary
-- **Minimal reproduction:** deterministic FM_003 boundary matrix (`max=0,1,N`) with repeated same-principal admissions
+- **Minimal reproduction:** deterministic FM_006 boundary matrix (`max=0,1,N`) with repeated same-principal admissions
 - **Mechanism:** strict boundary comparator (`>` vs `>=`) in pre-admit check
 - **Guardrail:** inclusive boundary policy + explicit edge-case regression tests
-- **Atlas update:** FP_006 linked to validated FM_003 + GR_006 artifacts
+- **Atlas update:** FP_006 linked to validated FM_006 + GR_006 artifacts
 - **Postmortem:** lab/postmortems/PM_006_quota_boundary_off_by_one.md
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_003_quota_boundary_off_by_one/`
+- `lab/failure_modes/FM_006_quota_boundary_off_by_one/`
 
 ## Relevant Guardrails
 

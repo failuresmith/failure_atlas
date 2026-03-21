@@ -5,7 +5,7 @@ Failure: FP_009_progress_stall_detection_gap
 Invariants: INV_002, INV_005
 Status: draft
 lab_proof:
-  - lab/failure_modes/FM_011_progress_stall_loop/
+  - lab/failure_modes/FM_009_progress_stall_loop/
 ---
 
 # Guardrail — Progress Guard Middleware
@@ -17,7 +17,7 @@ Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas upda
 ## Failure class mitigated
 
 - `FP_009_progress_stall_detection_gap`
-- Reproduced in `FM_011_progress_stall_loop`
+- Reproduced in `FM_009_progress_stall_loop`
 
 ## Design principle
 
@@ -54,4 +54,4 @@ Count steps only when state changes. If the agent is emitting identical step sig
 ## Links
 
 - Atlas: `atlas/FP_009_progress_stall_detection_gap.md`
-- Lab: `lab/failure_modes/FM_011_progress_stall_loop/`
+- Lab: `lab/failure_modes/FM_009_progress_stall_loop/`

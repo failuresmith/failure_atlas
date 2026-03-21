@@ -93,3 +93,7 @@ Each new FM includes:
 * the commit/idempotency fix
 
 **Deliverable:** Hiring-grade narrative backed by code.
+---
+it would be ideal to make this repo maintainable, and open to future changes.
+for start, the way we link items in markdown documents. if we rename a single item for example FM_001 to FM_002, currently, we would need to update multiple places that link to FM_001 to point to FM_002!
+it would be ideal to only change a single centralized plance! instead of having them scattered.

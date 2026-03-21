@@ -6,7 +6,7 @@ Mechanism: Server-side Cursor Growth
 Severity: availability
 Status: validated
 reproduced_in:
-  - FM_002
+  - FM_005
 mitigated_by:
   - GR_005
 ---
@@ -61,15 +61,15 @@ DISCOVER-style traffic.
 ## Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update
 
 - **Real failure:** unbounded DISCOVER cookie tracking allows remote memory amplification
-- **Minimal reproduction:** deterministic FM_002 repeated discover-request harness
+- **Minimal reproduction:** deterministic FM_005 repeated discover-request harness
 - **Mechanism:** unbounded server-side pagination state table
 - **Guardrail:** bounded cookie registry with deterministic overflow behavior
-- **Atlas update:** FP_005 linked to validated FM_002 + GR_005 artifacts
+- **Atlas update:** FP_005 linked to validated FM_005 + GR_005 artifacts
 - **Postmortem:** lab/postmortems/PM_005_unbounded_pagination_state.md
 
 ## Lab Reproduction
 
-- `lab/failure_modes/FM_002_unbounded_pagination_state/`
+- `lab/failure_modes/FM_005_unbounded_pagination_state/`
 
 ## Relevant Guardrails
 

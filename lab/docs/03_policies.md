@@ -53,13 +53,13 @@ Policies are small, explicit mechanisms that keep invariants intact when failure
   - Existing ordered cookie state table
 - **Outputs**
   - Bounded cookie registry size (`cookie_count <= MAX_COOKIES_TRACKED`)
-  - Deterministic overflow behavior (FIFO eviction in FM_002)
+  - Deterministic overflow behavior (FIFO eviction in FM_005)
   - Auditable pressure signal (`evicted_count`)
 - **Invariant(s) enforced**
   - [INV_006](01_invariants.md#inv_006----remote-request-driven-state-growth-must-be-bounded)
   - [INV_005](01_invariants.md#inv_005----failure-must-be-detectable)
 - **Failure modes covered**
-  - [FM_002 unbounded pagination state](../failure_modes/FM_002_unbounded_pagination_state/spec.md)
+  - [FM_005 unbounded pagination state](../failure_modes/FM_005_unbounded_pagination_state/spec.md)
 
 ## Inclusive per-principal quota boundary checks
 - **Inputs**
@@ -74,7 +74,7 @@ Policies are small, explicit mechanisms that keep invariants intact when failure
   - [INV_007](01_invariants.md#inv_007----per-principal-active-allocations-must-not-exceed-quota)
   - [INV_005](01_invariants.md#inv_005----failure-must-be-detectable)
 - **Failure modes covered**
-  - [FM_003 quota boundary off-by-one](../failure_modes/FM_003_quota_boundary_off_by_one/spec.md)
+  - [FM_006 quota boundary off-by-one](../failure_modes/FM_006_quota_boundary_off_by_one/spec.md)
 
 ## Audit & observability
 - **Inputs**

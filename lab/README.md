@@ -84,13 +84,13 @@ cover all bundles:
 
 ```bash
 make sync   # install required packages
-make test   # happy path + all FM bundles (001, 002, 003, 004, 008, 009, 010)
+make test   # happy path + all FM bundles (001, 002, 003, 005, 006, 007, 008, 009)
 ```
 
 To focus on a single failure mode, point pytest at its bundle, e.g.:
 
 ```bash
-uv run pytest failure_modes/FM_003_quota_boundary_off_by_one/tests
+uv run pytest failure_modes/FM_006_quota_boundary_off_by_one/tests
 ```
 
 The canonical list of active FMs and their invariants lives in

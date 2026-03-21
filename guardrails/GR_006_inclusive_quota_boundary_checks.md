@@ -39,4 +39,4 @@ inclusive predicate (`current >= max`) before allocation is admitted.
 ## Explicit Links
 
 - atlas: `atlas/FP_006_quota_boundary_off_by_one_admission.md`
-- lab proof: `lab/failure_modes/FM_003_quota_boundary_off_by_one/`
+- lab proof: `lab/failure_modes/FM_006_quota_boundary_off_by_one/`
