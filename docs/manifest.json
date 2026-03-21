@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T11:35:53.538977+00:00",
+  "generated_at": "2026-03-21T09:13:09.355205+00:00",
   "entries": [
     {
       "id": "FP_001",
@@ -32,11 +32,7 @@
       "related_ids": [
         "FP_001",
         "GR_001",
-        "PM_001",
-        "FP_002",
-        "GR_002",
-        "FP_003",
-        "GR_003"
+        "PM_001"
       ],
       "bundle_links": [
         {
@@ -155,7 +151,6 @@
       "source_path": "guardrails/GR_002_lifecycle_bound_authority.md",
       "entry_path": "entries/gr_002.html",
       "related_ids": [
-        "FM_001",
         "FP_002",
         "PM_002",
         "FP_003",
@@ -192,7 +187,6 @@
       "entry_path": "entries/fp_003.html",
       "related_ids": [
         "FP_001",
-        "FM_001",
         "FP_002",
         "GR_003",
         "PM_003",
@@ -244,7 +238,6 @@
       "source_path": "guardrails/GR_003_capability_surface_reduction.md",
       "entry_path": "entries/gr_003.html",
       "related_ids": [
-        "FM_001",
         "FP_002",
         "FP_003",
         "PM_003",
