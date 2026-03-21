@@ -4,7 +4,7 @@ Title: Read-only Enforcement Gap
 Domain: Policy Enforcement
 Mechanism: Read/Write Boundary Drift
 Severity: integrity
-Status: draft
+Status: validated
 reproduced_in:
   - FM_003
 mitigated_by:

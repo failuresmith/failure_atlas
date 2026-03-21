@@ -4,7 +4,7 @@ Title: Extension Authority Persistence
 Domain: Policy Enforcement
 Mechanism: Extension Authority Lifecycle
 Severity: integrity
-Status: draft
+Status: validated
 reproduced_in:
   - FM_002
 mitigated_by:
