@@ -52,6 +52,9 @@ Never merge these responsibilities.
 6. **Agent loops require explicit progress detection**
    - When modeling agents, include a deterministically checkable progress/stuck signal (e.g., sliding window of step signatures) instead of relying on iteration caps.
 
+7. **Centralize ID renames**
+   - When changing FP/FM/GR/PM numbers, edit `scripts/id_map.yml` once and run `make relink` to propagate references. Do not hand-edit scattered links.
+
 ---
 
 ## Standard deliverables for each new failure domain

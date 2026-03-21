@@ -1,0 +1,75 @@
+# Single-source registry for FP/FM/GR/PM linkage and labels
+# Edit here, then run `make registry` to regenerate indexes.
+entries:
+  FP_001:
+    title: Duplicate Execution After Retry Timeout
+    domain: State Consistency
+    mechanism: Retry Idempotence Window
+    fm: FM_001
+    gr: [GR_001]
+    pm: PM_001
+    status: validated
+  FP_002:
+    title: Extension Authority Persistence
+    domain: Policy Enforcement
+    mechanism: Extension Authority Lifecycle
+    fm: FM_002
+    gr: [GR_002]
+    pm: PM_002
+    status: validated
+  FP_003:
+    title: Read-only Enforcement Gap
+    domain: Policy Enforcement
+    mechanism: Read/Write Boundary Drift
+    fm: FM_003
+    gr: [GR_003]
+    pm: PM_003
+    status: validated
+  FP_004:
+    title: Anthropomorphic Misinterpretation
+    domain: Model Behavior
+    mechanism: Anthropomorphic Projection
+    fm: null
+    gr: [GR_004]
+    pm: null
+    status: theoretical
+  FP_005:
+    title: Unbounded Pagination Cookie State Amplification
+    domain: Resource Exhaustion
+    mechanism: Server-side Cursor Growth
+    fm: FM_005
+    gr: [GR_005]
+    pm: PM_005
+    status: validated
+  FP_006:
+    title: Quota Boundary Off-by-One Admission
+    domain: Policy Enforcement
+    mechanism: Quota Boundary Math
+    fm: FM_006
+    gr: [GR_006]
+    pm: PM_006
+    status: validated
+  FP_007:
+    title: Identity Map Bijection Break
+    domain: Identity Integrity
+    mechanism: Identity Registry Collisions
+    fm: FM_007
+    gr: [GR_007]
+    pm: PM_007
+    status: validated
+  FP_008:
+    title: Tool Authority Escalation via Prompt Injection
+    domain: Tool / Agent Interfaces
+    mechanism: Tool Authorization Conflation
+    fm: FM_008
+    gr: [GR_008]
+    pm: PM_008
+    status: draft
+  FP_009:
+    title: Progress Stall Detection Gap
+    domain: Agent Runtime
+    mechanism: Progress Ledger Omission
+    fm: FM_009
+    gr: [GR_009]
+    pm: null
+    status: draft

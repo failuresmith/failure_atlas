@@ -26,6 +26,13 @@ site:
 serve:
 	python -m http.server 8000 --directory docs
 
+# Regenerate index docs from registry/registry.yml (single source of truth)
+registry:
+	uv run --project site python scripts/sync_registry.py
+
+registry-check:
+	uv run --project site python scripts/sync_registry.py --check
+
 help:
 	@printf "Targets:\n"
 	@printf "  make test                     # run all lab tests (includes happy path)\n"
