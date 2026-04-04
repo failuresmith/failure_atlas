@@ -100,12 +100,21 @@
 </ol>
 <h2 id="verification">Verification</h2>
 <ul>
-<li><code>test_repro_fm002.py</code> proves unbounded growth in the broken baseline.</li>
-<li><code>test_prevent_fm002.py</code> proves bounded behavior with guardrail.</li>
+<li><code>test_repro_fm005.py</code> proves unbounded growth in the broken baseline.</li>
+<li><code>test_prevent_fm005.py</code> proves bounded behavior with guardrail.</li>
 </ul>
 <h2 id="occurrences">Occurrences</h2>
 <ul>
 <li>Rendezvous DISCOVER cookie handling allowed unbounded server-side cookie accumulation under repeated requests.</li>
+<li><code>rust-libp2p</code> maintainer advisory <code>GHSA-v5hw-cv9c-rpg7</code> / <code>CVE-2026-35457</code>
+  (published April 4, 2026) confirmed the same mechanism: unauthenticated
+  <code>DISCOVER</code> requests force unbounded server-side pagination cookie growth and
+  remote memory exhaustion.</li>
+</ul>
+<h2 id="external-references">External references</h2>
+<ul>
+<li>Advisory: <a href="https://github.com/libp2p/rust-libp2p/security/advisories/GHSA-v5hw-cv9c-rpg7">https://github.com/libp2p/rust-libp2p/security/advisories/GHSA-v5hw-cv9c-rpg7</a></li>
+<li>Seed incident note: <code>incidents/libp2p_1.md</code></li>
 </ul>
 <h2 id="links">Links</h2>
 <ul>
@@ -118,7 +127,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-03-21 13:15 UTC</span>
+      <span>Generated 2026-04-04 14:59 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"
