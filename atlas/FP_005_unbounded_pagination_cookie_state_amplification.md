@@ -58,6 +58,11 @@ DISCOVER-style traffic.
 - search/index APIs with server-side cursor registries
 - any stateless transport carrying stateful pagination handles
 
+## Known validated occurrences
+
+- `rust-libp2p` rendezvous server advisory [`GHSA-v5hw-cv9c-rpg7`](https://github.com/libp2p/rust-libp2p/security/advisories/GHSA-v5hw-cv9c-rpg7) /
+  [`CVE-2026-35457`](https://github.com/advisories/GHSA-v5hw-cv9c-rpg7) (published April 4, 2026)
+
 ## Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update
 
 - **Real failure:** unbounded DISCOVER cookie tracking allows remote memory amplification

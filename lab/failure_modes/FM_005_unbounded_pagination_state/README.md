@@ -6,5 +6,6 @@
 - **Guardrail**: `guardrails/GR_005_bounded_pagination_state.md`
 - **Atlas pattern**: `atlas/FP_005_unbounded_pagination_cookie_state_amplification.md`
 - **Postmortem**: `postmortems/PM_005_unbounded_pagination_state.md`
+- **Incident**: `incidents/libp2p_1.md`
 
 Story: repeated discover requests grow server-side pagination cookies without a cap. Guardrail enforces a hard cookie budget with FIFO eviction.

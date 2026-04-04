@@ -34,11 +34,19 @@ Repeated DISCOVER-style requests caused the server to allocate a new pagination 
 2. Added prevention test enforcing `cookie_count <= MAX_COOKIES_TRACKED`.
 
 ## Verification
-- `test_repro_fm002.py` proves unbounded growth in the broken baseline.
-- `test_prevent_fm002.py` proves bounded behavior with guardrail.
+- `test_repro_fm005.py` proves unbounded growth in the broken baseline.
+- `test_prevent_fm005.py` proves bounded behavior with guardrail.
 
 ## Occurrences
 - Rendezvous DISCOVER cookie handling allowed unbounded server-side cookie accumulation under repeated requests.
+- `rust-libp2p` maintainer advisory `GHSA-v5hw-cv9c-rpg7` / `CVE-2026-35457`
+  (published April 4, 2026) confirmed the same mechanism: unauthenticated
+  `DISCOVER` requests force unbounded server-side pagination cookie growth and
+  remote memory exhaustion.
+
+## External references
+- Advisory: <https://github.com/libp2p/rust-libp2p/security/advisories/GHSA-v5hw-cv9c-rpg7>
+- Seed incident note: `incidents/libp2p_1.md`
 
 ## Links
 - Failure mode: `lab/failure_modes/FM_005_unbounded_pagination_state/`
