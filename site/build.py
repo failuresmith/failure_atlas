@@ -594,6 +594,7 @@ def render_site(artifacts: list[Artifact]) -> None:
 
         rewritten = rewrite_relative_links(artifact.body_markdown, artifact.source_path)
         html_body = md.convert(rewritten)
+        html_body = re.sub(r"^\s*<h1[^>]*>.*?</h1>\s*", "", html_body, count=1, flags=re.DOTALL)
         md.reset()
 
         rendered_bundle_links: list[dict[str, Any]] = []

@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,74 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>PM_007 · PM_007 — Participant identity ↔ TLS key bijection not enforced</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Postmortem</dd>
+  <header class="entry-header entry-hero entry-hero-pm">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-pm">Postmortem</span>
+        <span class="entry-id">PM_007</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Identity Integrity</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Identity Registry Collisions</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>—</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/postmortems/PM_007_identity_map_bijection_break.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>PM_007 — Participant identity ↔ TLS key bijection not enforced</h1>
+      <p class="entry-summary">During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Identity Integrity</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Identity Registry Collisions</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>—</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_007.html">
-              <span class="related-item-id">FP_007</span>
-              <span class="related-item-title">Identity Map Bijection Break</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_007.html">
-              <span class="related-item-id">FM_007</span>
-              <span class="related-item-title">Participant identity map bijection not enforced</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_007.html">
-              <span class="related-item-id">GR_007</span>
-              <span class="related-item-title">Identity Bijection Startup Validation</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="pm_007-participant-identity-tls-key-bijection-not-enforced">PM_007 — Participant identity ↔ TLS key bijection not enforced</h1>
-<h2 id="summary">Summary</h2>
+    <h2 id="summary">Summary</h2>
 <p>During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used <code>HashMap::insert</code>, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant, weakening protocol identity guarantees. This incident is pending FM/FP/GR codification.</p>
 <h2 id="impact">Impact</h2>
 <ul>
@@ -141,11 +103,60 @@
 <li>Guardrail: <code>guardrails/GR_007_identity_bijection_startup_validation.md</code></li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/postmortems/PM_007_identity_map_bijection_break.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_007.html">
+                  <span class="related-item-id">FP_007</span>
+                  <span class="related-item-title">Identity Map Bijection Break</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_007.html">
+                  <span class="related-item-id">FM_007</span>
+                  <span class="related-item-title">Participant identity map bijection not enforced</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_007.html">
+                  <span class="related-item-id">GR_007</span>
+                  <span class="related-item-title">Identity Bijection Startup Validation</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

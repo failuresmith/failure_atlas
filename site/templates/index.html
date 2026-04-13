@@ -3,8 +3,39 @@
 {% block title %}Failure Atlas{% endblock %}
 
 {% block content %}
+<section class="index-hero">
+  <div class="index-hero-copy">
+    <p class="eyebrow">Failure mechanisms</p>
+    <h1>Scan the atlas first. Open detail only when you need it.</h1>
+    <p class="index-hero-summary">
+      Each entry surfaces the core pattern up front, with summary and related artifacts tucked behind on-demand panels.
+    </p>
+  </div>
+  <div class="index-hero-stats" aria-label="Atlas overview">
+    <div class="hero-stat">
+      <span class="hero-stat-value">{{ artifacts|length }}</span>
+      <span class="hero-stat-label">entries</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">{{ domains|length }}</span>
+      <span class="hero-stat-label">domains</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">{{ mechanisms|length }}</span>
+      <span class="hero-stat-label">mechanisms</span>
+    </div>
+  </div>
+</section>
 
 <section class="controls" aria-label="Atlas filters">
+  <div class="controls-header">
+    <div>
+      <p class="controls-kicker">Filter the map</p>
+      <h2>Reduce the visible surface</h2>
+    </div>
+    <p id="visible-count" class="result-count"></p>
+  </div>
+
   <div class="filter-row">
     <label for="filter-domain">Failure domain</label>
     <select id="filter-domain">
@@ -41,55 +72,56 @@
   </div>
 
   <button id="clear-filters" class="quiet-button" type="button">Clear filters</button>
-  <p id="visible-count" class="result-count"></p>
 </section>
 
-<section class="table-section" aria-label="Atlas entries">
-  <table class="atlas-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Domain</th>
-        <th>Mechanism</th>
-        <th>Type</th>
-        <th>Related</th>
-        <th>Summary</th>
-      </tr>
-    </thead>
-    <tbody id="atlas-table-body">
-      {% for artifact in artifacts %}
-      <tr
-        class="atlas-row"
-        data-id="{{ artifact.id|lower }}"
-        data-title="{{ artifact.title|lower }}"
-        data-type="{{ artifact.artifact_type|lower }}"
-        data-domain="{{ artifact.failure_domain|lower }}"
-        data-mechanism="{{ artifact.mechanism|lower }}"
-        data-summary="{{ artifact.summary|lower }}"
-      >
-        <td><a href="{{ artifact.entry_href }}">{{ artifact.id }}</a></td>
-        <td>{{ artifact.title }}</td>
-        <td>{{ artifact.failure_domain or "—" }}</td>
-        <td>{{ artifact.mechanism or "—" }}</td>
-        <td>{{ artifact.artifact_type }}</td>
-        <td class="related-cell">
-          {% if artifact.related_ids %}
-            {% for rid in artifact.related_ids %}
-              {% if by_id.get(rid) %}
-                <a href="{{ by_id[rid].entry_href }}">{{ rid }}</a>{% if not loop.last %} · {% endif %}
-              {% else %}
-                <span>{{ rid }}</span>{% if not loop.last %} · {% endif %}
-              {% endif %}
-            {% endfor %}
-          {% else %}
-            —
-          {% endif %}
-        </td>
-        <td>{{ artifact.summary }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<section class="atlas-feed" aria-label="Atlas entries">
+  <div id="atlas-card-feed" class="atlas-card-feed">
+    {% for artifact in artifacts %}
+    <article
+      class="atlas-card atlas-row atlas-card-{{ artifact.artifact_type|lower }} reveal-on-scroll"
+      data-id="{{ artifact.id|lower }}"
+      data-title="{{ artifact.title|lower }}"
+      data-type="{{ artifact.artifact_type|lower }}"
+      data-domain="{{ artifact.failure_domain|lower }}"
+      data-mechanism="{{ artifact.mechanism|lower }}"
+      data-summary="{{ artifact.summary|lower }}"
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-{{ artifact.artifact_type|lower }}">{{ artifact.artifact_type }}</span>
+            <a class="atlas-card-id" href="{{ artifact.entry_href }}">{{ artifact.id }}</a>
+          </div>
+          <h2><a href="{{ artifact.entry_href }}">{{ artifact.title }}</a></h2>
+          <p class="atlas-card-summary">{{ artifact.summary }}</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>{{ artifact.failure_domain or "—" }}</p>
+          <p><span>Mechanism</span>{{ artifact.mechanism or "—" }}</p>
+        </div>
+      </div>
+
+      {% if artifact.related_ids %}
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+              {% for rid in artifact.related_ids %}
+                {% if by_id.get(rid) %}
+                  <a href="{{ by_id[rid].entry_href }}">{{ rid }}</a>
+                {% else %}
+                  <span>{{ rid }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </section>
+        </div>
+      </details>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
 </section>
 {% endblock %}

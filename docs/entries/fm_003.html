@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,77 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>FM_003 · Read-only flag does not remove write tools</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Failure Mode</dd>
+  <header class="entry-header entry-hero entry-hero-fm">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-fm">Failure Mode</span>
+        <span class="entry-id">FM_003</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Policy Enforcement</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Read/Write Boundary Drift</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>draft</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap" target="_blank" rel="noopener noreferrer">Directory</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/README.md" target="_blank" rel="noopener noreferrer">README</a>
-        <a href="#spec">Spec</a>
+      <h1>Read-only flag does not remove write tools</h1>
+      <p class="entry-summary">The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Policy Enforcement</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Read/Write Boundary Drift</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>draft</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_003.html">
-              <span class="related-item-id">FP_003</span>
-              <span class="related-item-title">Read-only Enforcement Gap</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_003.html">
-              <span class="related-item-id">GR_003</span>
-              <span class="related-item-title">Capability Surface Reduction at Startup</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_003.html">
-              <span class="related-item-id">PM_003</span>
-              <span class="related-item-title">PM_003 — Read-only intent not enforced in MCP server</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="fm_003-read-only-flag-does-not-remove-write-tools">FM_003 — Read-only flag does not remove write tools</h1>
-<h2 id="description">Description</h2>
+    <h2 id="description">Description</h2>
 <p>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</p>
 <h2 id="trigger">Trigger</h2>
 <ul>
@@ -142,11 +101,63 @@
 <li><code>tests/test_fm010_happy_path.py</code> shows write tools available in standard mode.</li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+          <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap" target="_blank" rel="noopener noreferrer">Directory</a>
+          <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_003_read_only_enforcement_gap/README.md" target="_blank" rel="noopener noreferrer">README</a>
+          <a href="#spec">Spec</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_003.html">
+                  <span class="related-item-id">FP_003</span>
+                  <span class="related-item-title">Read-only Enforcement Gap</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_003.html">
+                  <span class="related-item-id">GR_003</span>
+                  <span class="related-item-title">Capability Surface Reduction at Startup</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_003.html">
+                  <span class="related-item-id">PM_003</span>
+                  <span class="related-item-title">PM_003 — Read-only intent not enforced in MCP server</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

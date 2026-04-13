@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,78 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>GR_002 · Lifecycle-Bound Authority Registry</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Guard Rail</dd>
+  <header class="entry-header entry-hero entry-hero-gr">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-gr">Guard Rail</span>
+        <span class="entry-id">GR_002</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Policy Enforcement</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Extension Authority Lifecycle</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>proposed</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_002_lifecycle_bound_authority.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>Lifecycle-Bound Authority Registry</h1>
+      <p class="entry-summary">Authority entries are derived views of active components, not independent mutable state.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Policy Enforcement</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Extension Authority Lifecycle</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>proposed</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (2)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_002.html">
-              <span class="related-item-id">FP_002</span>
-              <span class="related-item-title">Extension Authority Persistence</span>
-            </a>
-            <a class="related-item related-item-fp" href="../entries/fp_003.html">
-              <span class="related-item-id">FP_003</span>
-              <span class="related-item-title">Read-only Enforcement Gap</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_002.html">
-              <span class="related-item-id">FM_002</span>
-              <span class="related-item-title">Extension authority persists after uninstall</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_002.html">
-              <span class="related-item-id">PM_002</span>
-              <span class="related-item-title">PM_002 — Extension authority persists after uninstall</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern-mitigated">Failure Pattern Mitigated</h1>
-<ul>
+    <ul>
 <li>FP_002 Extension Authority Persistence</li>
 </ul>
 <h2 id="invariant-enforced">Invariant Enforced</h2>
@@ -127,11 +85,64 @@ state.</p>
 <li>FP_003</li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_002_lifecycle_bound_authority.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (2)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_002.html">
+                  <span class="related-item-id">FP_002</span>
+                  <span class="related-item-title">Extension Authority Persistence</span>
+                </a>
+                <a class="related-item related-item-fp" href="../entries/fp_003.html">
+                  <span class="related-item-id">FP_003</span>
+                  <span class="related-item-title">Read-only Enforcement Gap</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_002.html">
+                  <span class="related-item-id">FM_002</span>
+                  <span class="related-item-title">Extension authority persists after uninstall</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_002.html">
+                  <span class="related-item-id">PM_002</span>
+                  <span class="related-item-title">PM_002 — Extension authority persists after uninstall</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

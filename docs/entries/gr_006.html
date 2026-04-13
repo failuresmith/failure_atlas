@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,74 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>GR_006 · Inclusive Quota Boundary Admission Checks</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Guard Rail</dd>
+  <header class="entry-header entry-hero entry-hero-gr">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-gr">Guard Rail</span>
+        <span class="entry-id">GR_006</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Policy Enforcement</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Quota Boundary Math</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>validated</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_006_inclusive_quota_boundary_checks.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>Inclusive Quota Boundary Admission Checks</h1>
+      <p class="entry-summary">Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Policy Enforcement</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Quota Boundary Math</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>validated</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_006.html">
-              <span class="related-item-id">FP_006</span>
-              <span class="related-item-title">Quota Boundary Off-by-One Admission</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_006.html">
-              <span class="related-item-id">FM_006</span>
-              <span class="related-item-title">Per-peer reservation quota off-by-one at boundary</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_006.html">
-              <span class="related-item-id">PM_006</span>
-              <span class="related-item-title">PM_006 — Quota boundary off-by-one admission</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern-mitigated">Failure Pattern Mitigated</h1>
-<ul>
+    <ul>
 <li>FP_006 Quota Boundary Off-by-One Admission</li>
 </ul>
 <h2 id="invariant-enforced">Invariant Enforced</h2>
@@ -125,11 +87,60 @@ inclusive predicate (<code>current &gt;= max</code>) before allocation is admitt
 <li>lab proof: <code>lab/failure_modes/FM_006_quota_boundary_off_by_one/</code></li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/guardrails/GR_006_inclusive_quota_boundary_checks.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_006.html">
+                  <span class="related-item-id">FP_006</span>
+                  <span class="related-item-title">Quota Boundary Off-by-One Admission</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_006.html">
+                  <span class="related-item-id">FM_006</span>
+                  <span class="related-item-title">Per-peer reservation quota off-by-one at boundary</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_006.html">
+                  <span class="related-item-id">PM_006</span>
+                  <span class="related-item-title">PM_006 — Quota boundary off-by-one admission</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

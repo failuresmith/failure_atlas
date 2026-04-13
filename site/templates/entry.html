@@ -10,73 +10,87 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>{{ artifact.id }} · {{ artifact.title }}</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>{{ artifact_type_label(artifact.artifact_type) }}</dd>
+  <header class="entry-header entry-hero entry-hero-{{ artifact.artifact_type|lower }}">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-{{ artifact.artifact_type|lower }}">{{ artifact_type_label(artifact.artifact_type) }}</span>
+        <span class="entry-id">{{ artifact.id }}</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>{{ artifact.failure_domain or "—" }}</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>{{ artifact.mechanism or "—" }}</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>{{ artifact.status or "—" }}</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="{{ artifact.source_url }}" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-      {% if rendered_bundle_links %}
-        {% for link in rendered_bundle_links %}
-        {% if link.external %}
-        <a href="{{ link.href }}" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
-        {% else %}
-        <a href="{{ link.href }}">{{ link.label }}</a>
-        {% endif %}
-        {% endfor %}
-      {% endif %}
+      <h1>{{ artifact.title }}</h1>
+      <p class="entry-summary">{{ artifact.summary }}</p>
     </div>
-  </header>
 
-  {% if related_groups %}
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      {% for group in related_groups %}
-      <section class="related-group related-group-{{ group.type|lower }}">
-        <header class="related-group-header">
-          <p class="related-group-kicker">{{ group.type_label }} ({{group.artifacts|length}})</p>
-        </header>
-        <div class="related-items">
-          {% for item in group.artifacts %}
-            {% if item.href %}
-            <a class="related-item related-item-{{ item.type|lower }}" href="{{ item.href }}">
-              <span class="related-item-id">{{ item.id }}</span>
-              <span class="related-item-title">{{ item.title or item.type_label }}</span>
-            </a>
-            {% else %}
-            <span class="related-item related-item-{{ item.type|lower }}">
-              <span class="related-item-id">{{ item.id }}</span>
-              <span class="related-item-title">{{ item.title or item.type_label }}</span>
-            </span>
-            {% endif %}
-          {% endfor %}
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>{{ artifact.failure_domain or "—" }}</dd>
         </div>
-      </section>
-      {% endfor %}
-    </div>
-  </section>
-  {% endif %}
+        <div>
+          <dt>Mechanism</dt>
+          <dd>{{ artifact.mechanism or "—" }}</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>{{ artifact.status or "—" }}</dd>
+        </div>
+      </dl>
+    </aside>
+  </header>
 
   <section id="spec" class="entry-body markdown-body">
     {{ rendered_body|safe }}
   </section>
+
+  {% if related_groups or rendered_bundle_links %}
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="{{ artifact.source_url }}" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        {% if rendered_bundle_links %}
+          {% for link in rendered_bundle_links %}
+          {% if link.external %}
+          <a href="{{ link.href }}" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+          {% else %}
+          <a href="{{ link.href }}">{{ link.label }}</a>
+          {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% if related_groups %}
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          {% for group in related_groups %}
+          <section class="related-group related-group-{{ group.type|lower }}">
+            <header class="related-group-header">
+              <p class="related-group-kicker">{{ group.type_label }} ({{group.artifacts|length}})</p>
+            </header>
+            <div class="related-items">
+              {% for item in group.artifacts %}
+                {% if item.href %}
+                <a class="related-item related-item-{{ item.type|lower }}" href="{{ item.href }}">
+                  <span class="related-item-id">{{ item.id }}</span>
+                  <span class="related-item-title">{{ item.title or item.type_label }}</span>
+                </a>
+                {% else %}
+                <span class="related-item related-item-{{ item.type|lower }}">
+                  <span class="related-item-id">{{ item.id }}</span>
+                  <span class="related-item-title">{{ item.title or item.type_label }}</span>
+                </span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </section>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+    </div>
+  </details>
+  {% endif %}
 </article>
 {% endblock %}

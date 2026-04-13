@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,89 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>FP_001 · Duplicate Execution After Retry Timeout</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Failure Pattern</dd>
+  <header class="entry-header entry-hero entry-hero-fp">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-fp">Failure Pattern</span>
+        <span class="entry-id">FP_001</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>State Consistency</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Retry Idempotence Window</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>validated</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_001_duplicate_execution_after_retry_timeout.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>Duplicate Execution After Retry Timeout</h1>
+      <p class="entry-summary">At-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>State Consistency</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Retry Idempotence Window</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>validated</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (2)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_002.html">
-              <span class="related-item-id">FP_002</span>
-              <span class="related-item-title">Extension Authority Persistence</span>
-            </a>
-            <a class="related-item related-item-fp" href="../entries/fp_003.html">
-              <span class="related-item-id">FP_003</span>
-              <span class="related-item-title">Read-only Enforcement Gap</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_001.html">
-              <span class="related-item-id">FM_001</span>
-              <span class="related-item-title">Duplicate execution caused by retry after timeout</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_001.html">
-              <span class="related-item-id">GR_001</span>
-              <span class="related-item-title">Idempotent Commit Boundary</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_001.html">
-              <span class="related-item-id">PM_001</span>
-              <span class="related-item-title">PM_001 — Duplicate execution after retry timeout</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern">Failure Pattern</h1>
-<p>At-least-once retry after lease timeout can apply one logical effect more than
+    <p>At-least-once retry after lease timeout can apply one logical effect more than
 once unless a durable idempotency boundary exists.</p>
 <h2 id="hidden-assumption">Hidden Assumption</h2>
 <p>"Timeout implies no committed side effect was produced."</p>
@@ -146,11 +93,75 @@ Without first-commit gating, both cross the effect boundary.</p>
 <li>FP_003 Read-only Enforcement Gap</li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_001_duplicate_execution_after_retry_timeout.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (2)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_002.html">
+                  <span class="related-item-id">FP_002</span>
+                  <span class="related-item-title">Extension Authority Persistence</span>
+                </a>
+                <a class="related-item related-item-fp" href="../entries/fp_003.html">
+                  <span class="related-item-id">FP_003</span>
+                  <span class="related-item-title">Read-only Enforcement Gap</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_001.html">
+                  <span class="related-item-id">FM_001</span>
+                  <span class="related-item-title">Duplicate execution caused by retry after timeout</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_001.html">
+                  <span class="related-item-id">GR_001</span>
+                  <span class="related-item-title">Idempotent Commit Boundary</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_001.html">
+                  <span class="related-item-id">PM_001</span>
+                  <span class="related-item-title">PM_001 — Duplicate execution after retry timeout</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

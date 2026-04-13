@@ -16,13 +16,44 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
     <main>
+<section class="index-hero">
+  <div class="index-hero-copy">
+    <p class="eyebrow">Failure mechanisms</p>
+    <h1>Scan the atlas first. Open detail only when you need it.</h1>
+    <p class="index-hero-summary">
+      Each entry surfaces the core pattern up front, with summary and related artifacts tucked behind on-demand panels.
+    </p>
+  </div>
+  <div class="index-hero-stats" aria-label="Atlas overview">
+    <div class="hero-stat">
+      <span class="hero-stat-value">33</span>
+      <span class="hero-stat-label">entries</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">8</span>
+      <span class="hero-stat-label">domains</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">9</span>
+      <span class="hero-stat-label">mechanisms</span>
+    </div>
+  </div>
+</section>
 
 <section class="controls" aria-label="Atlas filters">
+  <div class="controls-header">
+    <div>
+      <p class="controls-kicker">Filter the map</p>
+      <h2>Reduce the visible surface</h2>
+    </div>
+    <p id="visible-count" class="result-count"></p>
+  </div>
+
   <div class="filter-row">
     <label for="filter-domain">Failure domain</label>
     <select id="filter-domain">
@@ -71,624 +102,1278 @@
   </div>
 
   <button id="clear-filters" class="quiet-button" type="button">Clear filters</button>
-  <p id="visible-count" class="result-count"></p>
 </section>
 
-<section class="table-section" aria-label="Atlas entries">
-  <table class="atlas-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Domain</th>
-        <th>Mechanism</th>
-        <th>Type</th>
-        <th>Related</th>
-        <th>Summary</th>
-      </tr>
-    </thead>
-    <tbody id="atlas-table-body">
-      <tr
-        class="atlas-row"
-        data-id="fp_001"
-        data-title="duplicate execution after retry timeout"
-        data-type="fp"
-        data-domain="state consistency"
-        data-mechanism="retry idempotence window"
-        data-summary="at-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists."
-      >
-        <td><a href="entries/fp_001.html">FP_001</a></td>
-        <td>Duplicate Execution After Retry Timeout</td>
-        <td>State Consistency</td>
-        <td>Retry Idempotence Window</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
-        <td>At-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_001"
-        data-title="duplicate execution caused by retry after timeout"
-        data-type="fm"
-        data-domain="state consistency"
-        data-mechanism="retry idempotence window"
-        data-summary="systems with at-least-once delivery can legitimately retry work after a timeout. if commit semantics are not idempotent at the logical job boundary, retries can amplify side effects."
-      >
-        <td><a href="entries/fm_001.html">FM_001</a></td>
-        <td>Duplicate execution caused by retry after timeout</td>
-        <td>State Consistency</td>
-        <td>Retry Idempotence Window</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/pm_001.html">PM_001</a>        </td>
-        <td>Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can amplify side effects.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_001"
-        data-title="idempotent commit boundary"
-        data-type="gr"
-        data-domain="state consistency"
-        data-mechanism="retry idempotence window"
-        data-summary="introduce a durable single-commit boundary (committed) per logical job. only the first execution may cross this boundary; subsequent retries no-op."
-      >
-        <td><a href="entries/gr_001.html">GR_001</a></td>
-        <td>Idempotent Commit Boundary</td>
-        <td>State Consistency</td>
-        <td>Retry Idempotence Window</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/pm_001.html">PM_001</a>        </td>
-        <td>Introduce a durable single-commit boundary (COMMITTED) per logical job. Only the first execution may cross this boundary; subsequent retries no-op.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_001"
-        data-title="pm_001 — duplicate execution after retry timeout"
-        data-type="pm"
-        data-domain="state consistency"
-        data-mechanism="retry idempotence window"
-        data-summary="fm001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. without an explicit idempotent commit boundary, both attempts could apply logical effects."
-      >
-        <td><a href="entries/pm_001.html">PM_001</a></td>
-        <td>PM_001 — Duplicate execution after retry timeout</td>
-        <td>State Consistency</td>
-        <td>Retry Idempotence Window</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_001.html">FM_001</a> ·                 <a href="entries/gr_001.html">GR_001</a> ·                 <a href="entries/fm_002.html">FM_002</a>        </td>
-        <td>FM001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_002"
-        data-title="extension authority persistence"
-        data-type="fp"
-        data-domain="policy enforcement"
-        data-mechanism="extension authority lifecycle"
-        data-summary="authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope."
-      >
-        <td><a href="entries/fp_002.html">FP_002</a></td>
-        <td>Extension Authority Persistence</td>
-        <td>Policy Enforcement</td>
-        <td>Extension Authority Lifecycle</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
-        <td>Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_002"
-        data-title="extension authority persists after uninstall"
-        data-type="fm"
-        data-domain="policy enforcement"
-        data-mechanism="extension authority lifecycle"
-        data-summary="authority entries registered by an extension are stored independently of extension lifecycle. uninstalling the extension leaves stale credential/tool bindings active until restart."
-      >
-        <td><a href="entries/fm_002.html">FM_002</a></td>
-        <td>Extension authority persists after uninstall</td>
-        <td>Policy Enforcement</td>
-        <td>Extension Authority Lifecycle</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/gr_002.html">GR_002</a> ·                 <a href="entries/pm_002.html">PM_002</a>        </td>
-        <td>Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_002"
-        data-title="lifecycle-bound authority registry"
-        data-type="gr"
-        data-domain="policy enforcement"
-        data-mechanism="extension authority lifecycle"
-        data-summary="authority entries are derived views of active components, not independent mutable state."
-      >
-        <td><a href="entries/gr_002.html">GR_002</a></td>
-        <td>Lifecycle-Bound Authority Registry</td>
-        <td>Policy Enforcement</td>
-        <td>Extension Authority Lifecycle</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/pm_002.html">PM_002</a> ·                 <a href="entries/fp_003.html">FP_003</a>        </td>
-        <td>Authority entries are derived views of active components, not independent mutable state.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_002"
-        data-title="pm_002 — extension authority persists after uninstall"
-        data-type="pm"
-        data-domain="policy enforcement"
-        data-mechanism="extension authority lifecycle"
-        data-summary="credential mappings registered by an extension were not revoked on uninstall/deactivate, so http credential injection authority could outlive the extension until process restart. this incident seeded fp002."
-      >
-        <td><a href="entries/pm_002.html">PM_002</a></td>
-        <td>PM_002 — Extension authority persists after uninstall</td>
-        <td>Policy Enforcement</td>
-        <td>Extension Authority Lifecycle</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_002.html">FM_002</a> ·                 <a href="entries/gr_002.html">GR_002</a>        </td>
-        <td>Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_003"
-        data-title="read-only enforcement gap"
-        data-type="fp"
-        data-domain="policy enforcement"
-        data-mechanism="read/write boundary drift"
-        data-summary="declared read-only policy is not enforced at capability exposure boundaries."
-      >
-        <td><a href="entries/fp_003.html">FP_003</a></td>
-        <td>Read-only Enforcement Gap</td>
-        <td>Policy Enforcement</td>
-        <td>Read/Write Boundary Drift</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
-        <td>Declared read-only policy is not enforced at capability exposure boundaries.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_003"
-        data-title="read-only flag does not remove write tools"
-        data-type="fm"
-        data-domain="policy enforcement"
-        data-mechanism="read/write boundary drift"
-        data-summary="the server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration."
-      >
-        <td><a href="entries/fm_003.html">FM_003</a></td>
-        <td>Read-only flag does not remove write tools</td>
-        <td>Policy Enforcement</td>
-        <td>Read/Write Boundary Drift</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_003.html">GR_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
-        <td>The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_003"
-        data-title="capability surface reduction at startup"
-        data-type="gr"
-        data-domain="policy enforcement"
-        data-mechanism="read/write boundary drift"
-        data-summary="project policy mode into the runtime capability surface during registration, not at invocation hints."
-      >
-        <td><a href="entries/gr_003.html">GR_003</a></td>
-        <td>Capability Surface Reduction at Startup</td>
-        <td>Policy Enforcement</td>
-        <td>Read/Write Boundary Drift</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/pm_003.html">PM_003</a>        </td>
-        <td>Project policy mode into the runtime capability surface during registration, not at invocation hints.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_003"
-        data-title="pm_003 — read-only intent not enforced in mcp server"
-        data-type="pm"
-        data-domain="policy enforcement"
-        data-mechanism="read/write boundary drift"
-        data-summary="the filesystem mcp server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. this incident seeded fp003."
-      >
-        <td><a href="entries/pm_003.html">PM_003</a></td>
-        <td>PM_003 — Read-only intent not enforced in MCP server</td>
-        <td>Policy Enforcement</td>
-        <td>Read/Write Boundary Drift</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_003.html">FM_003</a> ·                 <a href="entries/gr_003.html">GR_003</a>        </td>
-        <td>The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_004"
-        data-title="anthropomorphic misinterpretation"
-        data-type="fp"
-        data-domain="human interpretation"
-        data-mechanism="anthropomorphic projection"
-        data-summary="statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation."
-      >
-        <td><a href="entries/fp_004.html">FP_004</a></td>
-        <td>Anthropomorphic Misinterpretation</td>
-        <td>Human Interpretation</td>
-        <td>Anthropomorphic Projection</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/gr_004.html">GR_004</a>        </td>
-        <td>Statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_004"
-        data-title="failure-domain disambiguation before mitigation"
-        data-type="gr"
-        data-domain="model behavior"
-        data-mechanism="anthropomorphic projection"
-        data-summary="require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures."
-      >
-        <td><a href="entries/gr_004.html">GR_004</a></td>
-        <td>Failure-Domain Disambiguation Before Mitigation</td>
-        <td>Model Behavior</td>
-        <td>Anthropomorphic Projection</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_004.html">FP_004</a>        </td>
-        <td>Require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_005"
-        data-title="unbounded pagination cookie state amplification"
-        data-type="fp"
-        data-domain="resource exhaustion"
-        data-mechanism="server-side cursor growth"
-        data-summary="unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion."
-      >
-        <td><a href="entries/fp_005.html">FP_005</a></td>
-        <td>Unbounded Pagination Cookie State Amplification</td>
-        <td>Resource Exhaustion</td>
-        <td>Server-side Cursor Growth</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a> ·                 <a href="entries/fp_006.html">FP_006</a>        </td>
-        <td>Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_005"
-        data-title="unbounded pagination cookie state under repeated discover requests"
-        data-type="fm"
-        data-domain="resource exhaustion"
-        data-mechanism="server-side cursor growth"
-        data-summary="server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound."
-      >
-        <td><a href="entries/fm_005.html">FM_005</a></td>
-        <td>Unbounded pagination cookie state under repeated discover requests</td>
-        <td>Resource Exhaustion</td>
-        <td>Server-side Cursor Growth</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/gr_005.html">GR_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
-        <td>Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_005"
-        data-title="bounded pagination state registry"
-        data-type="gr"
-        data-domain="resource exhaustion"
-        data-mechanism="server-side cursor growth"
-        data-summary="project pagination into a deterministic bounded state budget. every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire)."
-      >
-        <td><a href="entries/gr_005.html">GR_005</a></td>
-        <td>Bounded Pagination State Registry</td>
-        <td>Resource Exhaustion</td>
-        <td>Server-side Cursor Growth</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/pm_005.html">PM_005</a>        </td>
-        <td>Project pagination into a deterministic bounded state budget. Every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire).</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_005"
-        data-title="pm_005 — unbounded pagination cookie state growth"
-        data-type="pm"
-        data-domain="resource exhaustion"
-        data-mechanism="server-side cursor growth"
-        data-summary="repeated discover-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. a single remote peer could grow the cookie registry until memory pressure/oom. this was the field incident that m"
-      >
-        <td><a href="entries/pm_005.html">PM_005</a></td>
-        <td>PM_005 — Unbounded pagination cookie state growth</td>
-        <td>Resource Exhaustion</td>
-        <td>Server-side Cursor Growth</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_005.html">FM_005</a> ·                 <a href="entries/gr_005.html">GR_005</a>        </td>
-        <td>Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_006"
-        data-title="quota boundary off-by-one admission"
-        data-type="fp"
-        data-domain="policy enforcement"
-        data-mechanism="quota boundary math"
-        data-summary="resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota."
-      >
-        <td><a href="entries/fp_006.html">FP_006</a></td>
-        <td>Quota Boundary Off-by-One Admission</td>
-        <td>Policy Enforcement</td>
-        <td>Quota Boundary Math</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_005.html">FP_005</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
-        <td>Resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_006"
-        data-title="per-peer reservation quota off-by-one at boundary"
-        data-type="fm"
-        data-domain="policy enforcement"
-        data-mechanism="quota boundary math"
-        data-summary="per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy."
-      >
-        <td><a href="entries/fm_006.html">FM_006</a></td>
-        <td>Per-peer reservation quota off-by-one at boundary</td>
-        <td>Policy Enforcement</td>
-        <td>Quota Boundary Math</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/gr_006.html">GR_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
-        <td>Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_006"
-        data-title="inclusive quota boundary admission checks"
-        data-type="gr"
-        data-domain="policy enforcement"
-        data-mechanism="quota boundary math"
-        data-summary="quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted."
-      >
-        <td><a href="entries/gr_006.html">GR_006</a></td>
-        <td>Inclusive Quota Boundary Admission Checks</td>
-        <td>Policy Enforcement</td>
-        <td>Quota Boundary Math</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/pm_006.html">PM_006</a>        </td>
-        <td>Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_006"
-        data-title="pm_006 — quota boundary off-by-one admission"
-        data-type="pm"
-        data-domain="policy enforcement"
-        data-mechanism="quota boundary math"
-        data-summary="per-peer reservation admission used a strict-greater () comparator. when a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. this field bug motivated fm006/fp006."
-      >
-        <td><a href="entries/pm_006.html">PM_006</a></td>
-        <td>PM_006 — Quota boundary off-by-one admission</td>
-        <td>Policy Enforcement</td>
-        <td>Quota Boundary Math</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_006.html">FP_006</a> ·                 <a href="entries/fm_006.html">FM_006</a> ·                 <a href="entries/gr_006.html">GR_006</a>        </td>
-        <td>Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM006/FP006.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_007"
-        data-title="identity map bijection break"
-        data-type="fp"
-        data-domain="identity integrity"
-        data-mechanism="identity registry collisions"
-        data-summary="participant identity registry allows duplicate credentials or ids to overwrite existing entries, breaking the required bijection between participant ids and tls keys."
-      >
-        <td><a href="entries/fp_007.html">FP_007</a></td>
-        <td>Identity Map Bijection Break</td>
-        <td>Identity Integrity</td>
-        <td>Identity Registry Collisions</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_001.html">FP_001</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
-        <td>Participant identity registry allows duplicate credentials or IDs to overwrite existing entries, breaking the required bijection between participant IDs and TLS keys.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_007"
-        data-title="participant identity map bijection not enforced"
-        data-type="fm"
-        data-domain="identity integrity"
-        data-mechanism="identity registry collisions"
-        data-summary="startup builds a tlskey → participantid registry using overwrite semantics. if two participants share the same tls key (or duplicate ids), the later insert replaces the earlier mapping. runtime attribution becomes ambiguous."
-      >
-        <td><a href="entries/fm_007.html">FM_007</a></td>
-        <td>Participant identity map bijection not enforced</td>
-        <td>Identity Integrity</td>
-        <td>Identity Registry Collisions</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/gr_007.html">GR_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
-        <td>Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_007"
-        data-title="identity bijection startup validation"
-        data-type="gr"
-        data-domain="identity integrity"
-        data-mechanism="identity registry collisions"
-        data-summary="validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant ids and credentials (tls keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; "
-      >
-        <td><a href="entries/gr_007.html">GR_007</a></td>
-        <td>Identity Bijection Startup Validation</td>
-        <td>Identity Integrity</td>
-        <td>Identity Registry Collisions</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/pm_007.html">PM_007</a>        </td>
-        <td>Validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant IDs and credentials (TLS keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; </td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_007"
-        data-title="pm_007 — participant identity ↔ tls key bijection not enforced"
-        data-type="pm"
-        data-domain="identity integrity"
-        data-mechanism="identity registry collisions"
-        data-summary="during tls key rotation/scale-out, two participants shared the same tls key. the identity map used hashmap::insert, so the later insert overwrote the earlier one. runtime attribution could map authenticated traffic to the wrong participant,"
-      >
-        <td><a href="entries/pm_007.html">PM_007</a></td>
-        <td>PM_007 — Participant identity ↔ TLS key bijection not enforced</td>
-        <td>Identity Integrity</td>
-        <td>Identity Registry Collisions</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_007.html">FP_007</a> ·                 <a href="entries/fm_007.html">FM_007</a> ·                 <a href="entries/gr_007.html">GR_007</a>        </td>
-        <td>During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_008"
-        data-title="tool authority escalation via prompt injection"
-        data-type="fp"
-        data-domain="agent runtime"
-        data-mechanism="tool authorization conflation"
-        data-summary="if tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority."
-      >
-        <td><a href="entries/fp_008.html">FP_008</a></td>
-        <td>Tool Authority Escalation via Prompt Injection</td>
-        <td>Agent Runtime</td>
-        <td>Tool Authorization Conflation</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fp_002.html">FP_002</a> ·                 <a href="entries/fp_003.html">FP_003</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
-        <td>If tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_008"
-        data-title="tool authority escalation via prompt injection"
-        data-type="fm"
-        data-domain="tool / agent interfaces"
-        data-mechanism="tool authorization conflation"
-        data-summary="an llm agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests."
-      >
-        <td><a href="entries/fm_008.html">FM_008</a></td>
-        <td>Tool authority escalation via prompt injection</td>
-        <td>Tool / Agent Interfaces</td>
-        <td>Tool Authorization Conflation</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/gr_008.html">GR_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
-        <td>An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_008"
-        data-title="explicit tool authorization boundary"
-        data-type="gr"
-        data-domain="tool / agent interfaces"
-        data-mechanism="tool authorization conflation"
-        data-summary="real failure → minimal reproduction → mechanism → guardrail → atlas update."
-      >
-        <td><a href="entries/gr_008.html">GR_008</a></td>
-        <td>Explicit Tool Authorization Boundary</td>
-        <td>Tool / Agent Interfaces</td>
-        <td>Tool Authorization Conflation</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/pm_008.html">PM_008</a>        </td>
-        <td>Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="pm_008"
-        data-title="pm_008 — tool authority escalation via prompt injection"
-        data-type="pm"
-        data-domain="tool / agent interfaces"
-        data-mechanism="tool authorization conflation"
-        data-summary="a standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). without an explicit runtime authorization check, tool availability equaled authority, violating inv009. adding gr008 inserted determinist"
-      >
-        <td><a href="entries/pm_008.html">PM_008</a></td>
-        <td>PM_008 — Tool authority escalation via prompt injection</td>
-        <td>Tool / Agent Interfaces</td>
-        <td>Tool Authorization Conflation</td>
-        <td>PM</td>
-        <td class="related-cell">
-                <a href="entries/fp_008.html">FP_008</a> ·                 <a href="entries/fm_008.html">FM_008</a> ·                 <a href="entries/gr_008.html">GR_008</a>        </td>
-        <td>A standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). Without an explicit runtime authorization check, tool availability equaled authority, violating INV009. Adding GR008 inserted determinist</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fp_009"
-        data-title="progress stall detection gap in agent loops"
-        data-type="fp"
-        data-domain="agent runtime"
-        data-mechanism="progress ledger omission"
-        data-summary="agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted."
-      >
-        <td><a href="entries/fp_009.html">FP_009</a></td>
-        <td>Progress Stall Detection Gap in Agent Loops</td>
-        <td>Agent Runtime</td>
-        <td>Progress Ledger Omission</td>
-        <td>FP</td>
-        <td class="related-cell">
-                <a href="entries/fm_009.html">FM_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
-        <td>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="fm_009"
-        data-title="progress-stall loop from repeated invalid tool call"
-        data-type="fm"
-        data-domain="agent runtime"
-        data-mechanism="progress ledger omission"
-        data-summary="llm agents commonly bound work by max iterations. when the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached."
-      >
-        <td><a href="entries/fm_009.html">FM_009</a></td>
-        <td>Progress-stall loop from repeated invalid tool call</td>
-        <td>Agent Runtime</td>
-        <td>Progress Ledger Omission</td>
-        <td>FM</td>
-        <td class="related-cell">
-                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/gr_009.html">GR_009</a>        </td>
-        <td>LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.</td>
-      </tr>
-      <tr
-        class="atlas-row"
-        data-id="gr_009"
-        data-title="progress guard middleware"
-        data-type="gr"
-        data-domain="agent runtime"
-        data-mechanism="progress ledger omission"
-        data-summary="containment for agents that repeat the same failing tool call without making progress."
-      >
-        <td><a href="entries/gr_009.html">GR_009</a></td>
-        <td>Progress Guard Middleware</td>
-        <td>Agent Runtime</td>
-        <td>Progress Ledger Omission</td>
-        <td>GR</td>
-        <td class="related-cell">
-                <a href="entries/fp_009.html">FP_009</a> ·                 <a href="entries/fm_009.html">FM_009</a>        </td>
-        <td>Containment for agents that repeat the same failing tool call without making progress.</td>
-      </tr>
-    </tbody>
-  </table>
+<section class="atlas-feed" aria-label="Atlas entries">
+  <div id="atlas-card-feed" class="atlas-card-feed">
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_001"
+      data-title="duplicate execution after retry timeout"
+      data-type="fp"
+      data-domain="state consistency"
+      data-mechanism="retry idempotence window"
+      data-summary="at-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_001.html">FP_001</a>
+          </div>
+          <h2><a href="entries/fp_001.html">Duplicate Execution After Retry Timeout</a></h2>
+          <p class="atlas-card-summary">At-least-once retry after lease timeout can apply one logical effect more than once unless a durable idempotency boundary exists.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>State Consistency</p>
+          <p><span>Mechanism</span>Retry Idempotence Window</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fm_001.html">FM_001</a>
+                  <a href="entries/gr_001.html">GR_001</a>
+                  <a href="entries/pm_001.html">PM_001</a>
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fp_003.html">FP_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_001"
+      data-title="duplicate execution caused by retry after timeout"
+      data-type="fm"
+      data-domain="state consistency"
+      data-mechanism="retry idempotence window"
+      data-summary="systems with at-least-once delivery can legitimately retry work after a timeout. if commit semantics are not idempotent at the logical job boundary, retries can amplify side effects."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_001.html">FM_001</a>
+          </div>
+          <h2><a href="entries/fm_001.html">Duplicate execution caused by retry after timeout</a></h2>
+          <p class="atlas-card-summary">Systems with at-least-once delivery can legitimately retry work after a timeout. If commit semantics are not idempotent at the logical job boundary, retries can amplify side effects.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>State Consistency</p>
+          <p><span>Mechanism</span>Retry Idempotence Window</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/gr_001.html">GR_001</a>
+                  <a href="entries/pm_001.html">PM_001</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_001"
+      data-title="idempotent commit boundary"
+      data-type="gr"
+      data-domain="state consistency"
+      data-mechanism="retry idempotence window"
+      data-summary="introduce a durable single-commit boundary (committed) per logical job. only the first execution may cross this boundary; subsequent retries no-op."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_001.html">GR_001</a>
+          </div>
+          <h2><a href="entries/gr_001.html">Idempotent Commit Boundary</a></h2>
+          <p class="atlas-card-summary">Introduce a durable single-commit boundary (COMMITTED) per logical job. Only the first execution may cross this boundary; subsequent retries no-op.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>State Consistency</p>
+          <p><span>Mechanism</span>Retry Idempotence Window</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/fm_001.html">FM_001</a>
+                  <a href="entries/pm_001.html">PM_001</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_001"
+      data-title="pm_001 — duplicate execution after retry timeout"
+      data-type="pm"
+      data-domain="state consistency"
+      data-mechanism="retry idempotence window"
+      data-summary="fm001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. without an explicit idempotent commit boundary, both attempts could apply logical effects."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_001.html">PM_001</a>
+          </div>
+          <h2><a href="entries/pm_001.html">PM_001 — Duplicate execution after retry timeout</a></h2>
+          <p class="atlas-card-summary">FM001 was triggered when a lease expired and the same job was retried by a second worker while the first worker was still completing work. Without an explicit idempotent commit boundary, both attempts could apply logical effects.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>State Consistency</p>
+          <p><span>Mechanism</span>Retry Idempotence Window</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/fm_001.html">FM_001</a>
+                  <a href="entries/gr_001.html">GR_001</a>
+                  <a href="entries/fm_002.html">FM_002</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_002"
+      data-title="extension authority persistence"
+      data-type="fp"
+      data-domain="policy enforcement"
+      data-mechanism="extension authority lifecycle"
+      data-summary="authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_002.html">FP_002</a>
+          </div>
+          <h2><a href="entries/fp_002.html">Extension Authority Persistence</a></h2>
+          <p class="atlas-card-summary">Authority granted to an extension persists beyond the extension lifecycle, creating stale privilege scope.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Extension Authority Lifecycle</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/fm_002.html">FM_002</a>
+                  <a href="entries/gr_002.html">GR_002</a>
+                  <a href="entries/pm_002.html">PM_002</a>
+                  <a href="entries/fp_003.html">FP_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_002"
+      data-title="extension authority persists after uninstall"
+      data-type="fm"
+      data-domain="policy enforcement"
+      data-mechanism="extension authority lifecycle"
+      data-summary="authority entries registered by an extension are stored independently of extension lifecycle. uninstalling the extension leaves stale credential/tool bindings active until restart."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_002.html">FM_002</a>
+          </div>
+          <h2><a href="entries/fm_002.html">Extension authority persists after uninstall</a></h2>
+          <p class="atlas-card-summary">Authority entries registered by an extension are stored independently of extension lifecycle. Uninstalling the extension leaves stale credential/tool bindings active until restart.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Extension Authority Lifecycle</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/gr_002.html">GR_002</a>
+                  <a href="entries/pm_002.html">PM_002</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_002"
+      data-title="lifecycle-bound authority registry"
+      data-type="gr"
+      data-domain="policy enforcement"
+      data-mechanism="extension authority lifecycle"
+      data-summary="authority entries are derived views of active components, not independent mutable state."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_002.html">GR_002</a>
+          </div>
+          <h2><a href="entries/gr_002.html">Lifecycle-Bound Authority Registry</a></h2>
+          <p class="atlas-card-summary">Authority entries are derived views of active components, not independent mutable state.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Extension Authority Lifecycle</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fm_002.html">FM_002</a>
+                  <a href="entries/pm_002.html">PM_002</a>
+                  <a href="entries/fp_003.html">FP_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_002"
+      data-title="pm_002 — extension authority persists after uninstall"
+      data-type="pm"
+      data-domain="policy enforcement"
+      data-mechanism="extension authority lifecycle"
+      data-summary="credential mappings registered by an extension were not revoked on uninstall/deactivate, so http credential injection authority could outlive the extension until process restart. this incident seeded fp002."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_002.html">PM_002</a>
+          </div>
+          <h2><a href="entries/pm_002.html">PM_002 — Extension authority persists after uninstall</a></h2>
+          <p class="atlas-card-summary">Credential mappings registered by an extension were not revoked on uninstall/deactivate, so HTTP credential injection authority could outlive the extension until process restart. This incident seeded FP002.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Extension Authority Lifecycle</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fm_002.html">FM_002</a>
+                  <a href="entries/gr_002.html">GR_002</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_003"
+      data-title="read-only enforcement gap"
+      data-type="fp"
+      data-domain="policy enforcement"
+      data-mechanism="read/write boundary drift"
+      data-summary="declared read-only policy is not enforced at capability exposure boundaries."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_003.html">FP_003</a>
+          </div>
+          <h2><a href="entries/fp_003.html">Read-only Enforcement Gap</a></h2>
+          <p class="atlas-card-summary">Declared read-only policy is not enforced at capability exposure boundaries.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Read/Write Boundary Drift</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fm_003.html">FM_003</a>
+                  <a href="entries/gr_003.html">GR_003</a>
+                  <a href="entries/pm_003.html">PM_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_003"
+      data-title="read-only flag does not remove write tools"
+      data-type="fm"
+      data-domain="policy enforcement"
+      data-mechanism="read/write boundary drift"
+      data-summary="the server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_003.html">FM_003</a>
+          </div>
+          <h2><a href="entries/fm_003.html">Read-only flag does not remove write tools</a></h2>
+          <p class="atlas-card-summary">The server exposes write-capable tools even when launched in read-only mode because the flag only annotates intent and does not constrain tool registration.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Read/Write Boundary Drift</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_003.html">FP_003</a>
+                  <a href="entries/gr_003.html">GR_003</a>
+                  <a href="entries/pm_003.html">PM_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_003"
+      data-title="capability surface reduction at startup"
+      data-type="gr"
+      data-domain="policy enforcement"
+      data-mechanism="read/write boundary drift"
+      data-summary="project policy mode into the runtime capability surface during registration, not at invocation hints."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_003.html">GR_003</a>
+          </div>
+          <h2><a href="entries/gr_003.html">Capability Surface Reduction at Startup</a></h2>
+          <p class="atlas-card-summary">Project policy mode into the runtime capability surface during registration, not at invocation hints.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Read/Write Boundary Drift</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fp_003.html">FP_003</a>
+                  <a href="entries/fm_003.html">FM_003</a>
+                  <a href="entries/pm_003.html">PM_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_003"
+      data-title="pm_003 — read-only intent not enforced in mcp server"
+      data-type="pm"
+      data-domain="policy enforcement"
+      data-mechanism="read/write boundary drift"
+      data-summary="the filesystem mcp server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. this incident seeded fp003."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_003.html">PM_003</a>
+          </div>
+          <h2><a href="entries/pm_003.html">PM_003 — Read-only intent not enforced in MCP server</a></h2>
+          <p class="atlas-card-summary">The filesystem MCP server exposed destructive tools even when launched with read-only intent, relying on advisory hints instead of runtime enforcement. This incident seeded FP003.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Read/Write Boundary Drift</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_003.html">FP_003</a>
+                  <a href="entries/fm_003.html">FM_003</a>
+                  <a href="entries/gr_003.html">GR_003</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_004"
+      data-title="anthropomorphic misinterpretation"
+      data-type="fp"
+      data-domain="human interpretation"
+      data-mechanism="anthropomorphic projection"
+      data-summary="statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_004.html">FP_004</a>
+          </div>
+          <h2><a href="entries/fp_004.html">Anthropomorphic Misinterpretation</a></h2>
+          <p class="atlas-card-summary">Statistical model errors are misclassified as strategic deception due to anthropomorphic interpretation.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Human Interpretation</p>
+          <p><span>Mechanism</span>Anthropomorphic Projection</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_003.html">FP_003</a>
+                  <a href="entries/gr_004.html">GR_004</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_004"
+      data-title="failure-domain disambiguation before mitigation"
+      data-type="gr"
+      data-domain="model behavior"
+      data-mechanism="anthropomorphic projection"
+      data-summary="require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_004.html">GR_004</a>
+          </div>
+          <h2><a href="entries/gr_004.html">Failure-Domain Disambiguation Before Mitigation</a></h2>
+          <p class="atlas-card-summary">Require domain-disambiguation checks before assigning intent-bearing labels (e.g., &#34;deception&#34;) to model failures.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Model Behavior</p>
+          <p><span>Mechanism</span>Anthropomorphic Projection</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_004.html">FP_004</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_005"
+      data-title="unbounded pagination cookie state amplification"
+      data-type="fp"
+      data-domain="resource exhaustion"
+      data-mechanism="server-side cursor growth"
+      data-summary="unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_005.html">FP_005</a>
+          </div>
+          <h2><a href="entries/fp_005.html">Unbounded Pagination Cookie State Amplification</a></h2>
+          <p class="atlas-card-summary">Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Resource Exhaustion</p>
+          <p><span>Mechanism</span>Server-side Cursor Growth</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fm_005.html">FM_005</a>
+                  <a href="entries/gr_005.html">GR_005</a>
+                  <a href="entries/pm_005.html">PM_005</a>
+                  <a href="entries/fp_006.html">FP_006</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_005"
+      data-title="unbounded pagination cookie state under repeated discover requests"
+      data-type="fm"
+      data-domain="resource exhaustion"
+      data-mechanism="server-side cursor growth"
+      data-summary="server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_005.html">FM_005</a>
+          </div>
+          <h2><a href="entries/fm_005.html">Unbounded pagination cookie state under repeated discover requests</a></h2>
+          <p class="atlas-card-summary">Server-side pagination that persists cookies/cursors per request can become a remote memory amplification vector when cookie state has no enforced bound.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Resource Exhaustion</p>
+          <p><span>Mechanism</span>Server-side Cursor Growth</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_005.html">FP_005</a>
+                  <a href="entries/gr_005.html">GR_005</a>
+                  <a href="entries/pm_005.html">PM_005</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_005"
+      data-title="bounded pagination state registry"
+      data-type="gr"
+      data-domain="resource exhaustion"
+      data-mechanism="server-side cursor growth"
+      data-summary="project pagination into a deterministic bounded state budget. every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire)."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_005.html">GR_005</a>
+          </div>
+          <h2><a href="entries/gr_005.html">Bounded Pagination State Registry</a></h2>
+          <p class="atlas-card-summary">Project pagination into a deterministic bounded state budget. Every new cookie allocation must pass through capacity enforcement with explicit overflow behavior (evict/reject/expire).</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Resource Exhaustion</p>
+          <p><span>Mechanism</span>Server-side Cursor Growth</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_005.html">FP_005</a>
+                  <a href="entries/fm_005.html">FM_005</a>
+                  <a href="entries/pm_005.html">PM_005</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_005"
+      data-title="pm_005 — unbounded pagination cookie state growth"
+      data-type="pm"
+      data-domain="resource exhaustion"
+      data-mechanism="server-side cursor growth"
+      data-summary="repeated discover-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. a single remote peer could grow the cookie registry until memory pressure/oom. this was the field incident that m"
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_005.html">PM_005</a>
+          </div>
+          <h2><a href="entries/pm_005.html">PM_005 — Unbounded pagination cookie state growth</a></h2>
+          <p class="atlas-card-summary">Repeated DISCOVER-style requests caused the server to allocate a new pagination cookie per call without any bound or eviction. A single remote peer could grow the cookie registry until memory pressure/OOM. This was the field incident that m</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Resource Exhaustion</p>
+          <p><span>Mechanism</span>Server-side Cursor Growth</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_005.html">FP_005</a>
+                  <a href="entries/fm_005.html">FM_005</a>
+                  <a href="entries/gr_005.html">GR_005</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_006"
+      data-title="quota boundary off-by-one admission"
+      data-type="fp"
+      data-domain="policy enforcement"
+      data-mechanism="quota boundary math"
+      data-summary="resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_006.html">FP_006</a>
+          </div>
+          <h2><a href="entries/fp_006.html">Quota Boundary Off-by-One Admission</a></h2>
+          <p class="atlas-card-summary">Resource admission logic uses an exclusive boundary check where an inclusive limit is required, allowing one extra allocation beyond configured quota.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Quota Boundary Math</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_005.html">FP_005</a>
+                  <a href="entries/fm_006.html">FM_006</a>
+                  <a href="entries/gr_006.html">GR_006</a>
+                  <a href="entries/pm_006.html">PM_006</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_006"
+      data-title="per-peer reservation quota off-by-one at boundary"
+      data-type="fm"
+      data-domain="policy enforcement"
+      data-mechanism="quota boundary math"
+      data-summary="per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_006.html">FM_006</a>
+          </div>
+          <h2><a href="entries/fm_006.html">Per-peer reservation quota off-by-one at boundary</a></h2>
+          <p class="atlas-card-summary">Per-peer quota enforcement can fail at the exact limit if the admission guard uses strict-greater () instead of greater-or-equal (=), allowing one extra allocation beyond policy.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Quota Boundary Math</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_006.html">FP_006</a>
+                  <a href="entries/gr_006.html">GR_006</a>
+                  <a href="entries/pm_006.html">PM_006</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_006"
+      data-title="inclusive quota boundary admission checks"
+      data-type="gr"
+      data-domain="policy enforcement"
+      data-mechanism="quota boundary math"
+      data-summary="quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_006.html">GR_006</a>
+          </div>
+          <h2><a href="entries/gr_006.html">Inclusive Quota Boundary Admission Checks</a></h2>
+          <p class="atlas-card-summary">Quota admission checks must reject at the exact configured boundary by using an inclusive predicate (current = max) before allocation is admitted.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Quota Boundary Math</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_006.html">FP_006</a>
+                  <a href="entries/fm_006.html">FM_006</a>
+                  <a href="entries/pm_006.html">PM_006</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_006"
+      data-title="pm_006 — quota boundary off-by-one admission"
+      data-type="pm"
+      data-domain="policy enforcement"
+      data-mechanism="quota boundary math"
+      data-summary="per-peer reservation admission used a strict-greater () comparator. when a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. this field bug motivated fm006/fp006."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_006.html">PM_006</a>
+          </div>
+          <h2><a href="entries/pm_006.html">PM_006 — Quota boundary off-by-one admission</a></h2>
+          <p class="atlas-card-summary">Per-peer reservation admission used a strict-greater () comparator. When a peer reached the configured max and sent one more request, the check passed and admitted a max + 1 reservation. This field bug motivated FM006/FP006.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Policy Enforcement</p>
+          <p><span>Mechanism</span>Quota Boundary Math</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_006.html">FP_006</a>
+                  <a href="entries/fm_006.html">FM_006</a>
+                  <a href="entries/gr_006.html">GR_006</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_007"
+      data-title="identity map bijection break"
+      data-type="fp"
+      data-domain="identity integrity"
+      data-mechanism="identity registry collisions"
+      data-summary="participant identity registry allows duplicate credentials or ids to overwrite existing entries, breaking the required bijection between participant ids and tls keys."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_007.html">FP_007</a>
+          </div>
+          <h2><a href="entries/fp_007.html">Identity Map Bijection Break</a></h2>
+          <p class="atlas-card-summary">Participant identity registry allows duplicate credentials or IDs to overwrite existing entries, breaking the required bijection between participant IDs and TLS keys.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Identity Integrity</p>
+          <p><span>Mechanism</span>Identity Registry Collisions</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_001.html">FP_001</a>
+                  <a href="entries/fm_007.html">FM_007</a>
+                  <a href="entries/gr_007.html">GR_007</a>
+                  <a href="entries/pm_007.html">PM_007</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_007"
+      data-title="participant identity map bijection not enforced"
+      data-type="fm"
+      data-domain="identity integrity"
+      data-mechanism="identity registry collisions"
+      data-summary="startup builds a tlskey → participantid registry using overwrite semantics. if two participants share the same tls key (or duplicate ids), the later insert replaces the earlier mapping. runtime attribution becomes ambiguous."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_007.html">FM_007</a>
+          </div>
+          <h2><a href="entries/fm_007.html">Participant identity map bijection not enforced</a></h2>
+          <p class="atlas-card-summary">Startup builds a tlskey → participantid registry using overwrite semantics. If two participants share the same TLS key (or duplicate IDs), the later insert replaces the earlier mapping. Runtime attribution becomes ambiguous.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Identity Integrity</p>
+          <p><span>Mechanism</span>Identity Registry Collisions</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_007.html">FP_007</a>
+                  <a href="entries/gr_007.html">GR_007</a>
+                  <a href="entries/pm_007.html">PM_007</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_007"
+      data-title="identity bijection startup validation"
+      data-type="gr"
+      data-domain="identity integrity"
+      data-mechanism="identity registry collisions"
+      data-summary="validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant ids and credentials (tls keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; "
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_007.html">GR_007</a>
+          </div>
+          <h2><a href="entries/gr_007.html">Identity Bijection Startup Validation</a></h2>
+          <p class="atlas-card-summary">Validate participant configuration at startup before any listeners are opened: - compute uniqueness of participant IDs and credentials (TLS keys) - if counts differ, fail fast with diagnostics listing conflicts - prohibit silent overwrite; </p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Identity Integrity</p>
+          <p><span>Mechanism</span>Identity Registry Collisions</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_007.html">FP_007</a>
+                  <a href="entries/fm_007.html">FM_007</a>
+                  <a href="entries/pm_007.html">PM_007</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_007"
+      data-title="pm_007 — participant identity ↔ tls key bijection not enforced"
+      data-type="pm"
+      data-domain="identity integrity"
+      data-mechanism="identity registry collisions"
+      data-summary="during tls key rotation/scale-out, two participants shared the same tls key. the identity map used hashmap::insert, so the later insert overwrote the earlier one. runtime attribution could map authenticated traffic to the wrong participant,"
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_007.html">PM_007</a>
+          </div>
+          <h2><a href="entries/pm_007.html">PM_007 — Participant identity ↔ TLS key bijection not enforced</a></h2>
+          <p class="atlas-card-summary">During TLS key rotation/scale-out, two participants shared the same TLS key. The identity map used HashMap::insert, so the later insert overwrote the earlier one. Runtime attribution could map authenticated traffic to the wrong participant,</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Identity Integrity</p>
+          <p><span>Mechanism</span>Identity Registry Collisions</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_007.html">FP_007</a>
+                  <a href="entries/fm_007.html">FM_007</a>
+                  <a href="entries/gr_007.html">GR_007</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_008"
+      data-title="tool authority escalation via prompt injection"
+      data-type="fp"
+      data-domain="agent runtime"
+      data-mechanism="tool authorization conflation"
+      data-summary="if tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_008.html">FP_008</a>
+          </div>
+          <h2><a href="entries/fp_008.html">Tool Authority Escalation via Prompt Injection</a></h2>
+          <p class="atlas-card-summary">If tool authority is delegated to model reasoning, prompt framing can steer agents into invoking sensitive tools outside intended user authority.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Agent Runtime</p>
+          <p><span>Mechanism</span>Tool Authorization Conflation</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_002.html">FP_002</a>
+                  <a href="entries/fp_003.html">FP_003</a>
+                  <a href="entries/fm_008.html">FM_008</a>
+                  <a href="entries/gr_008.html">GR_008</a>
+                  <a href="entries/pm_008.html">PM_008</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_008"
+      data-title="tool authority escalation via prompt injection"
+      data-type="fm"
+      data-domain="tool / agent interfaces"
+      data-mechanism="tool authorization conflation"
+      data-summary="an llm agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_008.html">FM_008</a>
+          </div>
+          <h2><a href="entries/fm_008.html">Tool authority escalation via prompt injection</a></h2>
+          <p class="atlas-card-summary">An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Tool / Agent Interfaces</p>
+          <p><span>Mechanism</span>Tool Authorization Conflation</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_008.html">FP_008</a>
+                  <a href="entries/gr_008.html">GR_008</a>
+                  <a href="entries/pm_008.html">PM_008</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_008"
+      data-title="explicit tool authorization boundary"
+      data-type="gr"
+      data-domain="tool / agent interfaces"
+      data-mechanism="tool authorization conflation"
+      data-summary="real failure → minimal reproduction → mechanism → guardrail → atlas update."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_008.html">GR_008</a>
+          </div>
+          <h2><a href="entries/gr_008.html">Explicit Tool Authorization Boundary</a></h2>
+          <p class="atlas-card-summary">Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Tool / Agent Interfaces</p>
+          <p><span>Mechanism</span>Tool Authorization Conflation</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_008.html">FP_008</a>
+                  <a href="entries/fm_008.html">FM_008</a>
+                  <a href="entries/pm_008.html">PM_008</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-pm reveal-on-scroll"
+      data-id="pm_008"
+      data-title="pm_008 — tool authority escalation via prompt injection"
+      data-type="pm"
+      data-domain="tool / agent interfaces"
+      data-mechanism="tool authorization conflation"
+      data-summary="a standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). without an explicit runtime authorization check, tool availability equaled authority, violating inv009. adding gr008 inserted determinist"
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-pm">PM</span>
+            <a class="atlas-card-id" href="entries/pm_008.html">PM_008</a>
+          </div>
+          <h2><a href="entries/pm_008.html">PM_008 — Tool authority escalation via prompt injection</a></h2>
+          <p class="atlas-card-summary">A standard-user prompt steered the planner model into invoking a sensitive tool (readsensitiveconfig). Without an explicit runtime authorization check, tool availability equaled authority, violating INV009. Adding GR008 inserted determinist</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Tool / Agent Interfaces</p>
+          <p><span>Mechanism</span>Tool Authorization Conflation</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_008.html">FP_008</a>
+                  <a href="entries/fm_008.html">FM_008</a>
+                  <a href="entries/gr_008.html">GR_008</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fp reveal-on-scroll"
+      data-id="fp_009"
+      data-title="progress stall detection gap in agent loops"
+      data-type="fp"
+      data-domain="agent runtime"
+      data-mechanism="progress ledger omission"
+      data-summary="agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fp">FP</span>
+            <a class="atlas-card-id" href="entries/fp_009.html">FP_009</a>
+          </div>
+          <h2><a href="entries/fp_009.html">Progress Stall Detection Gap in Agent Loops</a></h2>
+          <p class="atlas-card-summary">Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Agent Runtime</p>
+          <p><span>Mechanism</span>Progress Ledger Omission</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fm_009.html">FM_009</a>
+                  <a href="entries/gr_009.html">GR_009</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-fm reveal-on-scroll"
+      data-id="fm_009"
+      data-title="progress-stall loop from repeated invalid tool call"
+      data-type="fm"
+      data-domain="agent runtime"
+      data-mechanism="progress ledger omission"
+      data-summary="llm agents commonly bound work by max iterations. when the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-fm">FM</span>
+            <a class="atlas-card-id" href="entries/fm_009.html">FM_009</a>
+          </div>
+          <h2><a href="entries/fm_009.html">Progress-stall loop from repeated invalid tool call</a></h2>
+          <p class="atlas-card-summary">LLM agents commonly bound work by max iterations. When the planner cannot infer a fix for a failing tool call, it may repeat the same action indefinitely until the cap is reached.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Agent Runtime</p>
+          <p><span>Mechanism</span>Progress Ledger Omission</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_009.html">FP_009</a>
+                  <a href="entries/gr_009.html">GR_009</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+    <article
+      class="atlas-card atlas-row atlas-card-gr reveal-on-scroll"
+      data-id="gr_009"
+      data-title="progress guard middleware"
+      data-type="gr"
+      data-domain="agent runtime"
+      data-mechanism="progress ledger omission"
+      data-summary="containment for agents that repeat the same failing tool call without making progress."
+    >
+      <div class="atlas-card-main">
+        <div class="atlas-card-heading">
+          <div class="atlas-card-id-row">
+            <span class="artifact-badge artifact-badge-gr">GR</span>
+            <a class="atlas-card-id" href="entries/gr_009.html">GR_009</a>
+          </div>
+          <h2><a href="entries/gr_009.html">Progress Guard Middleware</a></h2>
+          <p class="atlas-card-summary">Containment for agents that repeat the same failing tool call without making progress.</p>
+        </div>
+
+        <div class="atlas-card-meta">
+          <p><span>Domain</span>Agent Runtime</p>
+          <p><span>Mechanism</span>Progress Ledger Omission</p>
+        </div>
+      </div>
+
+      <details class="atlas-card-details">
+        <summary>More information</summary>
+        <div class="atlas-card-detail-grid atlas-card-detail-grid-single">
+          <section>
+            <div class="card-related-list">
+                  <a href="entries/fp_009.html">FP_009</a>
+                  <a href="entries/fm_009.html">FM_009</a>
+            </div>
+          </section>
+        </div>
+      </details>
+    </article>
+  </div>
 </section>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

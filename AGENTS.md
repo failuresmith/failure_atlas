@@ -2,9 +2,6 @@
 
 This repository is a **failure-pattern manufacturing pipeline**.
 
-Do not optimize for realism.
-Optimize for **legibility of failure mechanism**.
-
 ## Core workflow (non-negotiable)
 
 Every contribution must follow this chain:

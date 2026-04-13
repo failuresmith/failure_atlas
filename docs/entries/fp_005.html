@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,85 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>FP_005 · Unbounded Pagination Cookie State Amplification</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Failure Pattern</dd>
+  <header class="entry-header entry-hero entry-hero-fp">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-fp">Failure Pattern</span>
+        <span class="entry-id">FP_005</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Resource Exhaustion</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Server-side Cursor Growth</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>validated</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_005_unbounded_pagination_cookie_state_amplification.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>Unbounded Pagination Cookie State Amplification</h1>
+      <p class="entry-summary">Unauthenticated pagination requests create server-side cursor state without a global bound, allowing remote peers to amplify memory usage until exhaustion.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Resource Exhaustion</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Server-side Cursor Growth</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>validated</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_006.html">
-              <span class="related-item-id">FP_006</span>
-              <span class="related-item-title">Quota Boundary Off-by-One Admission</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_005.html">
-              <span class="related-item-id">FM_005</span>
-              <span class="related-item-title">Unbounded pagination cookie state under repeated discover requests</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_005.html">
-              <span class="related-item-id">GR_005</span>
-              <span class="related-item-title">Bounded Pagination State Registry</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_005.html">
-              <span class="related-item-id">PM_005</span>
-              <span class="related-item-title">PM_005 — Unbounded pagination cookie state growth</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern">Failure Pattern</h1>
-<p>Unauthenticated pagination requests create server-side cursor state without a
+    <p>Unauthenticated pagination requests create server-side cursor state without a
 global bound, allowing remote peers to amplify memory usage until exhaustion.</p>
 <h2 id="context">Context</h2>
 <p>Applies to protocols that support paginated discovery/listing and persist
@@ -165,11 +116,71 @@ DISCOVER-style traffic.</p>
 <li>FP_006 Quota Boundary Off-by-One Admission</li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_005_unbounded_pagination_cookie_state_amplification.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_006.html">
+                  <span class="related-item-id">FP_006</span>
+                  <span class="related-item-title">Quota Boundary Off-by-One Admission</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_005.html">
+                  <span class="related-item-id">FM_005</span>
+                  <span class="related-item-title">Unbounded pagination cookie state under repeated discover requests</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_005.html">
+                  <span class="related-item-id">GR_005</span>
+                  <span class="related-item-title">Bounded Pagination State Registry</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_005.html">
+                  <span class="related-item-id">PM_005</span>
+                  <span class="related-item-title">PM_005 — Unbounded pagination cookie state growth</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

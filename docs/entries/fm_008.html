@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,78 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>FM_008 · Tool authority escalation via prompt injection</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Failure Mode</dd>
+  <header class="entry-header entry-hero entry-hero-fm">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-fm">Failure Mode</span>
+        <span class="entry-id">FM_008</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Tool / Agent Interfaces</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Tool Authorization Conflation</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>draft</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation" target="_blank" rel="noopener noreferrer">Directory</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/README.md" target="_blank" rel="noopener noreferrer">README</a>
-        <a href="#spec">Spec</a>
-        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md" target="_blank" rel="noopener noreferrer">Results</a>
+      <h1>Tool authority escalation via prompt injection</h1>
+      <p class="entry-summary">An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing (&#34;inspect internal config first&#34;) to invoke a sensitive tool that should not be available for standard user requests.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Tool / Agent Interfaces</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Tool Authorization Conflation</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>draft</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fp">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Pattern (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fp" href="../entries/fp_008.html">
-              <span class="related-item-id">FP_008</span>
-              <span class="related-item-title">Tool Authority Escalation via Prompt Injection</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_008.html">
-              <span class="related-item-id">GR_008</span>
-              <span class="related-item-title">Explicit Tool Authorization Boundary</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-pm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Postmortem (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-pm" href="../entries/pm_008.html">
-              <span class="related-item-id">PM_008</span>
-              <span class="related-item-title">PM_008 — Tool authority escalation via prompt injection</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="fm_008-tool-authority-escalation-via-prompt-injection">FM_008 — Tool authority escalation via prompt injection</h1>
-<h2 id="description">Description</h2>
+    <h2 id="description">Description</h2>
 <p>An LLM agent with access to both public and sensitive tools can be manipulated by user prompt framing ("inspect internal config first") to invoke a sensitive tool that should not be available for standard user requests.</p>
 <h2 id="trigger">Trigger</h2>
 <ol>
@@ -157,11 +115,64 @@
 <li>Guardrail: <code>guardrails/GR_008_explicit_tool_authorization_boundary.md</code></li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/spec.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+          <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation" target="_blank" rel="noopener noreferrer">Directory</a>
+          <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/README.md" target="_blank" rel="noopener noreferrer">README</a>
+          <a href="#spec">Spec</a>
+          <a href="https://github.com/failuresmith/failure_atlas/blob/main/lab/failure_modes/FM_008_tool_authority_escalation/results/summary.md" target="_blank" rel="noopener noreferrer">Results</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fp">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Pattern (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fp" href="../entries/fp_008.html">
+                  <span class="related-item-id">FP_008</span>
+                  <span class="related-item-title">Tool Authority Escalation via Prompt Injection</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_008.html">
+                  <span class="related-item-id">GR_008</span>
+                  <span class="related-item-title">Explicit Tool Authorization Boundary</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-pm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Postmortem (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-pm" href="../entries/pm_008.html">
+                  <span class="related-item-id">PM_008</span>
+                  <span class="related-item-title">PM_008 — Tool authority escalation via prompt injection</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

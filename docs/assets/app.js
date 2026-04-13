@@ -27,6 +27,15 @@
 
   const escapeRegExp = (value) => (value || "").toString().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+  const escapeHtml = (unsafe) =>
+    (unsafe || "")
+      .toString()
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
   const highlightText = (text, terms) => {
     const haystack = (text || "").toString();
     const activeTerms = Array.from(new Set(terms || [])).filter(Boolean);
@@ -65,14 +74,6 @@
     const inEntriesPage = window.location.pathname.includes("/entries/");
     return inEntriesPage ? `../${cleaned}` : cleaned;
   };
-
-  const escapeHtml = (unsafe) =>
-    unsafe
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
 
   const openSearch = () => {
     if (!searchModal) return;
@@ -191,13 +192,54 @@
       const passKeyword = !keywords.length || keywords.every((term) => haystack.includes(term));
 
       const show = passDomain && passMechanism && passType && passKeyword;
-      row.style.display = show ? "" : "none";
+      row.hidden = !show;
       if (show) visible += 1;
     });
 
     if (visibleCount) {
       visibleCount.textContent = `${visible} visible ${visible === 1 ? "entry" : "entries"}`;
     }
+  };
+
+  const initScrollReveal = () => {
+    const revealNodes = Array.from(document.querySelectorAll(".reveal-on-scroll"));
+    if (!revealNodes.length) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealNodes.forEach((node) => node.classList.add("is-visible"));
+      return;
+    }
+
+    const isNearViewport = (node) => {
+      const rect = node.getBoundingClientRect();
+      return rect.top < window.innerHeight * 0.92;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.remove("pending-reveal");
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.08,
+      }
+    );
+
+    revealNodes.forEach((node) => {
+      if (isNearViewport(node)) {
+        node.classList.add("is-visible");
+        return;
+      }
+
+      node.classList.add("pending-reveal");
+      observer.observe(node);
+    });
   };
 
   if (openSearchButton) {
@@ -240,4 +282,5 @@
   }
 
   applyRowFilters();
+  initScrollReveal();
 })();

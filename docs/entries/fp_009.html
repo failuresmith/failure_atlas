@@ -16,7 +16,7 @@
         </button>
       </div>
       <p class="subtitle">
-        This site shows failure cases, simple examples, and ways to prevent them.
+        Failure modes I’ve reproduced and systemized into invariants and safeguards
       </p>
     </header>
 
@@ -28,63 +28,36 @@
 </nav>
 
 <article class="entry-article">
-  <header class="entry-header">
-    <h1>FP_009 · Progress Stall Detection Gap in Agent Loops</h1>
-    <dl class="meta-grid">
-      <div>
-        <dt>Type</dt>
-        <dd>Failure Pattern</dd>
+  <header class="entry-header entry-hero entry-hero-fp">
+    <div class="entry-hero-main">
+      <div class="entry-kicker-row">
+        <span class="artifact-badge artifact-badge-fp">Failure Pattern</span>
+        <span class="entry-id">FP_009</span>
       </div>
-      <div>
-        <dt>Failure domain</dt>
-        <dd>Agent Runtime</dd>
-      </div>
-      <div>
-        <dt>Mechanism</dt>
-        <dd>Progress Ledger Omission</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>draft</dd>
-      </div>
-    </dl>
-
-    <div class="entry-links">
-      <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_009_progress_stall_detection_gap.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      <h1>Progress Stall Detection Gap in Agent Loops</h1>
+      <p class="entry-summary">Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</p>
     </div>
+
+    <aside class="entry-sidecard">
+      <dl class="meta-grid">
+        <div>
+          <dt>Failure domain</dt>
+          <dd>Agent Runtime</dd>
+        </div>
+        <div>
+          <dt>Mechanism</dt>
+          <dd>Progress Ledger Omission</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>draft</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
-  <section class="related-strip">
-    <h2>Related artifacts</h2>
-    <div class="related-groups">
-      <section class="related-group related-group-fm">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Failure Mode (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-fm" href="../entries/fm_009.html">
-              <span class="related-item-id">FM_009</span>
-              <span class="related-item-title">Progress-stall loop from repeated invalid tool call</span>
-            </a>
-        </div>
-      </section>
-      <section class="related-group related-group-gr">
-        <header class="related-group-header">
-          <p class="related-group-kicker">Guard Rail (1)</p>
-        </header>
-        <div class="related-items">
-            <a class="related-item related-item-gr" href="../entries/gr_009.html">
-              <span class="related-item-id">GR_009</span>
-              <span class="related-item-title">Progress Guard Middleware</span>
-            </a>
-        </div>
-      </section>
-    </div>
-  </section>
-
   <section id="spec" class="entry-body markdown-body">
-    <h1 id="failure-pattern">Failure Pattern</h1>
-<p>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</p>
+    <p>Agents with iteration caps but no progress awareness can loop on an unchanged failing tool invocation until the cap is exhausted.</p>
 <p>Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update.</p>
 <h2 id="context">Context</h2>
 <p>LLM tool loops typically bound work by <code>max_iterations</code>. In absence of a progress ledger, repeated failures are treated as "try again" rather than "stuck".</p>
@@ -120,11 +93,49 @@
 <li>guardrail entry: <code>guardrails/GR_009_progress_guard_middleware.md</code></li>
 </ul>
   </section>
+
+  <details class="entry-more">
+    <summary>More information</summary>
+
+    <div class="entry-more-body">
+      <div class="entry-links">
+        <a href="https://github.com/failuresmith/failure_atlas/blob/main/atlas/FP_009_progress_stall_detection_gap.md" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+      </div>
+
+      <section class="related-strip">
+        <h2>Related artifacts</h2>
+        <div class="related-groups">
+          <section class="related-group related-group-fm">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Failure Mode (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-fm" href="../entries/fm_009.html">
+                  <span class="related-item-id">FM_009</span>
+                  <span class="related-item-title">Progress-stall loop from repeated invalid tool call</span>
+                </a>
+            </div>
+          </section>
+          <section class="related-group related-group-gr">
+            <header class="related-group-header">
+              <p class="related-group-kicker">Guard Rail (1)</p>
+            </header>
+            <div class="related-items">
+                <a class="related-item related-item-gr" href="../entries/gr_009.html">
+                  <span class="related-item-id">GR_009</span>
+                  <span class="related-item-title">Progress Guard Middleware</span>
+                </a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </details>
 </article>
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-13 14:11 UTC</span>
+      <span>Last update 2026-04-13 14:48 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"
