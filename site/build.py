@@ -31,6 +31,12 @@ INLINE_META_RE = re.compile(
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 TYPE_ORDER = {"FP": 0, "FM": 1, "GR": 2, "PM": 3}
+TYPE_LABELS = {
+    "FP": "Failure Pattern",
+    "FM": "Failure Mode",
+    "GR": "Guard Rail",
+    "PM": "Postmortem",
+}
 SOURCE_PRIORITY = {
     "atlas": 0,
     "guardrails": 1,
@@ -283,6 +289,10 @@ def build_taxonomy_layer() -> dict[str, TaxonomyInfo]:
 
 def infer_artifact_type(artifact_id: str) -> str:
     return artifact_id.split("_", 1)[0] if artifact_id else ""
+
+
+def artifact_type_label(artifact_type: str) -> str:
+    return TYPE_LABELS.get(artifact_type, artifact_type)
 
 
 def rewrite_relative_links(content: str, source_rel: str) -> str:
@@ -539,19 +549,48 @@ def render_site(artifacts: list[Artifact]) -> None:
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    env.globals["artifact_type_label"] = artifact_type_label
     md = markdown.Markdown(extensions=["fenced_code", "tables", "sane_lists", "toc"])
 
     by_id = {artifact.id: artifact for artifact in artifacts}
     source_to_entry = {artifact.source_path: artifact.entry_href for artifact in artifacts}
 
     for artifact in artifacts:
-        related_links: list[dict[str, str]] = []
+        grouped_related: dict[str, list[dict[str, str]]] = {}
         for related_id in artifact.related_ids:
             related_item = by_id.get(related_id)
+            related_type = related_item.artifact_type if related_item else infer_artifact_type(related_id)
+            type_label = artifact_type_label(related_type) or related_id
             if related_item:
-                related_links.append({"id": related_id, "href": f"../{related_item.entry_href}"})
+                item = {
+                    "id": related_id,
+                    "title": related_item.title,
+                    "type": related_type,
+                    "type_label": type_label,
+                    "href": f"../{related_item.entry_href}",
+                }
             else:
-                related_links.append({"id": related_id, "href": ""})
+                item = {
+                    "id": related_id,
+                    "title": type_label,
+                    "type": related_type,
+                    "type_label": type_label,
+                    "href": "",
+                }
+
+            grouped_related.setdefault(related_type, []).append(item)
+
+        related_groups = [
+            {
+                "type": related_type,
+                "type_label": artifact_type_label(related_type) or related_type or "Artifact",
+                "artifacts": sorted(items, key=lambda item: id_sort_key(item["id"])),
+            }
+            for related_type, items in sorted(
+                grouped_related.items(),
+                key=lambda entry: TYPE_ORDER.get(entry[0], 99),
+            )
+        ]
 
         rewritten = rewrite_relative_links(artifact.body_markdown, artifact.source_path)
         html_body = md.convert(rewritten)
@@ -583,7 +622,7 @@ def render_site(artifacts: list[Artifact]) -> None:
         template = env.get_template("entry.html")
         rendered = template.render(
             artifact=artifact,
-            related_links=related_links,
+            related_groups=related_groups,
             rendered_bundle_links=rendered_bundle_links,
             rendered_body=html_body,
             asset_prefix="../",

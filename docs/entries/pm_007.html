@@ -16,19 +16,13 @@
         </button>
       </div>
       <p class="subtitle">
-        Navigate failure domains, deterministic reproductions, containment guardrails, and postmortems as one connected documentation system.
+        This site shows failure cases, simple examples, and ways to prevent them.
       </p>
-      <div class="legend" aria-label="Artifact Legend">
-        <span><strong>FP</strong> = Failure Pattern</span>
-        <span><strong>FM</strong> = Failure Mode / Reproduction</span>
-        <span><strong>GR</strong> = Guardrail</span>
-        <span><strong>PM</strong> = Postmortem</span>
-      </div>
     </header>
 
     <main>
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="../index.html">Atlas Index</a>
+  <a href="../index.html">Index</a>
   <span>›</span>
   <span>PM_007</span>
 </nav>
@@ -39,7 +33,7 @@
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
-        <dd>PM</dd>
+        <dd>Postmortem</dd>
       </div>
       <div>
         <dt>Failure domain</dt>
@@ -62,8 +56,41 @@
 
   <section class="related-strip">
     <h2>Related artifacts</h2>
-    <p>
-        <a href="../entries/fp_007.html">FP_007</a> ·         <a href="../entries/fm_007.html">FM_007</a> ·         <a href="../entries/gr_007.html">GR_007</a>    </p>
+    <div class="related-groups">
+      <section class="related-group related-group-fp">
+        <header class="related-group-header">
+          <p class="related-group-kicker">Failure Pattern (1)</p>
+        </header>
+        <div class="related-items">
+            <a class="related-item related-item-fp" href="../entries/fp_007.html">
+              <span class="related-item-id">FP_007</span>
+              <span class="related-item-title">Identity Map Bijection Break</span>
+            </a>
+        </div>
+      </section>
+      <section class="related-group related-group-fm">
+        <header class="related-group-header">
+          <p class="related-group-kicker">Failure Mode (1)</p>
+        </header>
+        <div class="related-items">
+            <a class="related-item related-item-fm" href="../entries/fm_007.html">
+              <span class="related-item-id">FM_007</span>
+              <span class="related-item-title">Participant identity map bijection not enforced</span>
+            </a>
+        </div>
+      </section>
+      <section class="related-group related-group-gr">
+        <header class="related-group-header">
+          <p class="related-group-kicker">Guard Rail (1)</p>
+        </header>
+        <div class="related-items">
+            <a class="related-item related-item-gr" href="../entries/gr_007.html">
+              <span class="related-item-id">GR_007</span>
+              <span class="related-item-title">Identity Bijection Startup Validation</span>
+            </a>
+        </div>
+      </section>
+    </div>
   </section>
 
   <section id="spec" class="entry-body markdown-body">
@@ -118,7 +145,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>Generated 2026-04-04 14:59 UTC</span>
+      <span>Generated 2026-04-13 14:11 UTC</span>
       <a
         class="footer-github"
         href="https://github.com/failuresmith/failure_atlas"

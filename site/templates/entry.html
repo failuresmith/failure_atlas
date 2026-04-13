@@ -4,7 +4,7 @@
 
 {% block content %}
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="../index.html">Atlas Index</a>
+  <a href="../index.html">Index</a>
   <span>›</span>
   <span>{{ artifact.id }}</span>
 </nav>
@@ -15,7 +15,7 @@
     <dl class="meta-grid">
       <div>
         <dt>Type</dt>
-        <dd>{{ artifact.artifact_type }}</dd>
+        <dd>{{ artifact_type_label(artifact.artifact_type) }}</dd>
       </div>
       <div>
         <dt>Failure domain</dt>
@@ -45,18 +45,33 @@
     </div>
   </header>
 
-  {% if related_links %}
+  {% if related_groups %}
   <section class="related-strip">
     <h2>Related artifacts</h2>
-    <p>
-      {% for item in related_links %}
-        {% if item.href %}
-        <a href="{{ item.href }}">{{ item.id }}</a>{% if not loop.last %} · {% endif %}
-        {% else %}
-        <span>{{ item.id }}</span>{% if not loop.last %} · {% endif %}
-        {% endif %}
+    <div class="related-groups">
+      {% for group in related_groups %}
+      <section class="related-group related-group-{{ group.type|lower }}">
+        <header class="related-group-header">
+          <p class="related-group-kicker">{{ group.type_label }} ({{group.artifacts|length}})</p>
+        </header>
+        <div class="related-items">
+          {% for item in group.artifacts %}
+            {% if item.href %}
+            <a class="related-item related-item-{{ item.type|lower }}" href="{{ item.href }}">
+              <span class="related-item-id">{{ item.id }}</span>
+              <span class="related-item-title">{{ item.title or item.type_label }}</span>
+            </a>
+            {% else %}
+            <span class="related-item related-item-{{ item.type|lower }}">
+              <span class="related-item-id">{{ item.id }}</span>
+              <span class="related-item-title">{{ item.title or item.type_label }}</span>
+            </span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
       {% endfor %}
-    </p>
+    </div>
   </section>
   {% endif %}
 
