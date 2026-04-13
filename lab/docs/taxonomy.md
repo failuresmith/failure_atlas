@@ -4,3 +4,4 @@
 
 This lab taxonomy view is generated from `registry/registry.yml`.
 For canonical domain/mechanism mapping, see `../../taxonomy.md`.
+Use `FM` for concrete lab manifestations and `FP` for the abstract recurring pattern.

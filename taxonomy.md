@@ -2,7 +2,9 @@
 
 # Failure Taxonomy
 
-Canonical catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`. Keep just enough domain/mechanism detail to disambiguate labels; anything deeper belongs in the FP/FM/GR artifacts.
+Canonical catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`.
+`FP` is the abstract layer; concrete manifestations belong in `FM`, and prevention details belong in `GR`.
+Keep just enough domain/mechanism detail to disambiguate labels; anything deeper belongs in the FP/FM/GR artifacts.
 
 ## Domains and mechanisms (single-line definitions)
 
@@ -27,6 +29,6 @@ Reserved headers (define when needed): Concurrency; Recovery & Reconciliation; D
 Notes:
 
 - `reproduced_in` and `mitigated_by` are list-valued in artifact metadata.
-- Multiple FMs and GRs may link to one FP as the atlas grows.
+- Multiple PMs, FMs, and GRs may link to one FP as the atlas grows.
 - FM IDs align 1:1 with FP/GR numbering; FP_004 currently has no FM.
 

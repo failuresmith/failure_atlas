@@ -1,6 +1,6 @@
 # Failure Atlas — Agent Operating Rules
 
-This repository is a **failure-pattern manufacturing pipeline**.
+This repository is a **failure-knowledge manufacturing pipeline**.
 
 ## Core workflow (non-negotiable)
 
@@ -16,13 +16,26 @@ Use this exact framing:
 
 **Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update**
 
+## Artifact model (keep these distinct)
+
+- `PM` = the real-world occurrence record. A postmortem captures one incident or a tightly related set of validated occurrences.
+- `FM` = one concrete deterministic manifestation in the lab. It is a single activation path of a broader failure class.
+- `FP` = the abstract recurring failure pattern. It captures the higher-level hidden assumption, invariant risk, and structural mechanism shared across multiple manifestations.
+- `GR` = the detailed prevention/containment design. It explains exactly how the guardrail enforces the invariant, where it acts, what it observes, and how it fails safely.
+
+`FM` and `FP` must be complementary, not duplicates.
+
+- If an `FP` can be replaced by a step-by-step lab script, it is too concrete.
+- If an `FM` only restates the abstract mechanism in prose without a deterministic scenario, it is too abstract.
+
 ---
 
 ## Repository boundaries
 
-- `atlas/` = failure knowledge (what fails and why)
-- `lab/` = reproducible mechanism proofs (how it fails under controlled conditions)
-- `guardrails/` = containment/prevention knowledge (how to make it fail safely)
+- `postmortems/` = real incidents / validated occurrences (`PM`)
+- `atlas/` = abstract failure-pattern knowledge (`FP`)
+- `lab/` = reproducible concrete failure modes (`FM`)
+- `guardrails/` = detailed containment/prevention designs (`GR`)
 
 Never merge these responsibilities.
 
@@ -56,11 +69,12 @@ Never merge these responsibilities.
 
 ## Standard deliverables for each new failure domain
 
-1. Atlas entry (failure knowledge)
-2. Lab failure mode bundle (repro + prevention test proof)
-3. Guardrail entry (containment pattern)
+1. Postmortem / incident anchor when a real occurrence exists
+2. Atlas failure-pattern entry
+3. Lab failure-mode bundle (repro + prevention test proof)
+4. Guardrail entry with mechanism details
 
-All three must cross-link explicitly.
+All artifacts must cross-link explicitly.
 
 ---
 

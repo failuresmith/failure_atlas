@@ -86,8 +86,9 @@ For any LLM-driven tool runtime:
 
 Invariants anchor the manufacturing pipeline:
 
-`FM → FP → GR`
+`PM → FM → FP → GR`
 
-- FM proves how an invariant can fail
-- FP explains the recurring mechanism
-- GR enforces the invariant-preserving guardrail
+- PM records the real occurrence that exposed the risk
+- FM proves one concrete way the invariant fails
+- FP explains the recurring mechanism above any one FM
+- GR specifies the invariant-preserving prevention/containment design

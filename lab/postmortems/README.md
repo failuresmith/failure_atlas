@@ -1,14 +1,21 @@
 # Postmortems
 
-Purpose: anchor each failure domain to a concrete real-world incident (“Real failure” in the chain).
+Purpose: anchor each failure domain to a concrete real-world incident (`PM`, the “Real failure” layer in the chain).
+
+Artifact boundaries
+- `PM` = real incident / validated occurrence record
+- `FM` = deterministic lab manifestation
+- `FP` = abstract recurring pattern
+- `GR` = prevention / containment design
 
 Scope and location
-- Canonical PM files now live at repo root `postmortems/` to avoid drift; keep this directory as a convenience mirror/placeholder.
+- Canonical PM files live at repo root `postmortems/` to avoid drift; keep this directory as a pointer-only convenience mirror.
 - Each PM links to its Failure Pattern (FP), Failure Mode (FM) lab (when available), and Guardrail (GR).
 
 Numbering convention
 - PM IDs match the corresponding FP ID when an incident clearly maps to one failure class.
 - A single PM can cite multiple occurrences of the same class; we don’t duplicate PMs per sighting.
+- If you need one concrete deterministic manifestation, create or update an `FM`, not another `PM`.
 - New classes without FP/FM yet get a PM placeholder ID to record the incident, then the lab/atlas artifacts catch up.
 
 Index (current)

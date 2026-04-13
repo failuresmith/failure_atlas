@@ -20,6 +20,7 @@ FAILURE_INDEX = ROOT / "failure_index.md"
 TAXONOMY = ROOT / "taxonomy.md"
 LAB_FAILURE_INDEX = ROOT / "lab" / "docs" / "failure_mode_index.md"
 LAB_TAXONOMY = ROOT / "lab" / "docs" / "taxonomy.md"
+POSTMORTEMS_DIR = ROOT / "postmortems"
 
 HEADER = "<!-- Generated from registry/registry.yml. Do not edit by hand. -->\n\n"
 
@@ -42,11 +43,26 @@ def load_registry():
     return [v | {"id": k} for k, v in sorted(entries.items(), key=sort_key)]
 
 
+def resolve_postmortem_relpath(pm_id: str) -> str | None:
+    matches = sorted(POSTMORTEMS_DIR.glob(f"{pm_id}_*.md"))
+    if not matches:
+        return None
+    if len(matches) > 1:
+        names = ", ".join(path.name for path in matches)
+        raise RuntimeError(f"Ambiguous postmortem files for {pm_id}: {names}")
+    return f"./postmortems/{matches[0].name}"
+
+
 def render_failure_index(entries):
     header = HEADER + dedent(
         """# Failure Index
 
-Catalog of Failure Patterns in the FM → FP → GR pipeline (PM numbers align to FP IDs).
+Catalog of complementary artifacts in the PM → FM → FP → GR chain.
+
+- `PM` records the real occurrence.
+- `FM` proves one concrete deterministic manifestation.
+- `FP` captures the reusable higher-level pattern.
+- `GR` documents the prevention/containment design.
 
 | ID | PM | Failure Pattern | Domain | Mechanism | Reproduced In | Mitigated By |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -54,13 +70,12 @@ Catalog of Failure Patterns in the FM → FP → GR pipeline (PM numbers align t
     )
     rows = []
     for e in entries:
-        pm = e.get("pm") or "— (no PM yet)"
-        pm_link = pm if pm.startswith("—") else f"[{pm}](./postmortems/{pm}_".replace("_", "_") + f"{e['title'].lower().replace(' ', '_')}.md)" if pm else "—"
-        # safer: build path from id
-        if isinstance(e.get("pm"), str):
-            pm_link = f"[{e['pm']}](./postmortems/{e['pm']}_{e['title'].lower().replace(' ', '_')}.md)"
-        elif e.get("pm"):
-            pm_link = e.get("pm")
+        pm_id = e.get("pm")
+        if isinstance(pm_id, str):
+            pm_relpath = resolve_postmortem_relpath(pm_id)
+            pm_link = f"[{pm_id}]({pm_relpath})" if pm_relpath else pm_id
+        elif pm_id:
+            pm_link = str(pm_id)
         else:
             pm_link = "— (no PM yet)"
         fp_slug = slugify(e['title'])
@@ -77,7 +92,9 @@ def render_taxonomy(entries):
     intro = HEADER + dedent(
         """# Failure Taxonomy
 
-Canonical catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`. Keep just enough domain/mechanism detail to disambiguate labels; anything deeper belongs in the FP/FM/GR artifacts.
+Canonical catalog spine for Failure Patterns (`FP_XXX`) in `atlas/`.
+`FP` is the abstract layer; concrete manifestations belong in `FM`, and prevention details belong in `GR`.
+Keep just enough domain/mechanism detail to disambiguate labels; anything deeper belongs in the FP/FM/GR artifacts.
 
 ## Domains and mechanisms (single-line definitions)
 
@@ -106,7 +123,7 @@ Reserved headers (define when needed): Concurrency; Recovery & Reconciliation; D
 Notes:
 
 - `reproduced_in` and `mitigated_by` are list-valued in artifact metadata.
-- Multiple FMs and GRs may link to one FP as the atlas grows.
+- Multiple PMs, FMs, and GRs may link to one FP as the atlas grows.
 - FM IDs align 1:1 with FP/GR numbering; FP_004 currently has no FM.
 """
     )
@@ -118,6 +135,7 @@ def render_lab_failure_mode_index(entries):
         """# Failure Mode Index (Generated)
 
 Source of truth: `registry/registry.yml`. Detailed FM specs/tests live in `lab/failure_modes/FM_XXX_*`.
+Each `FM` is one concrete deterministic manifestation of a broader `FP`.
 
 | Failure Mode | Failure Pattern | Guardrail(s) | Postmortem | Status |
 | --- | --- | --- | --- | --- |
@@ -144,6 +162,7 @@ def render_lab_taxonomy_pointer():
 
 This lab taxonomy view is generated from `registry/registry.yml`.
 For canonical domain/mechanism mapping, see `../../taxonomy.md`.
+Use `FM` for concrete lab manifestations and `FP` for the abstract recurring pattern.
 """
     )
 

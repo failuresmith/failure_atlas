@@ -1,39 +1,60 @@
-# Failure Title
+# Failure Pattern
 
-Failure Domain:  
-Mechanism:  
-System type:  
+ID:
+Title:
+Failure Domain:
+Mechanism:
 Severity:
-Reference:
+Status:
+Reproduced in:
+Mitigated by:
+Known occurrences:
 
-Use an existing mechanisms from [`taxonomy.md`](../taxonomy.md). Only mint a new mechanism when at least two FPs need the same discriminator.
+Use an existing mechanism from [`taxonomy.md`](../taxonomy.md). Only mint a new mechanism when at least two FPs need the same discriminator.
 
-## Question
+This template is for the abstract `FP` layer, not the lab `FM` layer.
+Keep it reusable across multiple concrete manifestations.
 
-What system property might fail?
+## Pattern statement
 
-## Context
+One paragraph describing the recurring higher-level failure pattern.
 
-Where this assumption appears in the system.
+## Hidden assumption
 
-## Invariant
+What assumption quietly has to stay true for the system to remain correct?
 
-INV_NAME --the property that must hold all the time.
+## Invariant at risk
 
-## Observation
+`INV_XXX` — the property that must hold all the time.
 
-evidence of violation.
+## Trigger family
 
-## Failure Scenario
+What kinds of conditions or events tend to activate this pattern?
 
-how the invariant breaks.
+## Failure mechanism
+
+Describe the structural cause at the abstract level, not the step-by-step FM script.
+
+## Observable symptoms
+
+What operators or systems would observe when this pattern manifests?
 
 ## Detection
 
-how the violation can be observed.
+How the violation can be observed or classified reliably.
 
-## Guardrail
+## Lab reproductions
 
-the engineering change that prevents it.
+List the concrete `FM_XXX` manifestations that reproduce this pattern.
 
-## Relevance
+## Relevant guardrails
+
+List the `GR_XXX` designs that prevent or contain this pattern.
+
+## Known occurrences
+
+List related `PM_XXX` postmortems or incident anchors when they exist.
+
+## Related patterns
+
+Neighboring `FP_XXX` entries that share boundaries or failure families.

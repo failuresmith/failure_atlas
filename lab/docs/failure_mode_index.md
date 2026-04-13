@@ -3,6 +3,7 @@
 # Failure Mode Index (Generated)
 
 Source of truth: `registry/registry.yml`. Detailed FM specs/tests live in `lab/failure_modes/FM_XXX_*`.
+Each `FM` is one concrete deterministic manifestation of a broader `FP`.
 
 | Failure Mode | Failure Pattern | Guardrail(s) | Postmortem | Status |
 | --- | --- | --- | --- | --- |

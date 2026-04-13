@@ -1,7 +1,22 @@
+---
+ID: FM_XXX
+Title: <short title>
+Hypothesis: One concrete manifestation path of a broader failure pattern.
+Invariant:
+  - INV_XXX
+related_pattern:
+  - FP_XXX
+related_guardrail:
+  - GR_XXX
+related_postmortem:
+  - PM_XXX
+Status: draft
+---
+
 # FM_XXX — <short title>
 
 ## Description
-One sentence describing the failure mode in plain language.
+One sentence describing the concrete failure manifestation in plain language.
 
 ## Trigger
 The concrete condition(s) that cause this failure mode.
@@ -43,6 +58,11 @@ How the system should prevent the failure or recover correctness.
 The minimum set of tests that must pass.
 - `test_repro_fmxxx.py` demonstrates the failure in baseline/broken config
 - `test_prevent_fmxxx.py` proves the fix preserves invariants
+
+## Related artifacts
+- Failure pattern: `atlas/FP_XXX_*.md`
+- Guardrail: `guardrails/GR_XXX_*.md`
+- Postmortem: `postmortems/PM_XXX_*.md` (when a real occurrence exists)
 
 ## Notes
 Constraints, trade-offs, and “what we are intentionally not solving here”.

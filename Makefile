@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: test test-001 test-% new site serve help
+.PHONY: test test-001 test-% new site serve help registry registry-check
 
 # Run the full lab test suite
 test:
@@ -19,7 +19,7 @@ new:
 	@bash scripts/new_atlas_entry.sh "$(TITLE)" "$(SLUG)"
 
 # Build the static site into docs/
-site:
+site: registry
 	uv run --project site python site/build.py
 
 # Serve the generated site locally at http://localhost:8000

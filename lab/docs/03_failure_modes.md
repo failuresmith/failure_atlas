@@ -2,6 +2,9 @@
 
 > This document defines the required structure for adding a failure mode (FM) to this repository.
 
+An `FM` is one concrete deterministic manifestation path of a broader `FP`.
+It is intentionally narrower than the atlas pattern and should not duplicate the `FP` abstraction layer.
+
 ## Single source of truth
 
 - Invariants: [docs/01_invariants.md](./01_invariants.md)
@@ -26,16 +29,24 @@ failure_modes/FM_XXX_short_name/
 
 Required bundle artifacts:
 
-- `spec.md`: single-source declaration of the failure mode, violated invariants, and acceptance criteria.
+- `spec.md`: single-source declaration of one concrete failure manifestation, the violated invariants, and acceptance criteria.
 - `scenario.py`: deterministic setup/driver that reproduces the condition described in `spec.md`.
 - `tests/`: executable proofs that the failure is reproducible and preventable.
+
+Every FM bundle must explicitly identify:
+
+- parent failure pattern (`FP_XXX`)
+- tested guardrail(s) (`GR_XXX`)
+- related postmortem(s) (`PM_XXX`) when known
+
+These links may live in frontmatter, `README.md`, or a dedicated related-artifacts section, but they must be explicit.
 
 ## Required fields in `spec.md`
 
 Every FM `spec.md` must include these sections (exact heading text may vary slightly, but content is required):
 
 1. **Description**
-   - One-paragraph statement of what fails and why it matters.
+   - One-paragraph statement of the concrete manifestation that fails and why it matters.
 2. **Trigger**
    - Precise preconditions + event sequence needed to activate the failure mode.
 3. **Symptoms**
@@ -85,6 +96,7 @@ Required practices:
 ## Catalog linkage
 
 This methodology defines **how** failure modes are authored and proven.
+The `FP` layer remains the place for reusable higher-level mechanism framing.
 The current FM catalog and progress ledger live in:
 
 - [`Failure Mode Index`](./failure_mode_index.md)
