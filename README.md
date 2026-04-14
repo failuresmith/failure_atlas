@@ -22,7 +22,6 @@ A personal log of software security failure modes, categorized by the CWE-1000 (
 
 ## 5. Control Flow & Logic (CWE-691)
 *Algorithmic complexity, loops, and deadlocks.*
-- [[FM-004] Anthropomorphic Misinterpretation](./atlas/logic_calculation/anthropomorphic_misinterpretation.md)
 - [[FM-009] Progress Stall Detection Gap](./atlas/logic_calculation/progress_stall_loop.md)
 
 ## 6. Identification & Authentication (CWE-287)
