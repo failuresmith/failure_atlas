@@ -1,7 +1,0 @@
-# Centralized ID rename map for FP/FM/GR/PM artifacts.
-# Usage:
-#   1) Add entries under `aliases:` with OLD_ID: NEW_ID (e.g., FM_010: FM_003).
-#   2) Run: python scripts/rename_ids.py --map scripts/id_map.yml
-#   3) Commit the content changes, then clear the aliases (or keep as history).
-# This avoids scattered manual edits when re-numbering failure bundles.
-aliases: {}

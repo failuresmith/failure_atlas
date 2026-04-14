@@ -20,15 +20,6 @@ Build a minimal abstract failure harness where each failure mode is:
 
 Primary outcome: a growing suite of failure-mode scenarios + proofs.
 
-Within the full repository, `lab/` owns the concrete `FM` layer:
-
-- `PM` = real occurrence record
-- `FM` = one deterministic manifestation path in the lab
-- `FP` = higher-level recurring pattern in `../atlas`
-- `GR` = detailed prevention/containment design in `../guardrails`
-
-An `FM` is concrete by design. It should not duplicate the abstraction work of the `FP`.
-
 ---
 
 ## Non-negotiable rules
@@ -83,7 +74,7 @@ An `FM` is concrete by design. It should not duplicate the abstraction work of t
   - containment + recovery mechanisms (only when reused by 2+ FMs)
 
 - `postmortems/`
-  - incident writeups that anchor real occurrences; not a substitute for FM specs
+  - incident writeups linked to FM tests and fixes
 
 - `baselines/`
   - reference implementations or “known broken” baselines (if needed)
@@ -106,20 +97,15 @@ For each new FM:
    - Recovery / prevention strategy
    - Acceptance criteria
 
-3) Link the FM explicitly to:
-   - its parent `FP_XXX`
-   - its tested `GR_XXX` guardrail(s)
-   - related `PM_XXX` incident(s) when they exist
-
-4) Add two tests:
+3) Add two tests:
    - `test_fmxxx_happy_path.py` → proves baseline invariant-preserving flow
    - `test_repro_fmxxx.py` → demonstrates the failure (baseline or broken variant)
    - `test_prevent_fmxxx.py` → proves the fix preserves invariants
    - `test_recover_fmxxx.py` (optional) → proves recovery returns to correctness
 
-5) Implement minimal runtime/policy changes to satisfy the prevention test.
+4) Implement minimal runtime/policy changes to satisfy the prevention test.
 
-6) Add a postmortem if it teaches something reusable.
+5) Add a postmortem if it teaches something reusable.
 
 ---
 
@@ -181,4 +167,4 @@ Do not broaden scope. Do not add features for completeness.
 
 The atlas becomes a mapping of `system failure patterns`, not documenting bugs.
 
-The lab remains a **concrete failure-manifestation demonstrator**, not a product simulator.
+The lab remains a **failure mechanism demonstrator**, not a product simulator.
