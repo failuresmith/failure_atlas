@@ -1,73 +1,48 @@
-# Failure Atlas — Agent Operating Rules
+# Failure Atlas Agent Instructions
 
-This repository is a **failure-pattern manufacturing pipeline**.
+This repository is a personal, searchable, and engineering-credible "Software Failure Log". It documents software security failure modes to help engineers learn from past mistakes and prevent similar failures.
 
-Do not optimize for realism.
-Optimize for **legibility of failure mechanism**.
+## Taxonomy: CWE-1000
 
-## Core workflow (non-negotiable)
+All failure modes must be categorized under one of the following 6 pillars from the CWE-1000 (Research View):
 
-Every contribution must follow this chain:
+1. **Resource Management** (CWE-399): Exhaustion (OOM), memory safety (Buffer Overflow), and leaks.
+2. **Access Control & Authorization** (CWE-285): Privilege escalation, policy bypass, and boundary violations.
+3. **State & Data Integrity** (CWE-664): Race conditions, idempotency failures, and consistency drift. (Folder: `state_concurrency`)
+4. **Input Validation & Representation** (CWE-20): Injection (Prompt/SQL), overflows, and boundary math errors.
+5. **Control Flow & Logic** (CWE-691): Algorithmic complexity, agent loop stalls, and deadlock/livelocks. (Folder: `logic_calculation`)
+6. **Identification & Authentication** (CWE-287): Identity map collisions and trust boundary failures. (Folder: `identity_authentication`)
 
-1. Identify a failure hypothesis (hidden assumption + invariant risk)
-2. Build a **minimal deterministic lab reproduction**
-3. Isolate the failure mechanism (structural cause)
-4. Document a guardrail / containment pattern
-5. Update atlas knowledge entry with links to lab + guardrail
+## Entry Template (`atlas/<pillar>/<descriptive-slug>.md`)
 
-Use this exact framing:
+Every entry must follow this "human-handwritten" tone—concise, technical, and non-verbose.
 
-**Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update**
+```markdown
+# [ID] Title
+**Pattern:** <Pillar Name>
 
----
+**The Failure**
+[1-2 sentences on why this is tricky/dangerous. What is the "gotcha"?]
 
-## Repository boundaries
+**Mechanism**
+[Technical deep-dive: what happens in memory/state/logic. Why does it fail?]
 
-- `atlas/` = failure knowledge (what fails and why)
-- `lab/` = reproducible mechanism proofs (how it fails under controlled conditions)
-- `guardrails/` = containment/prevention knowledge (how to make it fail safely)
+**Reproduction**
+[Short, credible code snippet or pseudo-code showing the failure.]
+Full reproduction: `lab/<pillar>/<descriptive-slug>/`
 
-Never merge these responsibilities.
+**Remediation**
+[Specific code-level fixes, architectural patterns, or invariant-enforcing designs.]
+```
 
----
+## Lab Standards (`lab/<pillar>/<descriptive-slug>/`)
 
-## Design principles
+- **Standalone**: Prefer simple, standalone scripts or minimal projects over complex frameworks.
+- **Reproducible**: Must include a clear way to run the reproduction and observe the failure.
+- **Credible**: Use realistic environments (e.g., specific library versions or memory constraints if relevant).
 
-1. **Minimal abstractions first**
-   - Keep the smallest model that exposes the failure domain.
+## Guiding Principles
 
-2. **No product simulation**
-   - The lab is not a production-like clone.
-   - Avoid domain details unless required to expose the mechanism.
-
-3. **Determinism required**
-   - Reproductions and tests must be stable and repeatable.
-
-4. **No abstraction without reuse proof**
-   - Add shared abstraction only when justified by at least 2 failure modes.
-
-5. **One failure mode per change set**
-   - Avoid mixed-scope changes.
-
-6. **Agent loops require explicit progress detection**
-   - When modeling agents, include a deterministically checkable progress/stuck signal (e.g., sliding window of step signatures) instead of relying on iteration caps.
-
-7. **Centralize ID renames**
-   - When changing FP/FM/GR/PM numbers, edit `scripts/id_map.yml` once and run `make relink` to propagate references. Do not hand-edit scattered links.
-
----
-
-## Standard deliverables for each new failure domain
-
-1. Atlas entry (failure knowledge)
-2. Lab failure mode bundle (repro + prevention test proof)
-3. Guardrail entry (containment pattern)
-
-All three must cross-link explicitly.
-
----
-
-## Success criterion
-
-This repository should become a map of **domains of failure** and reusable containment designs,
-not a catalog of isolated bugs.
+- **Searchability**: Use descriptive slugs for filenames and clear headings for easy grep/search.
+- **Engineering Credibility**: Include technical details like memory layouts or race condition traces where appropriate.
+- **Minimalism**: Avoid industrial documentation bloat. No auto-generated sites or complex registries. Pure Markdown is the source of truth.

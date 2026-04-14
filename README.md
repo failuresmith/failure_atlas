@@ -1,101 +1,38 @@
-# Failure Atlas
+# Software Failure Atlas
 
-A field guide to how complex systems fail (safely).
+A personal log of software security failure modes, categorized by the CWE-1000 (Research View) pillars. This atlas is designed for engineering learning and quick reference.
 
-**Real failure → FM (prove) → FP (explain) → GR (mitigate).**
+## 1. Resource Management (CWE-399)
+*Exhaustion, memory safety, and leaks.*
+- [[FM-005] Unbounded Pagination State Amplification](./atlas/resource_management/unbounded_pagination.md)
 
-<details>
-<summary>How?</summary>
+## 2. Access Control & Authorization (CWE-285)
+*Privilege escalation, policy bypass, and boundary violations.*
+- [[FM-002] Extension Authority Persistence](./atlas/access_control/extension_authority_persistence.md)
+- [[FM-003] Read-only Enforcement Gap](./atlas/access_control/read_only_enforcement_gap.md)
+- [[FM-008] Tool Authority Escalation via Prompt Injection](./atlas/access_control/tool_authority_escalation.md)
 
-> This is an engineering experiment
+## 3. State & Data Integrity (CWE-664)
+*Race conditions, idempotency, and consistency.*
+- [[FM-001] Duplicate Execution After Retry Timeout](./atlas/state_concurrency/duplicate_retry_timeout.md)
 
-#### Studying domains of failure, not individual bugs
+## 4. Input Validation & Representation (CWE-20)
+*Injection, overflows, and boundary math.*
+- [[FM-006] Quota Boundary Off-by-One](./atlas/input_validation/quota_off_by_one.md)
 
-- Because bugs disappear
-- Failure patterns repeat forever
+## 5. Control Flow & Logic (CWE-691)
+*Algorithmic complexity, loops, and deadlocks.*
+- [[FM-004] Anthropomorphic Misinterpretation](./atlas/logic_calculation/anthropomorphic_misinterpretation.md)
+- [[FM-009] Progress Stall Detection Gap](./atlas/logic_calculation/progress_stall_loop.md)
 
-</details>
+## 6. Identification & Authentication (CWE-287)
+*Identity collisions and trust boundaries.*
+- [[FM-007] Identity Map Bijection Break](./atlas/identity_authentication/identity_map_collision.md)
 
 ---
 
-Pipeline:
-“Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update”
+## Lab
+Every failure mode has a minimal, standalone reproduction in the `./lab/` directory.
 
-```mermaid
-flowchart TD
-  A[failure]
-  A --> B[FM - minimal reproduction]
-  B --> C[FP - failure pattern]
-  C --> D[GR - guardrail pattern]
-  D --> E[Atlas]
-```
-
-FM proves.
-FP explains.
-GR mitigates.
-
-# example
-
-- Real failure domain: Tool Authority Escalation via Prompt Injection
-- Failure Mode: [`FM_008_tool_authority_escalation`](./lab/failure_modes/FM_008_tool_authority_escalation/README.md)
-- Failure Pattern: [`FP_008_tool_authority_escalation_via_prompt_injection`](./atlas/FP_008_tool_authority_escalation_via_prompt_injection.md)
-- Guardrail: [`GR_008_explicit_tool_authorization_boundary`](./guardrails/GR_008_explicit_tool_authorization_boundary.md)
-- Postmortem: [`PM_008_tool_authority_escalation`](./postmortems/PM_008_tool_authority_escalation.md)
-
-# Components
-
-## Where to find postmortems
-- Canonical PMs live in `postmortems/PM_XXX_*.md`.
-- `lab/postmortems/PM_XXX_*.md` are thin pointers to the root to prevent drift; edit the root files only.
-
-## [Atlas](./atlas/)
-
-Explain the failure domain.
-
-Artifacts:
-
-- `FP_XXX_name.md` entries with YAML metadata
-- hidden assumption / trigger / mechanism / detection
-- links to FM reproductions and GR guardrails
-
-## [Lab](./lab/)
-
-Prove the failure exists.
-
-Artifacts:
-
-- `FM_XXX_*` bundles (`spec.md`, `scenario.py`, tests)
-- deterministic reproduction (happy/repro/prevent, recover when needed)
-- explicit invariant references (`INV_XXX`)
-
-## [Guardrails](./guardrails/)
-
-Prove the failure can be prevented or contained.
-
-Artifacts:
-
-- `GR_XXX_name.md` entries with YAML metadata
-- invariant-enforcing design pattern
-- tradeoffs and links back to FP/FM
-
-## Contribute
-
-- `make test` runs the full lab test suite in `lab/` (includes happy-path coverage)
-- `make test-001` runs only Experiment 01 tests (happy path + FM_001 bundle)
-
-### Adding or editing atlas items (FP/FM/GR/PM)
-
-- **Do not create/edit `docs/*.html` manually.**
-- Markdown is the source of truth:
-  - `atlas/FP_XXX_*.md`
-  - `guardrails/GR_XXX_*.md`
-  - `lab/postmortems/PM_XXX_*.md`
-  - `lab/failure_modes/FM_XXX_*/spec.md` (or `README.md` fallback)
-- Regenerate the static docs with:
-  - `make site` (or `python site/build.py`)
-
-### Site update policy
-
-- The GitHub Pages deployment workflow builds the site from Markdown on every push to `main`.
-- That means contributors should focus on source artifacts (FP/FM/GR/PM markdown + tests), not hand-maintained HTML.
-- Local rebuild (`make site`) is still useful for preview/review before pushing.
+## Contributing
+See [AGENTS.md](./AGENTS.md) for the entry template and taxonomy standards.
