@@ -1,36 +1,34 @@
-# Atlas Agent Guide
+# Atlas Directory Guide
 
-`atlas/` stores **failure knowledge**, not fixes.
+This file applies only to content inside `atlas/`.
 
-## Purpose
+The root [`AGENTS.md`](../AGENTS.md) remains the canonical source for repository purpose, taxonomy, the entry template, and shared authoring rules. This file exists to clarify how to apply those rules within `atlas/` without repeating them.
 
-Document real-world failure classes so they are reusable across systems.
+## What Belongs Here
 
-Use this workflow framing for every entry:
-
-**Real failure → Minimal reproduction → Mechanism → Guardrail → Atlas update**
-
-## Boundary
-
-- Put **what fails and why** in `atlas/`
-- Do **not** put prevention implementation details here (those belong in `guardrails/`)
-
-## Required structure for each atlas entry
-
-Each entry should include:
-
-1. Context
-2. Hidden assumption
-3. Invariant at risk
-4. Failure mechanism
-5. Relevance / where this failure appears
-6. Explicit links:
-   - lab reproduction (`lab/failure_modes/FM_XXX_*`)
-   - guardrail entry (`guardrails/GR_XXX_*` or equivalent)
-
-## Authoring rules
-
-- Focus on domain-level mechanism, not incident storytelling detail.
-- Keep language abstract and reusable across domains.
+- One markdown file per reusable failure pattern.
+- Path shape: `atlas/<pillar>/<descriptive-slug>.md`
 - One failure domain per entry.
-- If mechanism is unclear, refine the lab first before expanding atlas text.
+
+## Directory Contract
+
+- Put each entry in the pillar directory that best matches the violated boundary or invariant.
+- Choose a descriptive slug that names the mechanism, not a one-off incident.
+- Keep the file focused on a single reviewable failure pattern.
+
+## Writing Focus
+
+When authoring or editing an entry in `atlas/`, optimize for these questions:
+
+- What failed?
+- Why did it fail?
+- What invariant was missing or violated?
+- What fix restores that invariant?
+
+If those answers are not obvious from the page, the entry is not ready.
+
+## Local Quality Checks
+
+- The coding example should make the broken boundary visible, not just hint at the symptom.
+- The remediation should show the containment approach, not just say "validate" or "add a check".
+- References are optional and should be included only when they make the mechanism clearer.
